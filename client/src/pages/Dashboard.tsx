@@ -18,9 +18,13 @@ import {
   Target,
   TrendingUp,
   Award,
-  Clock
+  Clock,
+  Zap,
+  Heart,
+  Shield,
+  Leaf
 } from "lucide-react";
-import type { UserScore, EventRegistration, Competition, Event } from "@shared/schema";
+import type { UserScore, EventRegistration, Competition, Event, Problem } from "@shared/schema";
 
 export default function Dashboard() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
@@ -59,6 +63,11 @@ export default function Dashboard() {
     enabled: isAuthenticated,
   });
 
+  const { data: userProblems } = useQuery<Problem[]>({
+    queryKey: ["/api/user/problems"],
+    enabled: isAuthenticated,
+  });
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -90,6 +99,8 @@ export default function Dashboard() {
   const averageScore = completedQuizzes > 0 
     ? Math.round(userScores!.reduce((sum, s) => sum + (s.score / (s.totalQuestions * 10)) * 100, 0) / completedQuizzes)
     : 0;
+  const problemsReported = userProblems?.length || 0;
+  const hasPerfectScore = userScores?.some(s => s.score === s.totalQuestions * 10) || false;
 
   const getInitials = (firstName?: string | null, lastName?: string | null) => {
     const first = firstName?.charAt(0) || "";
@@ -182,6 +193,13 @@ export default function Dashboard() {
                     </span>
                     <span className="font-semibold">{registrations?.length || 0}</span>
                   </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <Shield className="h-4 w-4" />
+                      Problems Reported
+                    </span>
+                    <span className="font-semibold">{problemsReported}</span>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -199,23 +217,29 @@ export default function Dashboard() {
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {[
-                      { name: "First Quiz", icon: Star, unlocked: completedQuizzes >= 1 },
-                      { name: "Quiz Master", icon: Trophy, unlocked: completedQuizzes >= 5 },
-                      { name: "High Scorer", icon: Medal, unlocked: averageScore >= 80 },
-                      { name: "Event Joiner", icon: Calendar, unlocked: (registrations?.length || 0) >= 1 },
+                      { name: "First Quiz", description: "Complete your first quiz", icon: Star, unlocked: completedQuizzes >= 1 },
+                      { name: "Quiz Master", description: "Complete 5 quizzes", icon: Trophy, unlocked: completedQuizzes >= 5 },
+                      { name: "High Scorer", description: "Average score 80%+", icon: Medal, unlocked: averageScore >= 80 },
+                      { name: "Perfect Score", description: "Score 100% on any quiz", icon: Zap, unlocked: hasPerfectScore },
+                      { name: "Event Joiner", description: "Register for an event", icon: Calendar, unlocked: (registrations?.length || 0) >= 1 },
+                      { name: "Community Helper", description: "Report a problem", icon: Shield, unlocked: problemsReported >= 1 },
+                      { name: "Eco Champion", description: "Score 500+ total points", icon: Leaf, unlocked: totalScore >= 500 },
+                      { name: "Nature Lover", description: "Join 3+ events", icon: Heart, unlocked: (registrations?.length || 0) >= 3 },
                     ].map((achievement, i) => (
                       <div 
                         key={i}
-                        className={`p-4 rounded-lg text-center border ${
+                        className={`p-4 rounded-lg text-center border transition-all ${
                           achievement.unlocked 
                             ? 'bg-primary/5 border-primary/20' 
                             : 'bg-muted/30 border-transparent opacity-50'
                         }`}
+                        title={achievement.description}
                       >
                         <achievement.icon className={`h-8 w-8 mx-auto mb-2 ${
                           achievement.unlocked ? 'text-primary' : 'text-muted-foreground'
                         }`} />
                         <p className="text-sm font-medium">{achievement.name}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{achievement.description}</p>
                       </div>
                     ))}
                   </div>

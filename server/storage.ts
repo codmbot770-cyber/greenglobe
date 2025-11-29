@@ -5,6 +5,7 @@ import {
   competitionQuestions,
   userScores,
   eventRegistrations,
+  problems,
   type User,
   type UpsertUser,
   type Event,
@@ -17,9 +18,11 @@ import {
   type InsertUserScore,
   type EventRegistration,
   type InsertEventRegistration,
+  type Problem,
+  type InsertProblem,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -47,6 +50,16 @@ export interface IStorage {
   // Event registrations
   getUserRegistrations(userId: string): Promise<EventRegistration[]>;
   createEventRegistration(registration: InsertEventRegistration): Promise<EventRegistration>;
+
+  // Problems
+  getProblems(): Promise<Problem[]>;
+  getProblem(id: number): Promise<Problem | undefined>;
+  getUserProblems(userId: string): Promise<Problem[]>;
+  createProblem(problem: InsertProblem): Promise<Problem>;
+
+  // Leaderboard
+  getAllScores(): Promise<UserScore[]>;
+  getLeaderboard(): Promise<{ userId: string; totalScore: number; quizCount: number }[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -129,6 +142,44 @@ export class DatabaseStorage implements IStorage {
   async createEventRegistration(registration: InsertEventRegistration): Promise<EventRegistration> {
     const [newRegistration] = await db.insert(eventRegistrations).values(registration).returning();
     return newRegistration;
+  }
+
+  // Problems
+  async getProblems(): Promise<Problem[]> {
+    return db.select().from(problems).orderBy(desc(problems.createdAt));
+  }
+
+  async getProblem(id: number): Promise<Problem | undefined> {
+    const [problem] = await db.select().from(problems).where(eq(problems.id, id));
+    return problem;
+  }
+
+  async getUserProblems(userId: string): Promise<Problem[]> {
+    return db.select().from(problems).where(eq(problems.userId, userId)).orderBy(desc(problems.createdAt));
+  }
+
+  async createProblem(problem: InsertProblem): Promise<Problem> {
+    const [newProblem] = await db.insert(problems).values(problem).returning();
+    return newProblem;
+  }
+
+  // Leaderboard
+  async getAllScores(): Promise<UserScore[]> {
+    return db.select().from(userScores).orderBy(desc(userScores.score));
+  }
+
+  async getLeaderboard(): Promise<{ userId: string; totalScore: number; quizCount: number }[]> {
+    const result = await db
+      .select({
+        userId: userScores.userId,
+        totalScore: sql<number>`sum(${userScores.score})::int`,
+        quizCount: sql<number>`count(*)::int`,
+      })
+      .from(userScores)
+      .groupBy(userScores.userId)
+      .orderBy(desc(sql`sum(${userScores.score})`))
+      .limit(10);
+    return result;
   }
 }
 

@@ -126,3 +126,28 @@ export const insertEventRegistrationSchema = createInsertSchema(eventRegistratio
 });
 export type InsertEventRegistration = z.infer<typeof insertEventRegistrationSchema>;
 export type EventRegistration = typeof eventRegistrations.$inferSelect;
+
+// Environmental problems reports
+export const problems = pgTable("problems", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: varchar("user_id").notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  location: varchar("location", { length: 255 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(),
+  severity: varchar("severity", { length: 50 }).notNull(),
+  status: varchar("status", { length: 50 }).default("pending"),
+  imageUrl: varchar("image_url"),
+  latitude: varchar("latitude"),
+  longitude: varchar("longitude"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertProblemSchema = createInsertSchema(problems).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertProblem = z.infer<typeof insertProblemSchema>;
+export type Problem = typeof problems.$inferSelect;

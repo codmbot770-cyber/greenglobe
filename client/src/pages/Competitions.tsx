@@ -17,9 +17,10 @@ import {
   Star,
   ChevronRight,
   Leaf,
-  Play
+  Play,
+  Users
 } from "lucide-react";
-import type { Competition, UserScore } from "@shared/schema";
+import type { Competition, UserScore, User } from "@shared/schema";
 
 const difficultyColors: Record<string, string> = {
   Easy: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
@@ -27,16 +28,14 @@ const difficultyColors: Record<string, string> = {
   Hard: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
 };
 
-const mockLeaderboard = [
-  { rank: 1, name: "Kamran H.", score: 2850, competitions: 12 },
-  { rank: 2, name: "Nigar A.", score: 2720, competitions: 11 },
-  { rank: 3, name: "Elchin M.", score: 2680, competitions: 10 },
-  { rank: 4, name: "Aygun K.", score: 2540, competitions: 9 },
-  { rank: 5, name: "Farid O.", score: 2490, competitions: 11 },
-];
+type LeaderboardEntry = {
+  userId: string;
+  totalScore: number;
+  quizCount: number;
+};
 
 export default function Competitions() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [, setLocation] = useLocation();
 
   const { data: competitions, isLoading } = useQuery<Competition[]>({
@@ -46,6 +45,10 @@ export default function Competitions() {
   const { data: userScores } = useQuery<UserScore[]>({
     queryKey: ["/api/user/scores"],
     enabled: isAuthenticated,
+  });
+
+  const { data: leaderboard, isLoading: leaderboardLoading } = useQuery<LeaderboardEntry[]>({
+    queryKey: ["/api/leaderboard"],
   });
 
   const getCompetitionScore = (competitionId: number) => {
@@ -203,36 +206,59 @@ export default function Competitions() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {mockLeaderboard.map((entry, index) => (
-                    <div 
-                      key={entry.rank}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-                    >
-                      <div className={`
-                        h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold
-                        ${index === 0 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : ''}
-                        ${index === 1 ? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' : ''}
-                        ${index === 2 ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
-                        ${index > 2 ? 'bg-muted text-muted-foreground' : ''}
-                      `}>
-                        {index < 3 ? (
-                          <Medal className="h-4 w-4" />
-                        ) : (
-                          entry.rank
-                        )}
+                  {leaderboardLoading ? (
+                    <>
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <div key={i} className="flex items-center gap-3 p-2">
+                          <Skeleton className="h-8 w-8 rounded-full" />
+                          <div className="flex-1">
+                            <Skeleton className="h-4 w-24 mb-1" />
+                            <Skeleton className="h-3 w-16" />
+                          </div>
+                          <Skeleton className="h-4 w-12" />
+                        </div>
+                      ))}
+                    </>
+                  ) : leaderboard && leaderboard.length > 0 ? (
+                    leaderboard.map((entry, index) => (
+                      <div 
+                        key={entry.userId}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                      >
+                        <div className={`
+                          h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold
+                          ${index === 0 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : ''}
+                          ${index === 1 ? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' : ''}
+                          ${index === 2 ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
+                          ${index > 2 ? 'bg-muted text-muted-foreground' : ''}
+                        `}>
+                          {index < 3 ? (
+                            <Medal className="h-4 w-4" />
+                          ) : (
+                            index + 1
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium truncate">
+                            {user?.id === entry.userId ? 'You' : `Participant ${index + 1}`}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {entry.quizCount} quiz{entry.quizCount !== 1 ? 'zes' : ''}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-primary">{entry.totalScore.toLocaleString()}</p>
+                          <p className="text-xs text-muted-foreground">points</p>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">{entry.name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {entry.competitions} competitions
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-primary">{entry.score.toLocaleString()}</p>
-                        <p className="text-xs text-muted-foreground">points</p>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-6">
+                      <Users className="h-8 w-8 mx-auto text-muted-foreground/30 mb-2" />
+                      <p className="text-sm text-muted-foreground">No participants yet</p>
+                      <p className="text-xs text-muted-foreground">Be the first to take a quiz!</p>
                     </div>
-                  ))}
+                  )}
                 </CardContent>
               </Card>
 

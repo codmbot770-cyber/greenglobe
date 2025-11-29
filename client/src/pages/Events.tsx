@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,9 +32,11 @@ import {
   TreePine,
   Droplets,
   Bird,
-  Leaf
+  Leaf,
+  CheckCircle,
+  Loader2
 } from "lucide-react";
-import type { Event } from "@shared/schema";
+import type { Event, EventRegistration } from "@shared/schema";
 
 const categories = [
   { value: "all", label: "All Categories" },
@@ -53,6 +57,7 @@ const categoryIcons: Record<string, typeof TreePine> = {
 
 export default function Events() {
   const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showPastEvents, setShowPastEvents] = useState(false);
@@ -60,6 +65,35 @@ export default function Events() {
   const { data: events, isLoading } = useQuery<Event[]>({
     queryKey: ["/api/events"],
   });
+
+  const { data: registrations } = useQuery<EventRegistration[]>({
+    queryKey: ["/api/user/registrations"],
+    enabled: isAuthenticated,
+  });
+
+  const registerMutation = useMutation({
+    mutationFn: async (eventId: number) => {
+      await apiRequest("POST", "/api/user/registrations", { eventId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/user/registrations"] });
+      toast({
+        title: "Registration Successful",
+        description: "You have been registered for this event!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Registration Failed",
+        description: "There was an error registering for the event.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const isRegistered = (eventId: number) => {
+    return registrations?.some(r => r.eventId === eventId) || false;
+  };
 
   const filteredEvents = events?.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -90,6 +124,8 @@ export default function Events() {
 
   const EventCard = ({ event, isPast = false }: { event: Event; isPast?: boolean }) => {
     const CategoryIcon = categoryIcons[event.category] || Leaf;
+    const registered = isRegistered(event.id);
+    const isRegistering = registerMutation.isPending;
     
     return (
       <Card 
@@ -97,7 +133,6 @@ export default function Events() {
         data-testid={`card-event-${event.id}`}
       >
         <CardContent className="p-0">
-          {/* Date Badge */}
           <div className="relative">
             <div className="aspect-[16/9] bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-t-lg flex items-center justify-center">
               <CategoryIcon className="h-16 w-16 text-primary/30" />
@@ -115,6 +150,14 @@ export default function Events() {
             {isPast && (
               <div className="absolute top-3 left-3">
                 <Badge variant="secondary">Past Event</Badge>
+              </div>
+            )}
+            {registered && !isPast && (
+              <div className="absolute top-3 left-3">
+                <Badge className="bg-green-600 text-white gap-1">
+                  <CheckCircle className="h-3 w-3" />
+                  Registered
+                </Badge>
               </div>
             )}
           </div>
@@ -147,9 +190,28 @@ export default function Events() {
             {!isPast && (
               <div className="pt-3">
                 {isAuthenticated ? (
-                  <Button className="w-full" data-testid={`button-register-event-${event.id}`}>
-                    Register for Event
-                  </Button>
+                  registered ? (
+                    <Button variant="secondary" className="w-full gap-2" disabled>
+                      <CheckCircle className="h-4 w-4" />
+                      Already Registered
+                    </Button>
+                  ) : (
+                    <Button 
+                      className="w-full" 
+                      onClick={() => registerMutation.mutate(event.id)}
+                      disabled={isRegistering}
+                      data-testid={`button-register-event-${event.id}`}
+                    >
+                      {isRegistering ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Registering...
+                        </>
+                      ) : (
+                        "Register for Event"
+                      )}
+                    </Button>
+                  )
                 ) : (
                   <a href="/api/login" className="block">
                     <Button variant="outline" className="w-full">
@@ -170,7 +232,6 @@ export default function Events() {
       <Navbar />
       
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="py-12 sm:py-16 bg-gradient-to-br from-secondary/10 via-background to-primary/5">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -189,7 +250,6 @@ export default function Events() {
           </div>
         </section>
 
-        {/* Filters */}
         <section className="border-b bg-card sticky top-16 z-40">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col sm:flex-row gap-3">
@@ -220,20 +280,18 @@ export default function Events() {
           </div>
         </section>
 
-        {/* Events Content */}
-        <div className="container mx-auto px-4 py-12">
-          {/* Upcoming Events */}
-          <section className="mb-12">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold">Upcoming Events</h2>
-                <Badge variant="secondary">{upcomingEvents.length}</Badge>
-              </div>
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold mb-2">Upcoming Events</h2>
+              <p className="text-muted-foreground">
+                {upcomingEvents.length} event{upcomingEvents.length !== 1 ? 's' : ''} scheduled
+              </p>
             </div>
 
             {isLoading ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
+                {[1, 2, 3, 4, 5, 6].map((i) => (
                   <Card key={i}>
                     <CardContent className="p-0">
                       <Skeleton className="aspect-[16/9] rounded-t-lg" />
@@ -262,50 +320,31 @@ export default function Events() {
                   <p className="text-muted-foreground">
                     {searchQuery || selectedCategory !== "all" 
                       ? "No events match your search criteria. Try adjusting your filters."
-                      : "New events will be added soon. Check back later!"}
+                      : "Check back soon for new environmental events!"}
                   </p>
                 </CardContent>
               </Card>
             )}
-          </section>
 
-          {/* Past Events */}
-          {pastEvents.length > 0 && (
-            <Collapsible open={showPastEvents} onOpenChange={setShowPastEvents}>
-              <CollapsibleTrigger asChild>
-                <Button variant="outline" className="w-full gap-2 mb-6">
-                  <ChevronDown className={`h-4 w-4 transition-transform ${showPastEvents ? 'rotate-180' : ''}`} />
-                  Past Events ({pastEvents.length})
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {pastEvents.map((event) => (
-                    <EventCard key={event.id} event={event} isPast />
-                  ))}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          )}
-        </div>
-
-        {/* Join CTA */}
-        <section className="py-16 bg-card border-t">
-          <div className="container mx-auto px-4">
-            <Card className="bg-gradient-to-br from-secondary/10 via-primary/5 to-accent/10 border-secondary/20">
-              <CardContent className="p-8 sm:p-12 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Want to Organize an Event?</h2>
-                <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                  Have an idea for an environmental activity in your community? 
-                  We'd love to help you organize and promote it!
-                </p>
-                <a href="/api/login">
-                  <Button size="lg" variant="secondary" className="min-w-[200px]">
-                    Get in Touch
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
+            {pastEvents.length > 0 && (
+              <div className="mt-12">
+                <Collapsible open={showPastEvents} onOpenChange={setShowPastEvents}>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="outline" className="mb-6 gap-2">
+                      <ChevronDown className={`h-4 w-4 transition-transform ${showPastEvents ? 'rotate-180' : ''}`} />
+                      {showPastEvents ? 'Hide' : 'Show'} Past Events ({pastEvents.length})
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {pastEvents.map((event) => (
+                        <EventCard key={event.id} event={event} isPast />
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
+            )}
           </div>
         </section>
       </main>
