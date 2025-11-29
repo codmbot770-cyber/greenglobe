@@ -18,6 +18,7 @@ const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/competitions", label: "Competitions" },
   { href: "/events", label: "Eco Events" },
+  { href: "/community", label: "Community" },
   { href: "/problems", label: "Problems" },
 ];
 

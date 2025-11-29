@@ -386,7 +386,19 @@ export async function registerRoutes(
 
   app.delete("/api/community/comments/:id", isAuthenticated, async (req: any, res) => {
     try {
-      await storage.deletePostComment(parseInt(req.params.id));
+      const userId = req.user.claims.sub;
+      const commentId = parseInt(req.params.id);
+      const comment = await storage.getPostComment(commentId);
+      
+      if (!comment) {
+        return res.status(404).json({ message: "Comment not found" });
+      }
+      
+      if (comment.userId !== userId) {
+        return res.status(403).json({ message: "Not authorized to delete this comment" });
+      }
+      
+      await storage.deletePostComment(commentId);
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting comment:", error);
