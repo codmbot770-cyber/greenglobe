@@ -18,6 +18,21 @@ The platform supports three languages:
 - Language switcher in Navbar with globe icon and flag emojis
 - Translations cover all UI text: navigation, buttons, page content, forms, labels
 
+## Dark Theme Support
+
+The platform supports light and dark themes:
+- **Light mode** - Default theme with white background and green accents
+- **Dark mode** - Dark greenish-black background with light text
+
+**Implementation:**
+- ThemeProvider context in `client/src/lib/theme.tsx` manages theme state
+- Theme preference stored in localStorage with key "theme"
+- useTheme hook provides `theme` (current theme) and `toggleTheme()` for switching
+- Theme toggle button in Navbar (Moon icon for light mode, Sun icon for dark mode)
+- CSS variables in `client/src/index.css` define colors for `:root` (light) and `.dark` (dark)
+- Tailwind CSS with `darkMode: ["class"]` configuration
+- Theme automatically respects system preference on first visit
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

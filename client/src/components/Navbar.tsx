@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation, Language } from "@/lib/i18n";
+import { useTheme } from "@/lib/theme";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -11,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Leaf, Menu, User, LogOut, Trophy, Calendar, Globe, Check } from "lucide-react";
+import { Leaf, Menu, User, LogOut, Trophy, Calendar, Globe, Check, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 
 const languages: { code: Language; label: string; flag: string }[] = [
@@ -23,6 +24,7 @@ const languages: { code: Language; label: string; flag: string }[] = [
 export function Navbar() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const { t, language, setLanguage } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -103,6 +105,20 @@ export function Navbar() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={toggleTheme}
+            className="h-9 w-9 transition-all duration-300 hover:scale-110 hover:bg-green-100 dark:hover:bg-green-900/30"
+            data-testid="button-theme-toggle"
+          >
+            {theme === "light" ? (
+              <Moon className="h-4 w-4 text-green-600" />
+            ) : (
+              <Sun className="h-4 w-4 text-yellow-500" />
+            )}
+          </Button>
 
           {isLoading ? (
             <div className="h-9 w-20 animate-pulse rounded-md bg-muted" />
@@ -206,6 +222,33 @@ export function Navbar() {
                 ))}
               </nav>
               <div className="mt-6 pt-6 border-t">
+                <p className="text-sm text-muted-foreground mb-2">{t("theme")}</p>
+                <div className="flex gap-2 mb-4">
+                  <Button
+                    variant={theme === "light" ? "secondary" : "ghost"}
+                    size="sm"
+                    onClick={() => toggleTheme()}
+                    className={`flex-1 gap-2 ${
+                      theme === "light" ? "bg-green-100 dark:bg-green-900/30" : ""
+                    }`}
+                    data-testid="button-theme-light-mobile"
+                  >
+                    <Sun className="h-4 w-4" />
+                    {t("lightMode")}
+                  </Button>
+                  <Button
+                    variant={theme === "dark" ? "secondary" : "ghost"}
+                    size="sm"
+                    onClick={() => toggleTheme()}
+                    className={`flex-1 gap-2 ${
+                      theme === "dark" ? "bg-green-100 dark:bg-green-900/30" : ""
+                    }`}
+                    data-testid="button-theme-dark-mobile"
+                  >
+                    <Moon className="h-4 w-4" />
+                    {t("darkMode")}
+                  </Button>
+                </div>
                 <p className="text-sm text-muted-foreground mb-2">{t("language")}</p>
                 <div className="flex flex-col gap-1">
                   {languages.map((lang) => (

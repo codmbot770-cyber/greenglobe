@@ -345,7 +345,7 @@ export default function Problems() {
                           name="title"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{t("title")}</FormLabel>
+                              <FormLabel>{t("reportTitle")}</FormLabel>
                               <FormControl>
                                 <Input 
                                   placeholder={t("briefDescription")} 
