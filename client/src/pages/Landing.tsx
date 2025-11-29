@@ -20,12 +20,15 @@ import heroImage from "@assets/stock_images/azerbaijan_landscape_1c7523c3.jpg";
 import beachCleanupImg from "@assets/stock_images/beach_cleanup_volunt_c6de985f.jpg";
 import treePlantingImg from "@assets/stock_images/tree_planting_refore_abf1cea0.jpg";
 import wildlifeImg from "@assets/stock_images/birdwatching_wildlif_7096d9cc.jpg";
+import mountainHikingImg from "@assets/stock_images/mountain_hiking_natu_be5ae251.jpg";
+import recyclingImg from "@assets/stock_images/recycling_sustainabi_b0971641.jpg";
+import solarEnergyImg from "@assets/stock_images/solar_energy_renewab_84102c5e.jpg";
 
 const stats = [
-  { icon: Calendar, value: "50+", label: "Events Hosted" },
-  { icon: Users, value: "2,500+", label: "Participants" },
-  { icon: TreePine, value: "10", label: "Protected Areas" },
-  { icon: Trophy, value: "100+", label: "Competitions" },
+  { icon: Calendar, value: "50+", label: "Events Hosted", color: "text-blue-500" },
+  { icon: Users, value: "2,500+", label: "Participants", color: "text-amber-500" },
+  { icon: TreePine, value: "10", label: "Protected Areas", color: "text-green-500" },
+  { icon: Trophy, value: "100+", label: "Competitions", color: "text-purple-500" },
 ];
 
 const features = [
@@ -33,22 +36,28 @@ const features = [
     icon: Trophy,
     title: "Environmental Competitions",
     description: "Test your knowledge about ecology and win exciting prizes through our interactive quizzes.",
-    image: beachCleanupImg,
+    image: recyclingImg,
     link: "/competitions",
+    gradient: "from-purple-500/90 to-indigo-600/80",
+    iconBg: "bg-purple-500",
   },
   {
     icon: Calendar,
     title: "Eco Events",
     description: "Join tree planting, beach cleanups, and awareness campaigns across Azerbaijan.",
-    image: treePlantingImg,
+    image: mountainHikingImg,
     link: "/events",
+    gradient: "from-blue-500/90 to-cyan-600/80",
+    iconBg: "bg-blue-500",
   },
   {
     icon: Shield,
     title: "Report Problems",
     description: "Help identify and report environmental issues in your community for quick action.",
-    image: wildlifeImg,
+    image: solarEnergyImg,
     link: "/problems",
+    gradient: "from-amber-500/90 to-orange-600/80",
+    iconBg: "bg-amber-500",
   },
 ];
 
@@ -57,16 +66,22 @@ const ecosystems = [
     icon: Mountain,
     title: "Caucasus Mountains",
     description: "Home to diverse wildlife including the Caucasian leopard and brown bear.",
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-500/10",
   },
   {
     icon: Droplets,
     title: "Caspian Sea",
     description: "The world's largest enclosed body of water with unique marine species.",
+    color: "text-blue-500",
+    bgColor: "bg-blue-500/10",
   },
   {
     icon: Bird,
     title: "Migratory Birds",
     description: "Critical stopover for millions of birds traveling between Europe and Asia.",
+    color: "text-amber-500",
+    bgColor: "bg-amber-500/10",
   },
 ];
 
@@ -135,10 +150,10 @@ export default function Landing() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center group">
-                  <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mb-4 transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110">
-                    <stat.icon className="h-7 w-7 text-primary" />
+                  <div className={`inline-flex items-center justify-center h-14 w-14 rounded-full mb-4 transition-all duration-300 group-hover:scale-110 ${stat.color.replace('text-', 'bg-').replace('500', '500/15')}`}>
+                    <stat.icon className={`h-7 w-7 ${stat.color}`} />
                   </div>
-                  <div className="text-3xl sm:text-4xl font-bold text-foreground" data-testid={`stat-value-${index}`}>
+                  <div className={`text-3xl sm:text-4xl font-bold ${stat.color}`} data-testid={`stat-value-${index}`}>
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
@@ -149,10 +164,10 @@ export default function Landing() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-b from-background via-muted/30 to-background">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">How You Can Help</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">How You Can <span className="text-primary">Help</span></h2>
               <p className="text-muted-foreground text-lg">
                 Multiple ways to contribute to environmental protection in Azerbaijan
               </p>
@@ -160,7 +175,7 @@ export default function Landing() {
             
             <div className="grid md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
-                <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-0">
                   <div className="relative overflow-hidden">
                     <div className="aspect-[16/10]">
                       <img 
@@ -168,12 +183,15 @@ export default function Landing() {
                         alt={feature.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60 group-hover:opacity-70 transition-opacity`} />
                     </div>
                     <div className="absolute bottom-3 left-3">
-                      <div className="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white/90 backdrop-blur-sm shadow-lg">
-                        <feature.icon className="h-5 w-5 text-primary" />
+                      <div className={`inline-flex items-center justify-center h-10 w-10 rounded-lg ${feature.iconBg} shadow-lg`}>
+                        <feature.icon className="h-5 w-5 text-white" />
                       </div>
+                    </div>
+                    <div className="absolute bottom-3 right-3">
+                      <span className="text-white/90 text-sm font-medium drop-shadow-lg">{feature.title}</span>
                     </div>
                   </div>
                   <CardContent className="p-6 space-y-3">
