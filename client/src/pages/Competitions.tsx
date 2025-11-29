@@ -18,14 +18,28 @@ import {
   ChevronRight,
   Leaf,
   Play,
-  Users
+  Users,
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import type { Competition, UserScore, User } from "@shared/schema";
+
+import biodiversityImg from "@assets/stock_images/quiz_competition_stu_92023052.jpg";
+import caspianImg from "@assets/stock_images/caspian_sea_azerbaij_4431da8e.jpg";
+import climateImg from "@assets/stock_images/climate_change_globa_29918192.jpg";
+import forestImg from "@assets/stock_images/forest_conservation__cbc0a547.jpg";
 
 const difficultyColors: Record<string, string> = {
   Easy: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
   Medium: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
   Hard: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+};
+
+const competitionImages: Record<number, string> = {
+  1: biodiversityImg,
+  2: caspianImg,
+  3: climateImg,
+  4: forestImg,
 };
 
 type LeaderboardEntry = {
@@ -113,70 +127,86 @@ export default function Competitions() {
                   ))}
                 </div>
               ) : competitions && competitions.length > 0 ? (
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-2 gap-6">
                   {competitions.map((competition) => {
                     const userScore = getCompetitionScore(competition.id);
                     const isCompleted = !!userScore;
+                    const competitionImage = competitionImages[competition.id] || biodiversityImg;
                     
                     return (
                       <Card 
                         key={competition.id} 
-                        className={`hover-elevate ${!competition.isActive ? 'opacity-60' : ''}`}
+                        className={`group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${!competition.isActive ? 'opacity-60' : ''}`}
                         data-testid={`card-competition-${competition.id}`}
                       >
-                        <CardContent className="p-6 space-y-4">
-                          <div className="flex items-start justify-between gap-2">
-                            <h3 className="font-semibold text-lg line-clamp-2">{competition.title}</h3>
-                            <Badge 
-                              className={difficultyColors[competition.difficulty] || difficultyColors.Medium}
-                            >
-                              {competition.difficulty}
-                            </Badge>
-                          </div>
-                          
-                          <p className="text-sm text-muted-foreground line-clamp-2">
-                            {competition.description}
-                          </p>
-                          
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1.5">
-                              <Target className="h-4 w-4" />
-                              {competition.questionCount} questions
-                            </span>
-                            <span className="flex items-center gap-1.5">
-                              <Clock className="h-4 w-4" />
-                              {competition.estimatedMinutes} min
-                            </span>
-                          </div>
-                          
-                          {competition.prizeDescription && (
-                            <div className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
-                              <Gift className="h-4 w-4 text-primary shrink-0" />
-                              <span className="text-sm font-medium text-primary">
-                                {competition.prizeDescription}
-                              </span>
+                        <CardContent className="p-0">
+                          <div className="relative overflow-hidden">
+                            <div className="aspect-[16/9] relative">
+                              <img 
+                                src={competitionImage} 
+                                alt={competition.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                             </div>
-                          )}
-                          
-                          {isCompleted && (
-                            <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
-                              <span className="text-sm text-muted-foreground">Your Score</span>
-                              <Badge variant="secondary" className="gap-1">
-                                <Star className="h-3 w-3" />
-                                {userScore.score}/{userScore.totalQuestions * 10}
+                            <div className="absolute top-3 right-3">
+                              <Badge 
+                                className={`${difficultyColors[competition.difficulty] || difficultyColors.Medium} shadow-lg`}
+                              >
+                                {competition.difficulty}
                               </Badge>
                             </div>
-                          )}
+                            {isCompleted && (
+                              <div className="absolute top-3 left-3">
+                                <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm gap-1 shadow-md">
+                                  <Star className="h-3 w-3 text-yellow-500" />
+                                  {userScore.score}/{userScore.totalQuestions * 10}
+                                </Badge>
+                              </div>
+                            )}
+                            <div className="absolute bottom-3 left-3 right-3">
+                              <h3 className="font-bold text-lg text-white drop-shadow-lg line-clamp-2">
+                                {competition.title}
+                              </h3>
+                            </div>
+                          </div>
                           
-                          <Button 
-                            className="w-full gap-2" 
-                            onClick={() => handleStartQuiz(competition)}
-                            disabled={!competition.isActive}
-                            data-testid={`button-start-quiz-${competition.id}`}
-                          >
-                            <Play className="h-4 w-4" />
-                            {isCompleted ? 'Retake Quiz' : 'Start Quiz'}
-                          </Button>
+                          <div className="p-5 space-y-4">
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {competition.description}
+                            </p>
+                            
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1.5">
+                                <Target className="h-4 w-4 text-primary" />
+                                {competition.questionCount} questions
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <Clock className="h-4 w-4 text-secondary" />
+                                {competition.estimatedMinutes} min
+                              </span>
+                            </div>
+                            
+                            {competition.prizeDescription && (
+                              <div className="flex items-center gap-2 p-3 rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
+                                <Gift className="h-4 w-4 text-primary shrink-0" />
+                                <span className="text-sm font-medium text-primary">
+                                  {competition.prizeDescription}
+                                </span>
+                              </div>
+                            )}
+                            
+                            <Button 
+                              className="w-full gap-2 group/btn" 
+                              onClick={() => handleStartQuiz(competition)}
+                              disabled={!competition.isActive}
+                              data-testid={`button-start-quiz-${competition.id}`}
+                            >
+                              <Play className="h-4 w-4" />
+                              {isCompleted ? 'Retake Quiz' : 'Start Quiz'}
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Button>
+                          </div>
                         </CardContent>
                       </Card>
                     );

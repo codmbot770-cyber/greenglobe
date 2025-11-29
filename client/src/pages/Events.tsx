@@ -34,9 +34,16 @@ import {
   Bird,
   Leaf,
   CheckCircle,
-  Loader2
+  Loader2,
+  ArrowRight
 } from "lucide-react";
 import type { Event, EventRegistration } from "@shared/schema";
+
+import beachCleanupImg from "@assets/stock_images/beach_cleanup_volunt_c6de985f.jpg";
+import treePlantingImg from "@assets/stock_images/tree_planting_refore_abf1cea0.jpg";
+import wildlifeImg from "@assets/stock_images/birdwatching_wildlif_7096d9cc.jpg";
+import educationImg from "@assets/stock_images/environmental_educat_65329b06.jpg";
+import awarenessImg from "@assets/stock_images/nature_hiking_trail__73e64e09.jpg";
 
 const categories = [
   { value: "all", label: "All Categories" },
@@ -53,6 +60,14 @@ const categoryIcons: Record<string, typeof TreePine> = {
   "Wildlife": Bird,
   "Education": Users,
   "Awareness": Leaf,
+};
+
+const categoryImages: Record<string, string> = {
+  "Tree Planting": treePlantingImg,
+  "Beach Cleanup": beachCleanupImg,
+  "Wildlife": wildlifeImg,
+  "Education": educationImg,
+  "Awareness": awarenessImg,
 };
 
 export default function Events() {
@@ -124,21 +139,27 @@ export default function Events() {
 
   const EventCard = ({ event, isPast = false }: { event: Event; isPast?: boolean }) => {
     const CategoryIcon = categoryIcons[event.category] || Leaf;
+    const categoryImage = categoryImages[event.category] || awarenessImg;
     const registered = isRegistered(event.id);
     const isRegistering = registerMutation.isPending;
     
     return (
       <Card 
-        className={`hover-elevate overflow-visible ${isPast ? 'opacity-75' : ''}`}
+        className={`group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${isPast ? 'opacity-75' : ''}`}
         data-testid={`card-event-${event.id}`}
       >
         <CardContent className="p-0">
-          <div className="relative">
-            <div className="aspect-[16/9] bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-t-lg flex items-center justify-center">
-              <CategoryIcon className="h-16 w-16 text-primary/30" />
+          <div className="relative overflow-hidden">
+            <div className="aspect-[16/9] relative">
+              <img 
+                src={categoryImage} 
+                alt={event.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             </div>
             <div className="absolute top-3 right-3">
-              <div className="bg-background rounded-lg shadow-md p-2 text-center min-w-[60px]">
+              <div className="bg-background/95 backdrop-blur-sm rounded-lg shadow-lg p-2 text-center min-w-[60px] transition-transform duration-300 group-hover:scale-105">
                 <div className="text-xs font-semibold text-primary uppercase">
                   {new Date(event.eventDate).toLocaleDateString('en-US', { month: 'short' })}
                 </div>
@@ -149,28 +170,29 @@ export default function Events() {
             </div>
             {isPast && (
               <div className="absolute top-3 left-3">
-                <Badge variant="secondary">Past Event</Badge>
+                <Badge variant="secondary" className="backdrop-blur-sm">Past Event</Badge>
               </div>
             )}
             {registered && !isPast && (
               <div className="absolute top-3 left-3">
-                <Badge className="bg-green-600 text-white gap-1">
+                <Badge className="bg-green-600/90 backdrop-blur-sm text-white gap-1 shadow-lg">
                   <CheckCircle className="h-3 w-3" />
                   Registered
                 </Badge>
               </div>
             )}
+            <div className="absolute bottom-3 left-3">
+              <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm gap-1 shadow-md">
+                <CategoryIcon className="h-3 w-3" />
+                {event.category}
+              </Badge>
+            </div>
           </div>
           
           <div className="p-5 space-y-3">
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="font-semibold text-lg line-clamp-2">{event.title}</h3>
-            </div>
-            
-            <Badge variant="outline" className="gap-1">
-              <CategoryIcon className="h-3 w-3" />
-              {event.category}
-            </Badge>
+            <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors duration-300">
+              {event.title}
+            </h3>
             
             <p className="text-sm text-muted-foreground line-clamp-2">
               {event.description}
@@ -178,11 +200,11 @@ export default function Events() {
             
             <div className="space-y-2 pt-2">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CalendarIcon className="h-4 w-4 shrink-0" />
+                <CalendarIcon className="h-4 w-4 shrink-0 text-primary" />
                 <span>{formatDate(event.eventDate)} at {formatTime(event.eventDate)}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 shrink-0" />
+                <MapPin className="h-4 w-4 shrink-0 text-secondary" />
                 <span className="truncate">{event.location}</span>
               </div>
             </div>
@@ -197,25 +219,29 @@ export default function Events() {
                     </Button>
                   ) : (
                     <Button 
-                      className="w-full" 
+                      className="w-full gap-2 group/btn" 
                       onClick={() => registerMutation.mutate(event.id)}
                       disabled={isRegistering}
                       data-testid={`button-register-event-${event.id}`}
                     >
                       {isRegistering ? (
                         <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          <Loader2 className="h-4 w-4 animate-spin" />
                           Registering...
                         </>
                       ) : (
-                        "Register for Event"
+                        <>
+                          Register for Event
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </>
                       )}
                     </Button>
                   )
                 ) : (
                   <a href="/api/login" className="block">
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full gap-2 group/btn">
                       Sign In to Register
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                     </Button>
                   </a>
                 )}
