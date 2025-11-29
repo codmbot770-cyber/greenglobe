@@ -13,10 +13,10 @@ import {
   Leaf,
 } from "lucide-react";
 
-import muhammadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (3)_1764419215676.jpeg";
-import fuadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (2)_1764419215677.jpeg";
-import khadicaImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36_1764419215678.jpeg";
-import serhadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (1)_1764419215677.jpeg";
+import muhammadImg from "@assets/mehemmed_abdulla_1764419606548.jpeg";
+import fuadImg from "@assets/fuad_eliyev_1764419606548.jpeg";
+import khadicaImg from "@assets/xedice_ehmedli_1764419606549.jpeg";
+import serhadImg from "@assets/ferhad_serhadli_1764419606547.jpeg";
 
 const values = [
   {
