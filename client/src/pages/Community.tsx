@@ -350,12 +350,10 @@ export default function Community() {
                     <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60`} />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center text-white">
-                        <feature.type === "review" ? Star : feature.type === "general" ? MessageCircle : Sparkles
-                        }
-                        <div className="h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-2 mx-auto icon-container">
-                          {feature.type === "review" && <Star className="h-6 w-6" />}
-                          {feature.type === "general" && <MessageCircle className="h-6 w-6" />}
-                          {feature.type === "wish" && <Sparkles className="h-6 w-6" />}
+                        <div className="h-14 w-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 mx-auto icon-container">
+                          {feature.type === "review" && <Star className="h-7 w-7" />}
+                          {feature.type === "general" && <MessageCircle className="h-7 w-7" />}
+                          {feature.type === "wish" && <Sparkles className="h-7 w-7" />}
                         </div>
                         <Badge className="badge-gradient-primary">{feature.stats}</Badge>
                       </div>

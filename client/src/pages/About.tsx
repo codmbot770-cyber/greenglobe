@@ -170,12 +170,12 @@ export default function About() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value, index) => (
-                <Card key={index} className="hover-elevate text-center">
+                <Card key={index} className="card-hover-lift text-center group">
                   <CardContent className="p-6 space-y-4">
-                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mx-auto">
-                      <value.icon className="h-7 w-7 text-primary" />
+                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-all duration-300 group-hover:scale-110 group-hover:from-primary/30 group-hover:to-secondary/30">
+                      <value.icon className="h-7 w-7 text-primary transition-transform group-hover:rotate-12" />
                     </div>
-                    <h3 className="text-lg font-semibold">{value.title}</h3>
+                    <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{value.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {value.description}
                     </p>
@@ -200,15 +200,15 @@ export default function About() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member, index) => (
-                <Card key={index} className="hover-elevate">
+                <Card key={index} className="card-hover-lift group">
                   <CardContent className="p-6 text-center space-y-4">
-                    <Avatar className="h-24 w-24 mx-auto">
+                    <Avatar className="h-24 w-24 mx-auto ring-4 ring-primary/10 group-hover:ring-primary/30 transition-all duration-300 group-hover:scale-105">
                       <AvatarImage
                         src={member.image || undefined}
                         alt={member.name}
                         className="object-cover"
                       />
-                      <AvatarFallback className="bg-primary/10 text-primary text-xl">
+                      <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-white text-xl">
                         {member.name
                           .split(" ")
                           .map((n) => n[0])
@@ -216,7 +216,7 @@ export default function About() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-semibold text-lg">{member.name}</h3>
+                      <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{member.name}</h3>
                       <p className="text-sm text-primary font-medium">
                         {member.role}
                       </p>

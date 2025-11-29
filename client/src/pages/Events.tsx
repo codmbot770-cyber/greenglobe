@@ -170,7 +170,7 @@ export default function Events() {
     
     return (
       <Card 
-        className={`group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${isPast ? 'opacity-75' : ''}`}
+        className={`group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 card-hover-lift ${isPast ? 'opacity-75' : ''}`}
         data-testid={`card-event-${event.id}`}
       >
         <CardContent className="p-0">
@@ -181,7 +181,7 @@ export default function Events() {
                 alt={event.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             </div>
             <div className="absolute top-3 right-3">
               <div className="bg-background/95 backdrop-blur-sm rounded-lg shadow-lg p-2 text-center min-w-[60px] transition-transform duration-300 group-hover:scale-105">
@@ -244,7 +244,7 @@ export default function Events() {
                     </Button>
                   ) : (
                     <Button 
-                      className="w-full gap-2 group/btn" 
+                      className="w-full gap-2 group/btn btn-glow" 
                       onClick={() => registerMutation.mutate(event.id)}
                       disabled={isRegistering}
                       data-testid={`button-register-event-${event.id}`}
@@ -257,16 +257,16 @@ export default function Events() {
                       ) : (
                         <>
                           Register for Event
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                         </>
                       )}
                     </Button>
                   )
                 ) : (
                   <a href="/api/login" className="block">
-                    <Button variant="outline" className="w-full gap-2 group/btn">
+                    <Button variant="outline" className="w-full gap-2 group/btn btn-glow">
                       Sign In to Register
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                     </Button>
                   </a>
                 )}

@@ -206,14 +206,14 @@ export default function Competitions() {
                             )}
                             
                             <Button 
-                              className="w-full gap-2 group/btn" 
+                              className="w-full gap-2 group/btn btn-glow" 
                               onClick={() => handleStartQuiz(competition)}
                               disabled={!competition.isActive}
                               data-testid={`button-start-quiz-${competition.id}`}
                             >
-                              <Play className="h-4 w-4" />
+                              <Play className="h-4 w-4 transition-transform group-hover/btn:scale-110" />
                               {isCompleted ? 'Retake Quiz' : 'Start Quiz'}
-                              <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                             </Button>
                           </div>
                         </CardContent>

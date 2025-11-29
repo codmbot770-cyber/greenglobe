@@ -121,19 +121,19 @@ export default function Landing() {
                 eco events, and community action. Your participation makes a difference.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in-up stagger-3" style={{ opacity: 0 }}>
                 <Link href="/competitions">
-                  <Button size="lg" className="min-w-[200px] gap-2 group shadow-xl text-base h-12" data-testid="button-hero-competitions">
-                    <Trophy className="h-5 w-5" />
+                  <Button size="lg" className="min-w-[200px] gap-2 group shadow-xl text-base h-12 btn-glow" data-testid="button-hero-competitions">
+                    <Trophy className="h-5 w-5 transition-transform group-hover:rotate-12" />
                     Join Competitions
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                   </Button>
                 </Link>
                 <Link href="/events">
-                  <Button size="lg" variant="outline" className="min-w-[200px] gap-2 group bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 shadow-xl text-base h-12" data-testid="button-hero-events">
-                    <Calendar className="h-5 w-5" />
+                  <Button size="lg" variant="outline" className="min-w-[200px] gap-2 group bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 shadow-xl text-base h-12 btn-glow" data-testid="button-hero-events">
+                    <Calendar className="h-5 w-5 transition-transform group-hover:rotate-12" />
                     View Events
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                   </Button>
                 </Link>
               </div>
@@ -176,7 +176,7 @@ export default function Landing() {
             
             <div className="grid md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
-                <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-0">
+                <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-3 border-0 card-hover-lift animate-fade-in-up" style={{ opacity: 0, animationDelay: `${0.1 * (index + 1)}s` }}>
                   <div className="relative overflow-hidden">
                     <div className="aspect-[16/10]">
                       <img 
@@ -184,24 +184,24 @@ export default function Landing() {
                         alt={feature.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60 group-hover:opacity-70 transition-opacity`} />
+                      <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60 group-hover:opacity-75 transition-opacity`} />
                     </div>
                     <div className="absolute bottom-3 left-3">
-                      <div className={`inline-flex items-center justify-center h-10 w-10 rounded-lg ${feature.iconBg} shadow-lg`}>
-                        <feature.icon className="h-5 w-5 text-white" />
+                      <div className={`inline-flex items-center justify-center h-12 w-12 rounded-xl ${feature.iconBg} shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                        <feature.icon className="h-6 w-6 text-white" />
                       </div>
                     </div>
                     <div className="absolute bottom-3 right-3">
-                      <span className="text-white/90 text-sm font-medium drop-shadow-lg">{feature.title}</span>
+                      <span className="text-white text-sm font-semibold drop-shadow-lg bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">{feature.title}</span>
                     </div>
                   </div>
                   <CardContent className="p-6 space-y-3">
-                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{feature.title}</h3>
+                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{feature.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
                     <Link href={feature.link}>
-                      <Button variant="ghost" size="sm" className="gap-1 -ml-2 mt-2 group/btn">
+                      <Button variant="ghost" size="sm" className="gap-1.5 -ml-2 mt-2 group/btn text-primary font-medium">
                         Learn more
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                       </Button>
                     </Link>
                   </CardContent>
@@ -256,9 +256,9 @@ export default function Landing() {
                   to protect Azerbaijan's natural heritage. Sign in to get started.
                 </p>
                 <a href="/api/login">
-                  <Button size="lg" variant="secondary" className="min-w-[200px] gap-2 group shadow-xl text-base h-12" data-testid="button-cta-signin">
+                  <Button size="lg" variant="secondary" className="min-w-[200px] gap-2 group shadow-xl text-base h-12 btn-glow" data-testid="button-cta-signin">
                     Get Started Today
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                   </Button>
                 </a>
               </CardContent>

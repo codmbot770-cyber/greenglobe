@@ -323,8 +323,8 @@ export default function Problems() {
               {isAuthenticated ? (
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button size="lg" className="gap-2" data-testid="button-report-problem">
-                      <Plus className="h-5 w-5" />
+                    <Button size="lg" className="gap-2 btn-glow group" data-testid="button-report-problem">
+                      <Plus className="h-5 w-5 transition-transform group-hover:rotate-90" />
                       Report a Problem
                     </Button>
                   </DialogTrigger>
