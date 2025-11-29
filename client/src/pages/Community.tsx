@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +37,7 @@ import {
 } from "lucide-react";
 import type { CommunityPost, User } from "@shared/schema";
 import { formatDistanceToNow } from "date-fns";
+import { enUS, ru, az } from "date-fns/locale";
 import communityHeroImg from "@assets/stock_images/community_volunteer__3e2f3d83.jpg";
 import reviewImg from "@assets/stock_images/community_event_revi_cf66a1d1.jpg";
 import discussionImg from "@assets/stock_images/group_discussion_mee_2dd7d143.jpg";
@@ -43,54 +45,6 @@ import wishImg from "@assets/stock_images/wish_hope_dream_futu_5c3cc0cd.jpg";
 import plantingImg from "@assets/stock_images/people_planting_tree_523c9fa4.jpg";
 
 type PostType = "general" | "review" | "wish";
-
-const postTypeLabels: Record<PostType, { label: string; color: string; bgColor: string; icon: any }> = {
-  general: { 
-    label: "Discussion", 
-    color: "text-blue-700 dark:text-blue-300", 
-    bgColor: "bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20", 
-    icon: MessageCircle 
-  },
-  review: { 
-    label: "Review", 
-    color: "text-amber-700 dark:text-amber-300", 
-    bgColor: "bg-gradient-to-r from-amber-100 to-orange-50 dark:from-amber-900/40 dark:to-orange-800/20", 
-    icon: Star 
-  },
-  wish: { 
-    label: "Event Wish", 
-    color: "text-emerald-700 dark:text-emerald-300", 
-    bgColor: "bg-gradient-to-r from-emerald-100 to-green-50 dark:from-emerald-900/40 dark:to-green-800/20", 
-    icon: Sparkles 
-  }
-};
-
-const sectionFeatures = [
-  {
-    type: "review" as PostType,
-    title: "Event Reviews",
-    description: "Share your experiences from eco-events and help others learn",
-    image: reviewImg,
-    gradient: "from-amber-500 to-orange-500",
-    stats: "Rate & Review"
-  },
-  {
-    type: "general" as PostType,
-    title: "Discussions",
-    description: "Connect with eco-warriors and discuss environmental topics",
-    image: discussionImg,
-    gradient: "from-blue-500 to-cyan-500",
-    stats: "Join the Talk"
-  },
-  {
-    type: "wish" as PostType,
-    title: "Event Wishes",
-    description: "Suggest new eco-events you'd like to see in your community",
-    image: wishImg,
-    gradient: "from-emerald-500 to-teal-500",
-    stats: "Dream Big"
-  }
-];
 
 interface PostWithUser extends CommunityPost {
   userInfo?: {
@@ -104,6 +58,7 @@ interface PostWithUser extends CommunityPost {
 export default function Community() {
   const { isAuthenticated, user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [postType, setPostType] = useState<PostType>("general");
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -113,6 +68,54 @@ export default function Community() {
   const [commentInputs, setCommentInputs] = useState<Record<number, string>>({});
   const [expandedComments, setExpandedComments] = useState<Set<number>>(new Set());
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  const postTypeLabels: Record<PostType, { label: string; color: string; bgColor: string; icon: any }> = {
+    general: { 
+      label: t("discussion"), 
+      color: "text-blue-700 dark:text-blue-300", 
+      bgColor: "bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20", 
+      icon: MessageCircle 
+    },
+    review: { 
+      label: t("review"), 
+      color: "text-amber-700 dark:text-amber-300", 
+      bgColor: "bg-gradient-to-r from-amber-100 to-orange-50 dark:from-amber-900/40 dark:to-orange-800/20", 
+      icon: Star 
+    },
+    wish: { 
+      label: t("eventWish"), 
+      color: "text-emerald-700 dark:text-emerald-300", 
+      bgColor: "bg-gradient-to-r from-emerald-100 to-green-50 dark:from-emerald-900/40 dark:to-green-800/20", 
+      icon: Sparkles 
+    }
+  };
+
+  const sectionFeatures = [
+    {
+      type: "review" as PostType,
+      title: t("eventReviews"),
+      description: t("reviewsDesc"),
+      image: reviewImg,
+      gradient: "from-amber-500 to-orange-500",
+      stats: t("rateAndReview")
+    },
+    {
+      type: "general" as PostType,
+      title: t("discussions"),
+      description: t("discussionsDesc"),
+      image: discussionImg,
+      gradient: "from-blue-500 to-cyan-500",
+      stats: t("joinTheTalk")
+    },
+    {
+      type: "wish" as PostType,
+      title: t("eventWishes"),
+      description: t("wishesDesc"),
+      image: wishImg,
+      gradient: "from-emerald-500 to-teal-500",
+      stats: t("dreamBig")
+    }
+  ];
 
   const { data: posts, isLoading: postsLoading } = useQuery<CommunityPost[]>({
     queryKey: ["/api/community/posts"],
@@ -154,14 +157,14 @@ export default function Community() {
       setEventWishDescription("");
       setIsCreateDialogOpen(false);
       toast({
-        title: "Post created!",
-        description: "Your post has been shared with the community.",
+        title: t("postCreated"),
+        description: t("postShared"),
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to create post. Please try again.",
+        title: t("error"),
+        description: t("failedToCreatePost"),
         variant: "destructive",
       });
     }
@@ -188,8 +191,8 @@ export default function Community() {
       queryClient.invalidateQueries({ queryKey: ["/api/community/posts"] });
       setCommentInputs(prev => ({ ...prev, [variables.postId]: "" }));
       toast({
-        title: "Comment added!",
-        description: "Your comment has been posted.",
+        title: t("commentAdded"),
+        description: t("commentPosted"),
       });
     }
   });
@@ -201,8 +204,8 @@ export default function Community() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/community/posts"] });
       toast({
-        title: "Post deleted",
-        description: "Your post has been removed.",
+        title: t("postDeleted"),
+        description: t("postRemoved"),
       });
     }
   });
@@ -210,8 +213,8 @@ export default function Community() {
   const handleSubmitPost = () => {
     if (!content.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter some content for your post.",
+        title: t("error"),
+        description: t("enterContent"),
         variant: "destructive",
       });
       return;
@@ -238,11 +241,18 @@ export default function Community() {
   };
 
   const formatDate = (date: Date | string | null) => {
-    if (!date) return "Recently";
+    if (!date) return t("recently");
+    const localeMap: Record<string, any> = {
+      en: enUS,
+      az: az,
+      ru: ru
+    };
+    const language = localStorage.getItem('language') || 'en';
+    const dateLocale = localeMap[language] || enUS;
     try {
-      return formatDistanceToNow(new Date(date), { addSuffix: true });
+      return formatDistanceToNow(new Date(date), { addSuffix: true, locale: dateLocale });
     } catch {
-      return "Recently";
+      return t("recently");
     }
   };
 
@@ -262,7 +272,7 @@ export default function Community() {
         <section className="relative h-72 md:h-96 overflow-hidden">
           <img 
             src={communityHeroImg} 
-            alt="Community" 
+            alt={t("communityTitle")} 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
@@ -271,27 +281,27 @@ export default function Community() {
             <div className="text-center text-white max-w-4xl px-4">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white border border-white/20 mb-4 animate-fade-in" style={{ opacity: 0 }}>
                 <Users className="h-4 w-4" />
-                <span>Join 850+ Eco-Warriors</span>
+                <span>{t("joinEcoWarriors")}</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-community-title">
-                Community <span className="gradient-text text-glow">Hub</span>
+                {t("communityTitle")} <span className="gradient-text text-glow">{t("communityHub")}</span>
               </h1>
               <p className="text-lg md:text-xl max-w-2xl mx-auto text-white/90 drop-shadow animate-fade-in-up stagger-2 mb-6" style={{ opacity: 0 }}>
-                Share experiences, review events, and wish for new eco-activities
+                {t("shareExperiences")}
               </p>
               {isAuthenticated ? (
                 <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                   <DialogTrigger asChild>
                     <Button size="lg" className="btn-glow gap-2 animate-fade-in-up stagger-3" style={{ opacity: 0 }} data-testid="button-create-post">
                       <PenSquare className="h-5 w-5" />
-                      Create Post
+                      {t("createPost")}
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
                       <DialogTitle className="flex items-center gap-2">
                         <PenSquare className="h-5 w-5 text-primary" />
-                        Create New Post
+                        {t("createNewPost")}
                       </DialogTitle>
                     </DialogHeader>
                     <CreatePostForm 
@@ -307,13 +317,15 @@ export default function Community() {
                       setEventWishDescription={setEventWishDescription}
                       onSubmit={handleSubmitPost}
                       isPending={createPostMutation.isPending}
+                      postTypeLabels={postTypeLabels}
+                      t={t}
                     />
                   </DialogContent>
                 </Dialog>
               ) : (
                 <a href="/api/login">
                   <Button size="lg" className="btn-glow gap-2 animate-fade-in-up stagger-3" style={{ opacity: 0 }}>
-                    Sign In to Join
+                    {t("signInToJoin")}
                   </Button>
                 </a>
               )}
@@ -325,10 +337,10 @@ export default function Community() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-10">
               <h2 className="text-2xl md:text-3xl font-bold mb-3 animate-fade-in" style={{ opacity: 0 }}>
-                Explore <span className="gradient-text">Community Features</span>
+                {t("exploreCommunityFeatures").split(" ")[0]} <span className="gradient-text">{t("exploreCommunityFeatures").split(" ").slice(1).join(" ")}</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto animate-fade-in-up stagger-1" style={{ opacity: 0 }}>
-                Choose how you want to engage with our eco-community
+                {t("chooseEngagement")}
               </p>
             </div>
             
@@ -363,7 +375,7 @@ export default function Community() {
                     <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
                     <p className="text-sm text-muted-foreground mb-3">{feature.description}</p>
                     <div className="flex items-center text-primary font-medium text-sm">
-                      <span>Get Started</span>
+                      <span>{t("getStarted")}</span>
                       <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-2" />
                     </div>
                   </CardContent>
@@ -383,19 +395,19 @@ export default function Community() {
                   <TabsList className="grid w-full grid-cols-4 p-1 h-auto">
                     <TabsTrigger value="all" className="py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground" data-testid="tab-all">
                       <Zap className="h-4 w-4 mr-1.5" />
-                      All
+                      {t("all")}
                     </TabsTrigger>
                     <TabsTrigger value="general" className="py-2.5 data-[state=active]:bg-blue-500 data-[state=active]:text-white" data-testid="tab-general">
                       <MessageCircle className="h-4 w-4 mr-1.5" />
-                      Discussions
+                      {t("discussions")}
                     </TabsTrigger>
                     <TabsTrigger value="review" className="py-2.5 data-[state=active]:bg-amber-500 data-[state=active]:text-white" data-testid="tab-reviews">
                       <Star className="h-4 w-4 mr-1.5" />
-                      Reviews
+                      {t("reviews")}
                     </TabsTrigger>
                     <TabsTrigger value="wish" className="py-2.5 data-[state=active]:bg-emerald-500 data-[state=active]:text-white" data-testid="tab-wishes">
                       <Sparkles className="h-4 w-4 mr-1.5" />
-                      Wishes
+                      {t("wishes")}
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
@@ -423,19 +435,19 @@ export default function Community() {
                       <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-6">
                         <PenSquare className="h-10 w-10 text-primary" />
                       </div>
-                      <h3 className="font-bold text-xl mb-2">No posts yet</h3>
+                      <h3 className="font-bold text-xl mb-2">{t("noPosts")}</h3>
                       <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
-                        Be the first to share something with the community! Your voice matters.
+                        {t("beFirstPost")} {t("yourVoiceMatters")}
                       </p>
                       {!isAuthenticated ? (
                         <a href="/api/login">
                           <Button size="lg" className="btn-glow">
-                            Sign in to Post
+                            {t("signInToPost")}
                           </Button>
                         </a>
                       ) : (
                         <Button size="lg" className="btn-glow" onClick={() => setIsCreateDialogOpen(true)}>
-                          Create First Post
+                          {t("createFirstPost")}
                         </Button>
                       )}
                     </CardContent>
@@ -467,6 +479,8 @@ export default function Community() {
                         }}
                         fetchUserInfo={fetchUserInfo}
                         animationDelay={idx * 0.05}
+                        postTypeLabels={postTypeLabels}
+                        t={t}
                       />
                     ))}
                   </div>
@@ -479,28 +493,28 @@ export default function Community() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <TrendingUp className="h-5 w-5 text-primary" />
-                      Community Stats
+                      {t("communityStats")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-cool">
-                      <span className="font-medium">Total Posts</span>
+                      <span className="font-medium">{t("totalPosts")}</span>
                       <Badge className="badge-gradient-primary">{posts?.length || 0}</Badge>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-sunset">
-                      <span className="font-medium">Event Reviews</span>
+                      <span className="font-medium">{t("eventReviews")}</span>
                       <Badge className="badge-gradient-warning">
                         {posts?.filter(p => p.postType === "review").length || 0}
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-nature">
-                      <span className="font-medium">Event Wishes</span>
+                      <span className="font-medium">{t("eventWishes")}</span>
                       <Badge className="badge-gradient-primary">
                         {posts?.filter(p => p.postType === "wish").length || 0}
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-ocean">
-                      <span className="font-medium">Discussions</span>
+                      <span className="font-medium">{t("discussions")}</span>
                       <Badge className="badge-gradient-secondary">
                         {posts?.filter(p => p.postType === "general").length || 0}
                       </Badge>
@@ -510,7 +524,7 @@ export default function Community() {
 
                 <Card className="overflow-hidden">
                   <div className="relative h-32">
-                    <img src={plantingImg} alt="Community" className="w-full h-full object-cover" />
+                    <img src={plantingImg} alt={t("communityTitle")} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                   </div>
                   <CardContent className="space-y-3 text-sm -mt-6 relative">
@@ -518,20 +532,20 @@ export default function Community() {
                       <div className="p-2 rounded-lg bg-primary/10">
                         <Award className="h-5 w-5 text-primary" />
                       </div>
-                      <h3 className="font-bold text-lg">Top Contributors</h3>
+                      <h3 className="font-bold text-lg">{t("topContributors")}</h3>
                     </div>
                     <div className="space-y-2">
                       {[
-                        { name: "Eco Champion", badge: "🌿", color: "from-emerald-500 to-green-600" },
-                        { name: "Green Warrior", badge: "💚", color: "from-blue-500 to-cyan-600" },
-                        { name: "Nature Lover", badge: "🌍", color: "from-amber-500 to-orange-600" }
+                        { nameKey: "ecoChampion" as const, color: "from-emerald-500 to-green-600" },
+                        { nameKey: "greenWarrior" as const, color: "from-blue-500 to-cyan-600" },
+                        { nameKey: "natureLover" as const, color: "from-amber-500 to-orange-600" }
                       ].map((contributor, idx) => (
                         <div key={idx} className="flex items-center gap-3 p-2 rounded-lg hover-elevate">
                           <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${contributor.color} flex items-center justify-center text-white text-xs font-bold`}>
                             #{idx + 1}
                           </div>
-                          <span className="font-medium flex-1">{contributor.name}</span>
-                          <span className="text-lg">{contributor.badge}</span>
+                          <span className="font-medium flex-1">{t(contributor.nameKey)}</span>
+                          <Leaf className="h-4 w-4 text-primary" />
                         </div>
                       ))}
                     </div>
@@ -542,15 +556,15 @@ export default function Community() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg">
                       <Leaf className="h-5 w-5 text-primary" />
-                      Community Guidelines
+                      {t("communityGuidelines")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3 text-sm text-muted-foreground">
                     {[
-                      "Be respectful and supportive of other members",
-                      "Share authentic experiences from eco-events",
-                      "Suggest realistic and achievable event ideas",
-                      "Keep discussions focused on environmental topics"
+                      t("guideline1"),
+                      t("guideline2"),
+                      t("guideline3"),
+                      t("guideline4")
                     ].map((guideline, idx) => (
                       <div key={idx} className="flex items-start gap-3 p-2 rounded-lg bg-muted/50">
                         <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -566,26 +580,26 @@ export default function Community() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg">
                       <Users className="h-5 w-5 text-secondary" />
-                      Quick Links
+                      {t("quickLinks")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <Link href="/events" className="block">
                       <Button variant="outline" className="w-full justify-start gap-2 btn-glow">
                         <Calendar className="h-4 w-4 text-primary" />
-                        View Events
+                        {t("viewEvents")}
                       </Button>
                     </Link>
                     <Link href="/competitions" className="block">
                       <Button variant="outline" className="w-full justify-start gap-2 btn-glow">
                         <Award className="h-4 w-4 text-secondary" />
-                        Take a Quiz
+                        {t("takeAQuiz")}
                       </Button>
                     </Link>
                     <Link href="/problems" className="block">
                       <Button variant="ghost" className="w-full justify-start gap-2">
                         <ThumbsUp className="h-4 w-4 text-emerald-500" />
-                        Report an Issue
+                        {t("reportAnIssue")}
                       </Button>
                     </Link>
                   </CardContent>
@@ -614,6 +628,8 @@ interface CreatePostFormProps {
   setEventWishDescription: (desc: string) => void;
   onSubmit: () => void;
   isPending: boolean;
+  postTypeLabels: Record<PostType, { label: string; color: string; bgColor: string; icon: any }>;
+  t: (key: any) => string;
 }
 
 function CreatePostForm({
@@ -628,7 +644,9 @@ function CreatePostForm({
   eventWishDescription,
   setEventWishDescription,
   onSubmit,
-  isPending
+  isPending,
+  postTypeLabels,
+  t
 }: CreatePostFormProps) {
   return (
     <div className="space-y-4">
@@ -653,7 +671,7 @@ function CreatePostForm({
 
       {(postType === "general" || postType === "review") && (
         <Input
-          placeholder="Add a title (optional)"
+          placeholder={t("addTitleOptional")}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           data-testid="input-post-title"
@@ -664,16 +682,16 @@ function CreatePostForm({
         <div className={`space-y-3 p-4 rounded-lg ${postTypeLabels.wish.bgColor} border border-emerald-200 dark:border-emerald-800`}>
           <p className="text-sm text-emerald-700 dark:text-emerald-300 flex items-center gap-2 font-medium">
             <Sparkles className="h-4 w-4" />
-            Suggest a new eco-event for our community!
+            {t("suggestNewEvent")}
           </p>
           <Input
-            placeholder="Event name (e.g., Beach Cleanup at Sumgait)"
+            placeholder={t("eventNamePlaceholder")}
             value={eventWishTitle}
             onChange={(e) => setEventWishTitle(e.target.value)}
             data-testid="input-event-wish-title"
           />
           <Textarea
-            placeholder="Describe the event you'd like to see..."
+            placeholder={t("describeEvent")}
             value={eventWishDescription}
             onChange={(e) => setEventWishDescription(e.target.value)}
             className="min-h-[80px]"
@@ -685,10 +703,10 @@ function CreatePostForm({
       <Textarea
         placeholder={
           postType === "review" 
-            ? "Share your experience at an eco-event..." 
+            ? t("shareExperience")
             : postType === "wish"
-            ? "Tell us why this event would be great..."
-            : "What's on your mind about the environment?"
+            ? t("whyEventGreat")
+            : t("environmentThoughts")
         }
         value={content}
         onChange={(e) => setContent(e.target.value)}
@@ -712,7 +730,7 @@ function CreatePostForm({
           data-testid="button-submit-post"
         >
           <Send className="h-4 w-4" />
-          {isPending ? "Posting..." : "Post"}
+          {isPending ? t("posting") : t("post")}
         </Button>
       </div>
     </div>
@@ -732,6 +750,8 @@ interface PostCardProps {
   onToggleExpand: () => void;
   fetchUserInfo: (userId: string) => Promise<User | null>;
   animationDelay?: number;
+  postTypeLabels: Record<PostType, { label: string; color: string; bgColor: string; icon: any }>;
+  t: (key: any) => string;
 }
 
 function PostCard({
@@ -746,7 +766,9 @@ function PostCard({
   isExpanded,
   onToggleExpand,
   fetchUserInfo,
-  animationDelay = 0
+  animationDelay = 0,
+  postTypeLabels,
+  t
 }: PostCardProps) {
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const [isLiked, setIsLiked] = useState(false);
@@ -769,11 +791,18 @@ function PostCard({
   };
 
   const formatDate = (date: Date | string | null) => {
-    if (!date) return "Recently";
+    if (!date) return t("recently");
+    const localeMap: Record<string, any> = {
+      en: enUS,
+      az: az,
+      ru: ru
+    };
+    const language = localStorage.getItem('language') || 'en';
+    const dateLocale = localeMap[language] || enUS;
     try {
-      return formatDistanceToNow(new Date(date), { addSuffix: true });
+      return formatDistanceToNow(new Date(date), { addSuffix: true, locale: dateLocale });
     } catch {
-      return "Recently";
+      return t("recently");
     }
   };
 
@@ -795,7 +824,7 @@ function PostCard({
             <div className="flex items-start justify-between gap-2 flex-wrap">
               <div>
                 <p className="font-semibold">
-                  {userInfo?.firstName} {userInfo?.lastName || "Community Member"}
+                  {userInfo?.firstName} {userInfo?.lastName || t("communityMember")}
                 </p>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-sm text-muted-foreground">
@@ -871,7 +900,7 @@ function PostCard({
               <div className="mt-4 pt-4 border-t bg-muted/30 -mx-5 -mb-5 p-4 rounded-b-lg">
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Write a comment..."
+                    placeholder={t("writeComment")}
                     value={commentInput}
                     onChange={(e) => onCommentInputChange(e.target.value)}
                     onKeyDown={(e) => {
