@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -59,6 +60,7 @@ type LeaderboardEntry = {
 export default function Competitions() {
   const { isAuthenticated, user } = useAuth();
   const [, setLocation] = useLocation();
+  const { t } = useTranslation();
 
   const { data: competitions, isLoading } = useQuery<Competition[]>({
     queryKey: ["/api/competitions"],
@@ -85,26 +87,31 @@ export default function Competitions() {
     setLocation(`/competitions/${competition.id}`);
   };
 
+  const howItWorksSteps = [
+    { step: 1, textKey: "step1" as const },
+    { step: 2, textKey: "step2" as const },
+    { step: 3, textKey: "step3" as const },
+    { step: 4, textKey: "step4" as const },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/5 relative overflow-hidden">
           <div className="absolute inset-0 pattern-dots opacity-20" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <Trophy className="h-4 w-4" />
-                <span>Environmental Knowledge Challenge</span>
+                <span>{t("environmentalKnowledgeChallenge")}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-competitions-title">
-                Test Your <span className="gradient-text">Eco Knowledge</span>
+                {t("testYourEcoKnowledge")} <span className="gradient-text">{t("ecoKnowledge")}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
-                Take part in our environmental quizzes, learn about Azerbaijan's ecosystems, 
-                and win exciting prizes! The more you know, the more you can help protect our nature.
+                {t("competitionsHeroDesc")}
               </p>
             </div>
           </div>
@@ -112,13 +119,12 @@ export default function Competitions() {
 
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Competitions Grid */}
             <div className="lg:col-span-2">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Available Competitions</h2>
+                <h2 className="text-2xl font-bold">{t("availableCompetitions")}</h2>
                 <Badge variant="outline" className="gap-1">
                   <Leaf className="h-3 w-3" />
-                  {competitions?.filter(c => c.isActive).length || 0} Active
+                  {competitions?.filter(c => c.isActive).length || 0} {t("active")}
                 </Badge>
               </div>
 
@@ -188,11 +194,11 @@ export default function Competitions() {
                             <div className="flex items-center gap-4 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1.5">
                                 <Target className="h-4 w-4 text-primary" />
-                                {competition.questionCount} questions
+                                {competition.questionCount} {t("questions")}
                               </span>
                               <span className="flex items-center gap-1.5">
                                 <Clock className="h-4 w-4 text-secondary" />
-                                {competition.estimatedMinutes} min
+                                {competition.estimatedMinutes} {t("minutes")}
                               </span>
                             </div>
                             
@@ -212,7 +218,7 @@ export default function Competitions() {
                               data-testid={`button-start-quiz-${competition.id}`}
                             >
                               <Play className="h-4 w-4 transition-transform group-hover/btn:scale-110" />
-                              {isCompleted ? 'Retake Quiz' : 'Start Quiz'}
+                              {isCompleted ? t("retakeQuiz") : t("startQuiz")}
                               <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                             </Button>
                           </div>
@@ -225,23 +231,21 @@ export default function Competitions() {
                 <Card>
                   <CardContent className="p-12 text-center">
                     <Trophy className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">No Competitions Yet</h3>
+                    <h3 className="text-xl font-semibold mb-2">{t("noCompetitionsMessage")}</h3>
                     <p className="text-muted-foreground">
-                      New environmental quizzes will be added soon. Check back later!
+                      {t("noCompetitionsMessage")}
                     </p>
                   </CardContent>
                 </Card>
               )}
             </div>
 
-            {/* Sidebar */}
             <div className="space-y-6">
-              {/* Leaderboard */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
                     <Award className="h-5 w-5 text-primary" />
-                    Top Participants
+                    {t("topParticipants")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -279,77 +283,70 @@ export default function Competitions() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-medium truncate">
-                            {user?.id === entry.userId ? 'You' : `Participant ${index + 1}`}
+                            {user?.id === entry.userId ? t("you") : `${t("participant")} ${index + 1}`}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {entry.quizCount} quiz{entry.quizCount !== 1 ? 'zes' : ''}
+                            {entry.quizCount} {entry.quizCount !== 1 ? t("quizzes") : t("quiz")}
                           </p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold text-primary">{entry.totalScore.toLocaleString()}</p>
-                          <p className="text-xs text-muted-foreground">points</p>
+                          <p className="text-xs text-muted-foreground">{t("points")}</p>
                         </div>
                       </div>
                     ))
                   ) : (
                     <div className="text-center py-6">
                       <Users className="h-8 w-8 mx-auto text-muted-foreground/30 mb-2" />
-                      <p className="text-sm text-muted-foreground">No participants yet</p>
-                      <p className="text-xs text-muted-foreground">Be the first to take a quiz!</p>
+                      <p className="text-sm text-muted-foreground">{t("noParticipantsYet")}</p>
+                      <p className="text-xs text-muted-foreground">{t("beTheFirst")}</p>
                     </div>
                   )}
                 </CardContent>
               </Card>
 
-              {/* How It Works */}
               <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-lg">How It Works</CardTitle>
+                  <CardTitle className="text-lg">{t("howItWorks")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {[
-                    { step: 1, text: "Choose a quiz based on your interest" },
-                    { step: 2, text: "Answer questions about environment" },
-                    { step: 3, text: "Earn points for correct answers" },
-                    { step: 4, text: "Win prizes based on your score!" },
-                  ].map((item) => (
+                  {howItWorksSteps.map((item) => (
                     <div key={item.step} className="flex items-start gap-3">
                       <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold shrink-0">
                         {item.step}
                       </div>
-                      <p className="text-sm text-muted-foreground">{item.text}</p>
+                      <p className="text-sm text-muted-foreground">{t(item.textKey)}</p>
                     </div>
                   ))}
                 </CardContent>
               </Card>
 
-              {/* Prize Info */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
                     <Gift className="h-5 w-5 text-secondary" />
-                    Prize Categories
+                    {t("prizeCategories")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-yellow-600" />
-                      <span className="font-medium">Gold (90%+)</span>
+                      <span className="font-medium">{t("gold")}</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-gray-500" />
-                      <span className="font-medium">Silver (70%+)</span>
+                      <span className="font-medium">{t("silver")}</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
                     <div className="flex items-center gap-2">
                       <Star className="h-4 w-4 text-orange-600" />
-                      <span className="font-medium">Bronze (50%+)</span>
+                      <span className="font-medium">{t("bronze")}</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/lib/i18n";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -55,15 +56,6 @@ import recyclingImg from "@assets/stock_images/recycling_sustainabi_b0971641.jpg
 import solarEnergyImg from "@assets/stock_images/solar_energy_renewab_84102c5e.jpg";
 import wetlandImg from "@assets/stock_images/wetland_conservation_62b5a71a.jpg";
 
-const categories = [
-  { value: "all", label: "All Categories" },
-  { value: "Tree Planting", label: "Tree Planting" },
-  { value: "Beach Cleanup", label: "Beach Cleanup" },
-  { value: "Wildlife", label: "Wildlife Conservation" },
-  { value: "Education", label: "Environmental Education" },
-  { value: "Awareness", label: "Awareness Campaign" },
-];
-
 const categoryIcons: Record<string, typeof TreePine> = {
   "Tree Planting": TreePine,
   "Beach Cleanup": Droplets,
@@ -98,9 +90,19 @@ const eventImages: Record<number, string> = {
 export default function Events() {
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showPastEvents, setShowPastEvents] = useState(false);
+
+  const categories = [
+    { value: "all", labelKey: "allCategories" as const },
+    { value: "Tree Planting", labelKey: "treePlanting" as const },
+    { value: "Beach Cleanup", labelKey: "beachCleanup" as const },
+    { value: "Wildlife", labelKey: "wildlife" as const },
+    { value: "Education", labelKey: "educationCat" as const },
+    { value: "Awareness", labelKey: "awareness" as const },
+  ];
 
   const { data: events, isLoading } = useQuery<Event[]>({
     queryKey: ["/api/events"],
@@ -118,14 +120,14 @@ export default function Events() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/user/registrations"] });
       toast({
-        title: "Registration Successful",
-        description: "You have been registered for this event!",
+        title: t("registrationSuccessful"),
+        description: t("registeredForEvent"),
       });
     },
     onError: () => {
       toast({
-        title: "Registration Failed",
-        description: "There was an error registering for the event.",
+        title: t("registrationFailed"),
+        description: t("registrationError"),
         variant: "destructive",
       });
     },
@@ -195,14 +197,14 @@ export default function Events() {
             </div>
             {isPast && (
               <div className="absolute top-3 left-3">
-                <Badge variant="secondary" className="backdrop-blur-sm">Past Event</Badge>
+                <Badge variant="secondary" className="backdrop-blur-sm">{t("pastEvent")}</Badge>
               </div>
             )}
             {registered && !isPast && (
               <div className="absolute top-3 left-3">
                 <Badge className="bg-green-600/90 backdrop-blur-sm text-white gap-1 shadow-lg">
                   <CheckCircle className="h-3 w-3" />
-                  Registered
+                  {t("registered")}
                 </Badge>
               </div>
             )}
@@ -240,7 +242,7 @@ export default function Events() {
                   registered ? (
                     <Button variant="secondary" className="w-full gap-2" disabled>
                       <CheckCircle className="h-4 w-4" />
-                      Already Registered
+                      {t("alreadyRegistered")}
                     </Button>
                   ) : (
                     <Button 
@@ -252,11 +254,11 @@ export default function Events() {
                       {isRegistering ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          Registering...
+                          {t("registering")}
                         </>
                       ) : (
                         <>
-                          Register for Event
+                          {t("registerForEvent")}
                           <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                         </>
                       )}
@@ -265,7 +267,7 @@ export default function Events() {
                 ) : (
                   <a href="/api/login" className="block">
                     <Button variant="outline" className="w-full gap-2 group/btn btn-glow">
-                      Sign In to Register
+                      {t("signInToRegister")}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-2" />
                     </Button>
                   </a>
@@ -289,14 +291,13 @@ export default function Events() {
             <div className="max-w-3xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <CalendarIcon className="h-4 w-4" />
-                <span>Join Environmental Activities</span>
+                <span>{t("joinEnvironmentalActivities")}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-events-title">
-                <span className="text-secondary">Eco Events</span> in Azerbaijan
+                <span className="text-secondary">{t("eventsPageTitle")}</span> {t("ecoEventsInAzerbaijan")}
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
-                Discover and participate in environmental events happening across Azerbaijan. 
-                From tree planting to beach cleanups, find activities that match your passion for nature.
+                {t("eventsHeroDesc")}
               </p>
             </div>
           </div>
@@ -308,7 +309,7 @@ export default function Events() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search events by name or location..."
+                  placeholder={t("searchEventsPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -318,12 +319,12 @@ export default function Events() {
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-full sm:w-[200px]" data-testid="select-category">
                   <Filter className="h-4 w-4 mr-2" />
-                  <SelectValue placeholder="Category" />
+                  <SelectValue placeholder={t("category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
                     <SelectItem key={category.value} value={category.value}>
-                      {category.label}
+                      {t(category.labelKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -335,9 +336,9 @@ export default function Events() {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-2">Upcoming Events</h2>
+              <h2 className="text-2xl font-bold mb-2">{t("upcomingEvents")}</h2>
               <p className="text-muted-foreground">
-                {upcomingEvents.length} event{upcomingEvents.length !== 1 ? 's' : ''} scheduled
+                {upcomingEvents.length} {t("eventsScheduled")}
               </p>
             </div>
 
@@ -368,11 +369,11 @@ export default function Events() {
               <Card>
                 <CardContent className="p-12 text-center">
                   <CalendarIcon className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">No Upcoming Events</h3>
+                  <h3 className="text-xl font-semibold mb-2">{t("noUpcomingEvents")}</h3>
                   <p className="text-muted-foreground">
                     {searchQuery || selectedCategory !== "all" 
-                      ? "No events match your search criteria. Try adjusting your filters."
-                      : "Check back soon for new environmental events!"}
+                      ? t("noEventsMatchCriteria")
+                      : t("checkBackSoon")}
                   </p>
                 </CardContent>
               </Card>
@@ -384,7 +385,7 @@ export default function Events() {
                   <CollapsibleTrigger asChild>
                     <Button variant="outline" className="mb-6 gap-2">
                       <ChevronDown className={`h-4 w-4 transition-transform ${showPastEvents ? 'rotate-180' : ''}`} />
-                      {showPastEvents ? 'Hide' : 'Show'} Past Events ({pastEvents.length})
+                      {showPastEvents ? t("hidePastEvents") : t("showPastEvents")} ({pastEvents.length})
                     </Button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
