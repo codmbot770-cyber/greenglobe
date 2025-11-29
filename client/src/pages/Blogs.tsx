@@ -148,17 +148,18 @@ export default function Blogs() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-purple-500/10 via-background to-amber-500/10">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-purple-500/10 via-background to-amber-500/10 relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-purple-100 dark:bg-purple-900/30 px-4 py-2 text-sm font-medium text-purple-700 dark:text-purple-300 mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-purple-100 dark:bg-purple-900/30 px-4 py-2 text-sm font-medium text-purple-700 dark:text-purple-300 mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <PenSquare className="h-4 w-4" />
                 <span>User Blogs & Ideas</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6" data-testid="text-blogs-title">
-                Community <span className="text-primary">Voices</span>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-blogs-title">
+                Community <span className="gradient-text">Voices</span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 Share your feedback, ideas, and experiences about environmental protection in Azerbaijan.
                 Your voice matters in shaping a sustainable future.
               </p>

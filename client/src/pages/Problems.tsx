@@ -303,17 +303,18 @@ export default function Problems() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-blue-500/10 via-background to-destructive/5">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-blue-500/10 via-background to-destructive/5 relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <Droplets className="h-4 w-4" />
                 <span>Environmental Challenges</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6" data-testid="text-problems-title">
-                Protecting the <span className="text-primary">Caspian Sea</span>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-problems-title">
+                Protecting the <span className="gradient-text">Caspian Sea</span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8 animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 The Caspian Sea, the world's largest enclosed body of water, faces critical environmental 
                 challenges from oil extraction - Azerbaijan's main income source. Discover how we can 
                 protect our natural heritage while ensuring economic prosperity.

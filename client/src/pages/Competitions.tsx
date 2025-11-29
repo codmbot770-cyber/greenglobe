@@ -24,10 +24,14 @@ import {
 } from "lucide-react";
 import type { Competition, UserScore, User } from "@shared/schema";
 
-import biodiversityImg from "@assets/stock_images/quiz_competition_stu_92023052.jpg";
+import biodiversityImg from "@assets/stock_images/birdwatching_wildlif_7096d9cc.jpg";
 import caspianImg from "@assets/stock_images/caspian_sea_azerbaij_4431da8e.jpg";
 import climateImg from "@assets/stock_images/climate_change_globa_29918192.jpg";
 import forestImg from "@assets/stock_images/forest_conservation__cbc0a547.jpg";
+import wildlifeImg from "@assets/stock_images/wildlife_protection__b4061850.jpg";
+import renewableImg from "@assets/stock_images/renewable_energy_sol_202bbb8c.jpg";
+import oceanImg from "@assets/stock_images/water_conservation_r_1aab0f53.jpg";
+import sustainableImg from "@assets/stock_images/sustainable_living_e_d6e3e80f.jpg";
 
 const difficultyColors: Record<string, string> = {
   Easy: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
@@ -40,6 +44,10 @@ const competitionImages: Record<number, string> = {
   2: caspianImg,
   3: climateImg,
   4: forestImg,
+  5: wildlifeImg,
+  6: renewableImg,
+  7: oceanImg,
+  8: sustainableImg,
 };
 
 type LeaderboardEntry = {
@@ -83,17 +91,18 @@ export default function Competitions() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/5">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/5 relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <Trophy className="h-4 w-4" />
                 <span>Environmental Knowledge Challenge</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6" data-testid="text-competitions-title">
-                Test Your <span className="text-primary">Eco Knowledge</span>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-competitions-title">
+                Test Your <span className="gradient-text">Eco Knowledge</span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 Take part in our environmental quizzes, learn about Azerbaijan's ecosystems, 
                 and win exciting prizes! The more you know, the more you can help protect our nature.
               </p>

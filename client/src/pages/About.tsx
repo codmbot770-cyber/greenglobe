@@ -73,10 +73,10 @@ const team = [
 ];
 
 const achievements = [
-  { value: "15+", label: "Years of Impact" },
-  { value: "50,000+", label: "Trees Planted" },
-  { value: "100+", label: "Partner Organizations" },
-  { value: "25,000+", label: "Volunteers Engaged" },
+  { value: "3", label: "Years of Impact" },
+  { value: "2,500+", label: "Trees Planted" },
+  { value: "12", label: "Partner Organizations" },
+  { value: "850+", label: "Volunteers Engaged" },
 ];
 
 export default function About() {
@@ -112,13 +112,14 @@ export default function About() {
         </section>
 
         {/* Mission Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
+        <section className="py-16 relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="container mx-auto px-4 relative">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
+              <div className="space-y-6 animate-slide-in-left" style={{ opacity: 0 }}>
                 <div className="flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Target className="h-6 w-6 text-primary" />
+                  <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center shadow-lg">
+                    <Target className="h-7 w-7 text-primary" />
                   </div>
                   <h2 className="text-3xl font-bold">Our Mission</h2>
                 </div>
@@ -137,14 +138,14 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 animate-slide-in-right" style={{ opacity: 0 }}>
                 {achievements.map((achievement, index) => (
-                  <Card key={index} className="text-center">
+                  <Card key={index} className="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
                     <CardContent className="p-6">
-                      <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">
+                      <div className="text-4xl sm:text-5xl font-bold gradient-text mb-2">
                         {achievement.value}
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-muted-foreground font-medium">
                         {achievement.label}
                       </div>
                     </CardContent>

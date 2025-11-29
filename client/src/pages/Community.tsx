@@ -202,15 +202,19 @@ export default function Community() {
           <img 
             src={communityHeroImg} 
             alt="Community" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform scale-105 animate-[pulse_10s_ease-in-out_infinite]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-community-title">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white border border-white/20 mb-4 animate-fade-in" style={{ opacity: 0 }}>
+                <Users className="h-4 w-4" />
+                <span>Connect with Eco-Warriors</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-community-title">
                 Community Hub
               </h1>
-              <p className="text-lg md:text-xl max-w-2xl mx-auto px-4 text-white/90">
+              <p className="text-lg md:text-xl max-w-2xl mx-auto px-4 text-white/90 drop-shadow animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 Share your experiences, review events, and suggest new eco-activities for our community
               </p>
             </div>

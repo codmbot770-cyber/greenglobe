@@ -283,17 +283,18 @@ export default function Events() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-secondary/10 via-background to-primary/5">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-secondary/10 via-background to-primary/5 relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-20" />
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary mb-6 animate-fade-in" style={{ opacity: 0 }}>
                 <CalendarIcon className="h-4 w-4" />
                 <span>Join Environmental Activities</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6" data-testid="text-events-title">
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-events-title">
                 <span className="text-secondary">Eco Events</span> in Azerbaijan
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 Discover and participate in environmental events happening across Azerbaijan. 
                 From tree planting to beach cleanups, find activities that match your passion for nature.
               </p>

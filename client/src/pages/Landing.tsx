@@ -25,10 +25,10 @@ import recyclingImg from "@assets/stock_images/recycling_sustainabi_b0971641.jpg
 import solarEnergyImg from "@assets/stock_images/solar_energy_renewab_84102c5e.jpg";
 
 const stats = [
-  { icon: Calendar, value: "50+", label: "Events Hosted", color: "text-blue-500" },
-  { icon: Users, value: "2,500+", label: "Participants", color: "text-amber-500" },
-  { icon: TreePine, value: "10", label: "Protected Areas", color: "text-green-500" },
-  { icon: Trophy, value: "100+", label: "Competitions", color: "text-purple-500" },
+  { icon: Calendar, value: "50+", label: "Events Hosted", color: "text-blue-500", bgColor: "bg-blue-500/10" },
+  { icon: Users, value: "2,500+", label: "Active Members", color: "text-amber-500", bgColor: "bg-amber-500/10" },
+  { icon: TreePine, value: "2,500+", label: "Trees Planted", color: "text-green-500", bgColor: "bg-green-500/10" },
+  { icon: Trophy, value: "8", label: "Quiz Challenges", color: "text-purple-500", bgColor: "bg-purple-500/10" },
 ];
 
 const features = [
@@ -145,18 +145,19 @@ export default function Landing() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 bg-card border-y">
-          <div className="container mx-auto px-4">
+        <section className="py-16 bg-card border-y relative overflow-hidden">
+          <div className="absolute inset-0 pattern-dots opacity-30" />
+          <div className="container mx-auto px-4 relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center group">
-                  <div className={`inline-flex items-center justify-center h-14 w-14 rounded-full mb-4 transition-all duration-300 group-hover:scale-110 ${stat.color.replace('text-', 'bg-').replace('500', '500/15')}`}>
-                    <stat.icon className={`h-7 w-7 ${stat.color}`} />
+                <div key={index} className={`text-center group animate-fade-in-up stagger-${index + 1}`} style={{ opacity: 0 }}>
+                  <div className={`inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${stat.bgColor} border border-current/10`}>
+                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
                   </div>
                   <div className={`text-3xl sm:text-4xl font-bold ${stat.color}`} data-testid={`stat-value-${index}`}>
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground mt-1 font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
