@@ -12,8 +12,14 @@ import {
   Droplets,
   Bird,
   ArrowRight,
-  Shield
+  Shield,
+  Sparkles
 } from "lucide-react";
+
+import heroImage from "@assets/stock_images/azerbaijan_landscape_1c7523c3.jpg";
+import beachCleanupImg from "@assets/stock_images/beach_cleanup_volunt_c6de985f.jpg";
+import treePlantingImg from "@assets/stock_images/tree_planting_refore_abf1cea0.jpg";
+import wildlifeImg from "@assets/stock_images/birdwatching_wildlif_7096d9cc.jpg";
 
 const stats = [
   { icon: Calendar, value: "50+", label: "Events Hosted" },
@@ -27,16 +33,22 @@ const features = [
     icon: Trophy,
     title: "Environmental Competitions",
     description: "Test your knowledge about ecology and win exciting prizes through our interactive quizzes.",
+    image: beachCleanupImg,
+    link: "/competitions",
   },
   {
     icon: Calendar,
     title: "Eco Events",
     description: "Join tree planting, beach cleanups, and awareness campaigns across Azerbaijan.",
+    image: treePlantingImg,
+    link: "/events",
   },
   {
     icon: Shield,
     title: "Report Problems",
     description: "Help identify and report environmental issues in your community for quick action.",
+    image: wildlifeImg,
+    link: "/problems",
   },
 ];
 
@@ -65,40 +77,48 @@ export default function Landing() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10" />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M54.627%200l.83.828-1.415%201.415L51.8%200h2.827zM5.373%200l-.83.828L5.96%202.243%208.2%200H5.374zM48.97%200l3.657%203.657-1.414%201.414L46.143%200h2.828zM11.03%200L7.372%203.657%208.787%205.07%2013.857%200H11.03zm32.284%200L49.8%206.485%2048.384%207.9l-7.9-7.9h2.83zM16.686%200L10.2%206.485%2011.616%207.9l7.9-7.9h-2.83zm20.97%200l9.315%209.314-1.414%201.414L34.828%200h2.83zM22.344%200L13.03%209.314l1.414%201.414L25.172%200h-2.83zM32%200l12.142%2012.142-1.414%201.414L30%20.828%2017.272%2013.556l-1.414-1.414L28%200h4zM.284%200l28%2028-1.414%201.414L0%202.544V0h.284zM0%205.373l25.456%2025.455-1.414%201.415L0%208.2V5.374zm0%205.656l22.627%2022.627-1.414%201.414L0%2013.86v-2.83zm0%205.656l19.8%2019.8-1.415%201.413L0%2019.514v-2.83zm0%205.657l16.97%2016.97-1.414%201.415L0%2025.172v-2.83zM0%2028l14.142%2014.142-1.414%201.414L0%2030.828V28zm0%205.657L11.314%2044.97%209.9%2046.386l-9.9-9.9v-2.828zm0%205.657L8.485%2047.8%207.07%2049.212%200%2042.143v-2.83zm0%205.657l5.657%205.657-1.414%201.415L0%2047.8v-2.83zm0%205.657l2.828%202.83-1.414%201.413L0%2053.456v-2.83zM54.627%2060L30%2035.373%205.373%2060H8.2L30%2038.2%2051.8%2060h2.827zm-5.656%200L30%2041.03%2011.03%2060h2.828L30%2043.858%2046.142%2060h2.83zm-5.656%200L30%2046.686%2016.686%2060h2.83L30%2049.515%2040.485%2060h2.83zm-5.657%200L30%2052.343%2022.343%2060h2.83L30%2055.172%2034.828%2060h2.83zM32%2060l-2-2-2%202h4zM59.716%2060l-28-28%201.414-1.414L60%2057.456V60h-.284zM60%2054.627L34.544%2029.172l1.414-1.415L60%2051.8v2.827zm0-5.656L37.373%2026.344l1.414-1.414L60%2046.143v2.828zm0-5.656L40.2%2023.515l1.415-1.414L60%2040.485v2.83zm0-5.657L43.03%2020.687l1.414-1.414L60%2034.828v2.83zM60%2032L45.858%2017.858l1.414-1.414L60%2029.172V32zm0-5.657L48.686%2015.03l1.414-1.415L60%2023.515v2.828zm0-5.657L51.515%2012.2l1.414-1.414L60%2017.857v2.83zm0-5.657L54.343%209.372l1.414-1.414L60%2012.2v2.83zm0-5.657L57.172%206.544l1.414-1.415L60%206.543v2.83z%22%20fill%3D%22%2322c55e%22%20fill-opacity%3D%22.03%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] opacity-50" />
+        <section className="relative min-h-[700px] flex items-center justify-center overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src={heroImage} 
+              alt="Azerbaijan landscape"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+          </div>
           
           <div className="container mx-auto px-4 py-20 relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-                <TreePine className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white border border-white/20 animate-fade-in">
+                <Sparkles className="h-4 w-4" />
                 <span>Protecting Azerbaijan's Natural Heritage</span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight" data-testid="text-hero-title">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white drop-shadow-lg" data-testid="text-hero-title">
                 Together for a{" "}
-                <span className="text-primary">Greener</span>{" "}
-                <span className="text-secondary">Azerbaijan</span>
+                <span className="text-green-400">Greener</span>{" "}
+                <span className="text-blue-400">Azerbaijan</span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow">
                 Join our community in preserving Azerbaijan's stunning biodiversity through environmental competitions, 
                 eco events, and community action. Your participation makes a difference.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                 <Link href="/competitions">
-                  <Button size="lg" className="min-w-[180px] gap-2" data-testid="button-hero-competitions">
+                  <Button size="lg" className="min-w-[200px] gap-2 group shadow-xl text-base h-12" data-testid="button-hero-competitions">
                     <Trophy className="h-5 w-5" />
                     Join Competitions
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 <Link href="/events">
-                  <Button size="lg" variant="outline" className="min-w-[180px] gap-2" data-testid="button-hero-events">
+                  <Button size="lg" variant="outline" className="min-w-[200px] gap-2 group bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 shadow-xl text-base h-12" data-testid="button-hero-events">
                     <Calendar className="h-5 w-5" />
                     View Events
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
               </div>
@@ -106,7 +126,7 @@ export default function Landing() {
           </div>
           
           {/* Decorative elements */}
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
         </section>
 
         {/* Stats Section */}
@@ -114,9 +134,9 @@ export default function Landing() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 mb-4">
-                    <stat.icon className="h-6 w-6 text-primary" />
+                <div key={index} className="text-center group">
+                  <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mb-4 transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110">
+                    <stat.icon className="h-7 w-7 text-primary" />
                   </div>
                   <div className="text-3xl sm:text-4xl font-bold text-foreground" data-testid={`stat-value-${index}`}>
                     {stat.value}
@@ -140,17 +160,29 @@ export default function Landing() {
             
             <div className="grid md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
-                <Card key={index} className="hover-elevate group">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <feature.icon className="h-6 w-6 text-primary" />
+                <Card key={index} className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                  <div className="relative overflow-hidden">
+                    <div className="aspect-[16/10]">
+                      <img 
+                        src={feature.image} 
+                        alt={feature.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
-                    <h3 className="text-xl font-semibold">{feature.title}</h3>
+                    <div className="absolute bottom-3 left-3">
+                      <div className="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white/90 backdrop-blur-sm shadow-lg">
+                        <feature.icon className="h-5 w-5 text-primary" />
+                      </div>
+                    </div>
+                  </div>
+                  <CardContent className="p-6 space-y-3">
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{feature.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                    <Link href={feature.title.includes("Competition") ? "/competitions" : feature.title.includes("Event") ? "/events" : "/problems"}>
-                      <Button variant="ghost" size="sm" className="gap-1 -ml-2 mt-2">
+                    <Link href={feature.link}>
+                      <Button variant="ghost" size="sm" className="gap-1 -ml-2 mt-2 group/btn">
                         Learn more
-                        <ArrowRight className="h-4 w-4" />
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                       </Button>
                     </Link>
                   </CardContent>
@@ -172,12 +204,12 @@ export default function Landing() {
             
             <div className="grid md:grid-cols-3 gap-6">
               {ecosystems.map((ecosystem, index) => (
-                <Card key={index} className="border-primary/20 hover-elevate">
+                <Card key={index} className="border-primary/20 group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                   <CardContent className="p-6 text-center space-y-4">
-                    <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto">
-                      <ecosystem.icon className="h-8 w-8 text-primary" />
+                    <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-transform duration-300 group-hover:scale-110">
+                      <ecosystem.icon className="h-10 w-10 text-primary" />
                     </div>
-                    <h3 className="text-xl font-semibold">{ecosystem.title}</h3>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{ecosystem.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{ecosystem.description}</p>
                   </CardContent>
                 </Card>
@@ -189,16 +221,25 @@ export default function Landing() {
         {/* CTA Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <Card className="bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 border-primary/20">
-              <CardContent className="p-8 sm:p-12 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
-                <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
+            <Card className="relative overflow-hidden border-0">
+              <div className="absolute inset-0">
+                <img 
+                  src={treePlantingImg} 
+                  alt="Join us"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/80" />
+              </div>
+              <CardContent className="relative p-8 sm:p-12 text-center">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white drop-shadow-lg">Ready to Make a Difference?</h2>
+                <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto drop-shadow">
                   Join thousands of environmentally conscious citizens working together 
                   to protect Azerbaijan's natural heritage. Sign in to get started.
                 </p>
                 <a href="/api/login">
-                  <Button size="lg" className="min-w-[200px]" data-testid="button-cta-signin">
+                  <Button size="lg" variant="secondary" className="min-w-[200px] gap-2 group shadow-xl text-base h-12" data-testid="button-cta-signin">
                     Get Started Today
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </a>
               </CardContent>
