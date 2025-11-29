@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "@/lib/i18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,19 +30,20 @@ import type { UserScore, EventRegistration, Competition, Event, Problem } from "
 export default function Dashboard() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       toast({
-        title: "Unauthorized",
-        description: "You are logged out. Logging in again...",
+        title: t("unauthorized"),
+        description: t("loggedOutMessage"),
         variant: "destructive",
       });
       setTimeout(() => {
         window.location.href = "/api/login";
       }, 500);
     }
-  }, [isAuthenticated, authLoading, toast]);
+  }, [isAuthenticated, authLoading, toast, t]);
 
   const { data: userScores, isLoading: scoresLoading } = useQuery<UserScore[]>({
     queryKey: ["/api/user/scores"],
@@ -124,6 +126,17 @@ export default function Dashboard() {
     return "text-muted-foreground";
   };
 
+  const achievements = [
+    { nameKey: "firstQuiz" as const, descKey: "completeFirstQuiz" as const, icon: Star, unlocked: completedQuizzes >= 1 },
+    { nameKey: "quizMaster" as const, descKey: "completeFiveQuizzes" as const, icon: Trophy, unlocked: completedQuizzes >= 5 },
+    { nameKey: "highScorer" as const, descKey: "averageScore80" as const, icon: Medal, unlocked: averageScore >= 80 },
+    { nameKey: "perfectScore" as const, descKey: "score100" as const, icon: Zap, unlocked: hasPerfectScore },
+    { nameKey: "eventJoiner" as const, descKey: "registerForAnEvent" as const, icon: Calendar, unlocked: (registrations?.length || 0) >= 1 },
+    { nameKey: "communityHelper" as const, descKey: "reportAProblem" as const, icon: Shield, unlocked: problemsReported >= 1 },
+    { nameKey: "ecoChampion" as const, descKey: "score500Points" as const, icon: Leaf, unlocked: totalScore >= 500 },
+    { nameKey: "natureLover" as const, descKey: "join3Events" as const, icon: Heart, unlocked: (registrations?.length || 0) >= 3 },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
@@ -131,7 +144,6 @@ export default function Dashboard() {
       <main className="flex-1">
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-4 gap-8">
-            {/* Profile Sidebar */}
             <div className="lg:col-span-1 space-y-6">
               <Card>
                 <CardContent className="p-6 text-center">
@@ -152,51 +164,50 @@ export default function Dashboard() {
                     {user?.email}
                   </p>
                   <Badge className="mt-3" variant="secondary">
-                    Eco Warrior
+                    {t("ecoWarrior")}
                   </Badge>
                 </CardContent>
               </Card>
 
-              {/* Quick Stats */}
               <Card>
                 <CardHeader>
                   <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Quick Stats
+                    {t("quickStats")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
                       <Trophy className="h-4 w-4" />
-                      Total Points
+                      {t("totalPoints")}
                     </span>
                     <span className="font-semibold text-primary">{totalScore}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
                       <Target className="h-4 w-4" />
-                      Quizzes Taken
+                      {t("quizzesTaken")}
                     </span>
                     <span className="font-semibold">{completedQuizzes}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
                       <TrendingUp className="h-4 w-4" />
-                      Avg. Score
+                      {t("avgScore")}
                     </span>
                     <span className="font-semibold">{averageScore}%</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      Events Joined
+                      {t("eventsJoined")}
                     </span>
                     <span className="font-semibold">{registrations?.length || 0}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
                       <Shield className="h-4 w-4" />
-                      Problems Reported
+                      {t("problemsReported")}
                     </span>
                     <span className="font-semibold">{problemsReported}</span>
                   </div>
@@ -204,28 +215,17 @@ export default function Dashboard() {
               </Card>
             </div>
 
-            {/* Main Content */}
             <div className="lg:col-span-3 space-y-6">
-              {/* Achievements */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Award className="h-5 w-5 text-primary" />
-                    Achievements
+                    {t("achievements")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    {[
-                      { name: "First Quiz", description: "Complete your first quiz", icon: Star, unlocked: completedQuizzes >= 1 },
-                      { name: "Quiz Master", description: "Complete 5 quizzes", icon: Trophy, unlocked: completedQuizzes >= 5 },
-                      { name: "High Scorer", description: "Average score 80%+", icon: Medal, unlocked: averageScore >= 80 },
-                      { name: "Perfect Score", description: "Score 100% on any quiz", icon: Zap, unlocked: hasPerfectScore },
-                      { name: "Event Joiner", description: "Register for an event", icon: Calendar, unlocked: (registrations?.length || 0) >= 1 },
-                      { name: "Community Helper", description: "Report a problem", icon: Shield, unlocked: problemsReported >= 1 },
-                      { name: "Eco Champion", description: "Score 500+ total points", icon: Leaf, unlocked: totalScore >= 500 },
-                      { name: "Nature Lover", description: "Join 3+ events", icon: Heart, unlocked: (registrations?.length || 0) >= 3 },
-                    ].map((achievement, i) => (
+                    {achievements.map((achievement, i) => (
                       <div 
                         key={i}
                         className={`p-4 rounded-lg text-center border transition-all ${
@@ -233,28 +233,27 @@ export default function Dashboard() {
                             ? 'bg-primary/5 border-primary/20' 
                             : 'bg-muted/30 border-transparent opacity-50'
                         }`}
-                        title={achievement.description}
+                        title={t(achievement.descKey)}
                       >
                         <achievement.icon className={`h-8 w-8 mx-auto mb-2 ${
                           achievement.unlocked ? 'text-primary' : 'text-muted-foreground'
                         }`} />
-                        <p className="text-sm font-medium">{achievement.name}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{achievement.description}</p>
+                        <p className="text-sm font-medium">{t(achievement.nameKey)}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{t(achievement.descKey)}</p>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Competition History */}
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="h-5 w-5 text-primary" />
-                    Competition History
+                    {t("competitionHistory")}
                   </CardTitle>
                   <Link href="/competitions">
-                    <Button variant="outline" size="sm">View All</Button>
+                    <Button variant="outline" size="sm">{t("viewAll")}</Button>
                   </Link>
                 </CardHeader>
                 <CardContent>
@@ -307,24 +306,23 @@ export default function Dashboard() {
                   ) : (
                     <div className="text-center py-8">
                       <Trophy className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-                      <p className="text-muted-foreground mb-4">No competitions completed yet</p>
+                      <p className="text-muted-foreground mb-4">{t("noCompetitionsYet")}</p>
                       <Link href="/competitions">
-                        <Button>Take Your First Quiz</Button>
+                        <Button>{t("takeFirstQuiz")}</Button>
                       </Link>
                     </div>
                   )}
                 </CardContent>
               </Card>
 
-              {/* Event Registrations */}
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle className="flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-secondary" />
-                    Registered Events
+                    {t("registeredEvents")}
                   </CardTitle>
                   <Link href="/events">
-                    <Button variant="outline" size="sm">Browse Events</Button>
+                    <Button variant="outline" size="sm">{t("browseEvents")}</Button>
                   </Link>
                 </CardHeader>
                 <CardContent>
@@ -351,7 +349,7 @@ export default function Dashboard() {
                             </div>
                             {event && (
                               <Badge variant={event.isPast ? "secondary" : "outline"}>
-                                {event.isPast ? "Completed" : formatDate(event.eventDate)}
+                                {event.isPast ? t("completed") : formatDate(event.eventDate)}
                               </Badge>
                             )}
                           </div>
@@ -361,9 +359,9 @@ export default function Dashboard() {
                   ) : (
                     <div className="text-center py-8">
                       <Calendar className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-                      <p className="text-muted-foreground mb-4">No events registered yet</p>
+                      <p className="text-muted-foreground mb-4">{t("noEventsYet")}</p>
                       <Link href="/events">
-                        <Button variant="secondary">Browse Events</Button>
+                        <Button variant="secondary">{t("browseEvents")}</Button>
                       </Link>
                     </div>
                   )}
