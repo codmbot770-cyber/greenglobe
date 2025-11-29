@@ -28,7 +28,7 @@ const team = [
   },
   {
     name: "Fuad Aliyev",
-    role: "Developer",
+    role: "CEO & Developer",
     image: fuadImg,
     bioKey: "fuadBio" as const,
   },

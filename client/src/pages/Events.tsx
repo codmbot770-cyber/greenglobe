@@ -55,6 +55,12 @@ import mountainHikingImg from "@assets/stock_images/mountain_hiking_natu_be5ae25
 import recyclingImg from "@assets/stock_images/recycling_sustainabi_b0971641.jpg";
 import solarEnergyImg from "@assets/stock_images/solar_energy_renewab_84102c5e.jpg";
 import wetlandImg from "@assets/stock_images/wetland_conservation_62b5a71a.jpg";
+import natureCleanup1Img from "@assets/stock_images/nature_conservation__e3a9b41f.jpg";
+import natureCleanup2Img from "@assets/stock_images/nature_conservation__47abb51f.jpg";
+import natureCleanup3Img from "@assets/stock_images/nature_conservation__28708db9.jpg";
+import envCleanup1Img from "@assets/stock_images/environmental_cleanu_5b46db87.jpg";
+import envCleanup2Img from "@assets/stock_images/environmental_cleanu_82aa15a5.jpg";
+import envCleanup3Img from "@assets/stock_images/environmental_cleanu_6c45cbc6.jpg";
 
 const categoryIcons: Record<string, typeof TreePine> = {
   "Tree Planting": TreePine,
@@ -73,17 +79,17 @@ const categoryImages: Record<string, string> = {
 };
 
 const eventImages: Record<number, string> = {
-  1: coastalCleanupImg,
+  1: natureCleanup1Img,
   2: forestImg,
   3: birdSanctuaryImg,
   4: workshopImg,
   5: mountainHikingImg,
-  6: riverCleanupImg,
+  6: envCleanup1Img,
   7: communityGardenImg,
   8: solarEnergyImg,
   9: wetlandImg,
   10: recyclingImg,
-  11: beachCleanupImg,
+  11: natureCleanup2Img,
   12: treePlantingImg,
 };
 
