@@ -1,8 +1,22 @@
-# EcoAzerbaijan - Environmental Protection Platform
+# EcoFriends - Environmental Protection Platform
 
 ## Overview
 
-EcoAzerbaijan is an environmental protection platform focused on preserving Azerbaijan's natural heritage through community engagement. The platform enables users to participate in environmental competitions (quizzes), join eco-events (cleanups, tree planting, wildlife conservation), and report environmental problems. The application aims to educate citizens about ecological issues while facilitating real-world environmental action across Azerbaijan's diverse ecosystems including the Caspian Sea, Caucasus Mountains, and protected national parks.
+EcoFriends is an environmental protection platform focused on preserving Azerbaijan's natural heritage through community engagement. The platform enables users to participate in environmental competitions (quizzes), join eco-events (cleanups, tree planting, wildlife conservation), and report environmental problems. The application aims to educate citizens about ecological issues while facilitating real-world environmental action across Azerbaijan's diverse ecosystems including the Caspian Sea, Caucasus Mountains, and protected national parks.
+
+## Internationalization (i18n)
+
+The platform supports three languages:
+- **English (en)** - Default language
+- **Azerbaijani (az)** - Native language support
+- **Russian (ru)** - Regional language support
+
+**Implementation:**
+- I18nProvider context in `client/src/lib/i18n.tsx` manages language state
+- Language preference stored in localStorage with key "language"
+- useTranslation hook provides `t()` function for translations and `setLanguage()` for switching
+- Language switcher in Navbar with globe icon and flag emojis
+- Translations cover all UI text: navigation, buttons, page content, forms, labels
 
 ## User Preferences
 
