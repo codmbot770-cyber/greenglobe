@@ -101,7 +101,7 @@ export default function About() {
                 <span className="text-primary">Natural Heritage</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                EcoAzerbaijan is a dedicated environmental organization working
+                EcoFriends is a dedicated environmental organization working
                 to preserve the rich biodiversity and natural beauty of
                 Azerbaijan. Through education, community engagement, and direct
                 conservation efforts, we're building a sustainable future for
