@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRoute, useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/lib/i18n";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,7 @@ export default function Quiz() {
   const [, setLocation] = useLocation();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   const [quizState, setQuizState] = useState<QuizState>("intro");
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -45,15 +47,15 @@ export default function Quiz() {
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       toast({
-        title: "Unauthorized",
-        description: "Please sign in to take quizzes.",
+        title: t("unauthorized"),
+        description: t("pleaseSignIn"),
         variant: "destructive",
       });
       setTimeout(() => {
         window.location.href = "/api/login";
       }, 500);
     }
-  }, [isAuthenticated, authLoading, toast]);
+  }, [isAuthenticated, authLoading, toast, t]);
 
   const { data: competition, isLoading: competitionLoading } = useQuery<Competition>({
     queryKey: ["/api/competitions", competitionId],
@@ -75,8 +77,8 @@ export default function Quiz() {
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "Please sign in again to save your score.",
+          title: t("unauthorized"),
+          description: t("pleaseSignInAgain"),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -85,8 +87,8 @@ export default function Quiz() {
         return;
       }
       toast({
-        title: "Error",
-        description: "Failed to save your score. Please try again.",
+        title: t("error"),
+        description: t("failedSaveScore"),
         variant: "destructive",
       });
     },
@@ -193,10 +195,10 @@ export default function Quiz() {
           <Card className="max-w-2xl mx-auto">
             <CardContent className="p-12 text-center">
               <Trophy className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Competition Not Found</h2>
-              <p className="text-muted-foreground mb-6">The competition you're looking for doesn't exist.</p>
+              <h2 className="text-xl font-semibold mb-2">{t("competitionNotFound")}</h2>
+              <p className="text-muted-foreground mb-6">{t("competitionNotFoundDesc")}</p>
               <Button onClick={() => setLocation("/competitions")}>
-                Back to Competitions
+                {t("backToCompetitions")}
               </Button>
             </CardContent>
           </Card>
@@ -229,12 +231,12 @@ export default function Quiz() {
                   <div className="p-4 rounded-lg bg-muted text-center">
                     <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
                     <p className="text-2xl font-bold">{competition.questionCount}</p>
-                    <p className="text-sm text-muted-foreground">Questions</p>
+                    <p className="text-sm text-muted-foreground">{t("questions")}</p>
                   </div>
                   <div className="p-4 rounded-lg bg-muted text-center">
                     <Clock className="h-6 w-6 mx-auto mb-2 text-secondary" />
                     <p className="text-2xl font-bold">{competition.estimatedMinutes}</p>
-                    <p className="text-sm text-muted-foreground">Minutes</p>
+                    <p className="text-sm text-muted-foreground">{t("minutes")}</p>
                   </div>
                 </div>
 
@@ -248,10 +250,10 @@ export default function Quiz() {
                 <div className="flex gap-3 pt-4">
                   <Button variant="outline" className="flex-1" onClick={() => setLocation("/competitions")}>
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back
+                    {t("back")}
                   </Button>
                   <Button className="flex-1" onClick={handleStartQuiz} data-testid="button-start-quiz">
-                    Start Quiz
+                    {t("startQuiz")}
                     <ChevronRight className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
@@ -280,10 +282,10 @@ export default function Quiz() {
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="outline">
-                        Question {currentQuestion + 1} of {questions.length}
+                        {t("questionOf")} {currentQuestion + 1} {t("of")} {questions.length}
                       </Badge>
                       <Badge variant="secondary">
-                        {calculateCorrectAnswers()} correct
+                        {calculateCorrectAnswers()} {t("correct")}
                       </Badge>
                     </div>
                     <Progress value={((currentQuestion + 1) / questions.length) * 100} className="h-2" />
@@ -347,7 +349,7 @@ export default function Quiz() {
                           disabled={selectedAnswer === null}
                           data-testid="button-confirm-answer"
                         >
-                          Confirm Answer
+                          {t("confirmAnswer")}
                         </Button>
                       ) : (
                         <Button 
@@ -355,7 +357,7 @@ export default function Quiz() {
                           onClick={handleNextQuestion}
                           data-testid="button-next-question"
                         >
-                          {currentQuestion < questions.length - 1 ? "Next Question" : "See Results"}
+                          {currentQuestion < questions.length - 1 ? t("nextQuestion") : t("finishQuiz")}
                           <ChevronRight className="h-4 w-4 ml-2" />
                         </Button>
                       )}
@@ -366,10 +368,10 @@ export default function Quiz() {
                 <Card>
                   <CardContent className="p-12 text-center">
                     <Target className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-                    <h2 className="text-xl font-semibold mb-2">No Questions Available</h2>
-                    <p className="text-muted-foreground mb-6">This quiz doesn't have any questions yet.</p>
+                    <h2 className="text-xl font-semibold mb-2">{t("noQuestionsAvailable")}</h2>
+                    <p className="text-muted-foreground mb-6">{t("noQuestionsDesc")}</p>
                     <Button onClick={() => setLocation("/competitions")}>
-                      Back to Competitions
+                      {t("backToCompetitions")}
                     </Button>
                   </CardContent>
                 </Card>
@@ -385,7 +387,7 @@ export default function Quiz() {
                 </div>
                 
                 <div>
-                  <h2 className="text-2xl font-bold mb-2">Quiz Complete!</h2>
+                  <h2 className="text-2xl font-bold mb-2">{t("quizComplete")}</h2>
                   <p className="text-muted-foreground">{competition.title}</p>
                 </div>
 
@@ -401,11 +403,11 @@ export default function Quiz() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-lg bg-muted">
                     <p className="text-2xl font-bold text-primary">{calculateScore()}</p>
-                    <p className="text-sm text-muted-foreground">Total Points</p>
+                    <p className="text-sm text-muted-foreground">{t("totalPointsEarned")}</p>
                   </div>
                   <div className="p-4 rounded-lg bg-muted">
                     <p className="text-2xl font-bold">{calculateCorrectAnswers()}/{questions.length}</p>
-                    <p className="text-sm text-muted-foreground">Correct Answers</p>
+                    <p className="text-sm text-muted-foreground">{t("correctAnswers")}</p>
                   </div>
                 </div>
 
@@ -425,13 +427,13 @@ export default function Quiz() {
                     onClick={handleStartQuiz}
                   >
                     <RefreshCw className="h-4 w-4 mr-2" />
-                    Retry
+                    {t("tryAgain")}
                   </Button>
                   <Button 
                     className="flex-1" 
                     onClick={() => setLocation("/competitions")}
                   >
-                    More Quizzes
+                    {t("moreQuizzes")}
                   </Button>
                 </div>
               </CardContent>

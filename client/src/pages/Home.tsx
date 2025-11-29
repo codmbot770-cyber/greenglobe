@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +21,7 @@ import type { Competition, Event, UserScore } from "@shared/schema";
 
 export default function Home() {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   const { data: competitions } = useQuery<Competition[]>({
     queryKey: ["/api/competitions"],
@@ -56,23 +58,23 @@ export default function Home() {
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               <div>
                 <h1 className="text-3xl sm:text-4xl font-bold mb-2" data-testid="text-welcome">
-                  Welcome back, {user?.firstName || "Eco Warrior"}!
+                  {t("welcomeBack")}, {user?.firstName || t("ecoWarrior")}!
                 </h1>
                 <p className="text-muted-foreground text-lg">
-                  Continue your journey to protect Azerbaijan's environment
+                  {t("continueJourney")}
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/competitions">
                   <Button className="gap-2">
                     <Trophy className="h-4 w-4" />
-                    Take a Quiz
+                    {t("takeAQuiz")}
                   </Button>
                 </Link>
                 <Link href="/events">
                   <Button variant="outline" className="gap-2">
                     <Calendar className="h-4 w-4" />
-                    Browse Events
+                    {t("browseEvents")}
                   </Button>
                 </Link>
               </div>
@@ -89,11 +91,11 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Trophy className="h-5 w-5 text-primary" />
-                    <h2 className="text-xl font-semibold">Active Competitions</h2>
+                    <h2 className="text-xl font-semibold">{t("activeCompetitions")}</h2>
                   </div>
                   <Link href="/competitions">
                     <Button variant="ghost" size="sm" className="gap-1">
-                      View all
+                      {t("viewAll")}
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </Link>
@@ -116,16 +118,16 @@ export default function Home() {
                           <div className="flex items-center gap-4 text-xs text-muted-foreground">
                             <span className="flex items-center gap-1">
                               <Target className="h-3 w-3" />
-                              {competition.questionCount} questions
+                              {competition.questionCount} {t("questions")}
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              {competition.estimatedMinutes} min
+                              {competition.estimatedMinutes} {t("minutes")}
                             </span>
                           </div>
                           <Link href={`/competitions/${competition.id}`}>
                             <Button size="sm" className="w-full mt-2">
-                              Start Quiz
+                              {t("startQuiz")}
                             </Button>
                           </Link>
                         </CardContent>
@@ -136,8 +138,8 @@ export default function Home() {
                   <Card>
                     <CardContent className="p-8 text-center">
                       <Trophy className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-                      <p className="text-muted-foreground">No active competitions at the moment</p>
-                      <p className="text-sm text-muted-foreground mt-1">Check back soon for new challenges!</p>
+                      <p className="text-muted-foreground">{t("noActiveCompetitions")}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{t("checkBackSoonCompetitions")}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -148,11 +150,11 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-secondary" />
-                    <h2 className="text-xl font-semibold">Upcoming Events</h2>
+                    <h2 className="text-xl font-semibold">{t("upcomingEvents")}</h2>
                   </div>
                   <Link href="/events">
                     <Button variant="ghost" size="sm" className="gap-1">
-                      View all
+                      {t("viewAll")}
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </Link>
@@ -194,8 +196,8 @@ export default function Home() {
                   <Card>
                     <CardContent className="p-8 text-center">
                       <Calendar className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-                      <p className="text-muted-foreground">No upcoming events scheduled</p>
-                      <p className="text-sm text-muted-foreground mt-1">Stay tuned for new environmental activities!</p>
+                      <p className="text-muted-foreground">{t("noUpcomingEventsHome")}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{t("stayTunedEvents")}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -209,7 +211,7 @@ export default function Home() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
                     <Sparkles className="h-5 w-5 text-primary" />
-                    Your Progress
+                    {t("yourProgress")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -235,16 +237,16 @@ export default function Home() {
                       ))}
                       <Link href="/dashboard">
                         <Button variant="outline" size="sm" className="w-full">
-                          View All Results
+                          {t("viewAll")}
                         </Button>
                       </Link>
                     </>
                   ) : (
                     <div className="text-center py-4">
-                      <p className="text-sm text-muted-foreground">No completed competitions yet</p>
+                      <p className="text-sm text-muted-foreground">{t("noCompletedCompetitions")}</p>
                       <Link href="/competitions">
                         <Button size="sm" className="mt-3">
-                          Start Your First Quiz
+                          {t("startFirstQuiz")}
                         </Button>
                       </Link>
                     </div>
@@ -255,24 +257,24 @@ export default function Home() {
               {/* Quick Actions */}
               <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="text-lg">Quick Actions</CardTitle>
+                  <CardTitle className="text-lg">{t("quickActions")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Link href="/competitions" className="block">
                     <Button variant="outline" className="w-full justify-start gap-2">
                       <Trophy className="h-4 w-4" />
-                      Take a Quiz
+                      {t("takeAQuiz")}
                     </Button>
                   </Link>
                   <Link href="/events" className="block">
                     <Button variant="outline" className="w-full justify-start gap-2">
                       <Calendar className="h-4 w-4" />
-                      Register for Event
+                      {t("registerForEventAction")}
                     </Button>
                   </Link>
                   <Link href="/about" className="block">
                     <Button variant="ghost" className="w-full justify-start gap-2">
-                      Learn About Us
+                      {t("learnAboutUs")}
                     </Button>
                   </Link>
                 </CardContent>
