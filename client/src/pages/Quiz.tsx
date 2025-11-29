@@ -33,7 +33,22 @@ export default function Quiz() {
   const [, setLocation] = useLocation();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
+  
+  // Helper functions for multilingual questions
+  const getQuestionText = (question: CompetitionQuestion): string => {
+    if (language === "az") return question.questionAz;
+    if (language === "ru" && question.questionRu) return question.questionRu;
+    if (language === "en" && question.questionEn) return question.questionEn;
+    return question.questionAz; // Fallback to Azerbaijani
+  };
+  
+  const getQuestionOptions = (question: CompetitionQuestion): string[] => {
+    if (language === "az") return question.optionsAz as string[];
+    if (language === "ru" && question.optionsRu) return question.optionsRu as string[];
+    if (language === "en" && question.optionsEn) return question.optionsEn as string[];
+    return question.optionsAz as string[]; // Fallback to Azerbaijani
+  };
   
   const [quizState, setQuizState] = useState<QuizState>("intro");
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -292,11 +307,11 @@ export default function Quiz() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <h2 className="text-xl font-semibold" data-testid="text-question">
-                      {questions[currentQuestion].question}
+                      {getQuestionText(questions[currentQuestion])}
                     </h2>
                     
                     <div className="space-y-3">
-                      {(questions[currentQuestion].options as string[]).map((option, index) => {
+                      {getQuestionOptions(questions[currentQuestion]).map((option, index) => {
                         const isSelected = selectedAnswer === index;
                         const isCorrect = index === questions[currentQuestion].correctAnswer;
                         const showCorrect = showFeedback && isCorrect;

@@ -79,12 +79,19 @@ export const insertCompetitionSchema = createInsertSchema(competitions).omit({
 export type InsertCompetition = z.infer<typeof insertCompetitionSchema>;
 export type Competition = typeof competitions.$inferSelect;
 
-// Competition questions
+// Competition questions with multilingual support
 export const competitionQuestions = pgTable("competition_questions", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   competitionId: integer("competition_id").notNull(),
-  question: text("question").notNull(),
-  options: jsonb("options").notNull().$type<string[]>(),
+  // Azerbaijani (primary)
+  questionAz: text("question_az").notNull(),
+  optionsAz: jsonb("options_az").notNull().$type<string[]>(),
+  // English
+  questionEn: text("question_en"),
+  optionsEn: jsonb("options_en").$type<string[]>(),
+  // Russian
+  questionRu: text("question_ru"),
+  optionsRu: jsonb("options_ru").$type<string[]>(),
   correctAnswer: integer("correct_answer").notNull(),
   points: integer("points").default(10),
 });
