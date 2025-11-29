@@ -32,8 +32,9 @@ Preferred communication style: Simple, everyday language.
 - About page with mission statement, team profiles, and organizational values
 - Competitions page displaying 8 active quizzes (Wildlife Protection, Water Conservation, Sustainable Living, Renewable Energy, Azerbaijan Biodiversity, Caspian Sea Conservation, Climate Change & Azerbaijan, Forest Conservation) with 55+ questions
 - Events page with 12 events featuring unique stock photos per event (coastal cleanup, forest reforestation, wildlife sanctuary, eco workshop, river cleanup, urban garden, and more)
-- Community page for user-generated content: discussions, reviews, and event wishes with like/comment functionality
-- Problems page (planned feature, currently placeholder) for environmental issue reporting
+- Community page for user discussions, event reviews, and event wishes with like/comment functionality (post types: general, review, wish)
+- Blogs page for user feedback and ideas about environmental initiatives (post types: feedback, idea) - separate from Community
+- Problems page featuring Caspian Sea environmental challenges with three tabs: Issues (oil spills, water levels, invasive species, pollution), Sustainable Solutions (green technology, renewable energy, conservation, eco-tourism), and Community Reports
 - Dashboard page showing user's competition scores, event registrations, and achievements
 
 **State Management:**
