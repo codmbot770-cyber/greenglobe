@@ -13,6 +13,11 @@ import {
   Leaf,
 } from "lucide-react";
 
+import muhammadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (3)_1764419215676.jpeg";
+import fuadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (2)_1764419215677.jpeg";
+import khadicaImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36_1764419215678.jpeg";
+import serhadImg from "@assets/WhatsApp Image 2025-11-29 at 16.24.36 (1)_1764419215677.jpeg";
+
 const values = [
   {
     icon: Heart,
@@ -44,25 +49,25 @@ const team = [
   {
     name: "Muhammad Abdulla",
     role: "Developer",
-    image: null,
+    image: muhammadImg,
     bio: "Leading environmental initiatives across Azerbaijan.",
   },
   {
     name: "Fuad Aliyev",
     role: "Developer",
-    image: null,
+    image: fuadImg,
     bio: "Expert in biodiversity preservation with focus on Caucasus ecosystems.",
   },
   {
     name: "Khadica Mammadli",
     role: "Improvement Department",
-    image: null,
+    image: khadicaImg,
     bio: "Connecting volunteers with meaningful environmental projects nationwide.",
   },
   {
     name: "Serhad Farhadli",
     role: "Researching Assistant",
-    image: null,
+    image: serhadImg,
     bio: "Developing engaging environmental education programs for all ages.",
   },
 ];
