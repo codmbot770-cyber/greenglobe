@@ -49,6 +49,8 @@
   --success-foreground: 0 0% 100%;
   --info: 199 89% 48%;
   --info-foreground: 0 0% 100%;
+  --light-green-bg: 150 45% 95%;
+  --light-green-bg-foreground: 152 15% 12%;
   --font-sans: Inter, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
@@ -133,6 +135,8 @@
   --success-foreground: 0 0% 100%;
   --info: 199 89% 55%;
   --info-foreground: 0 0% 100%;
+  --light-green-bg: 152 25% 15%;
+  --light-green-bg-foreground: 150 8% 95%;
   --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);

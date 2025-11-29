@@ -143,7 +143,7 @@ export default function Landing() {
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
         </section>
 
-        <section className="py-16 bg-card border-y relative overflow-hidden">
+        <section className="py-16 bg-[hsl(var(--light-green-bg))] border-y relative overflow-hidden">
           <div className="absolute inset-0 pattern-dots opacity-30" />
           <div className="container mx-auto px-4 relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -208,7 +208,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="py-20 bg-card">
+        <section className="py-20 bg-[hsl(var(--light-green-bg))]">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t("naturalTreasures")}</h2>

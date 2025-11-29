@@ -142,7 +142,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="py-16 bg-card">
+        <section className="py-16 bg-[hsl(var(--light-green-bg))]">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">

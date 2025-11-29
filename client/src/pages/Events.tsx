@@ -309,7 +309,7 @@ export default function Events() {
           </div>
         </section>
 
-        <section className="border-b bg-card sticky top-16 z-40">
+        <section className="border-b bg-[hsl(var(--light-green-bg))] sticky top-16 z-40">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">

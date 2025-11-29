@@ -53,7 +53,7 @@ export default function Home() {
       
       <main className="flex-1">
         {/* Welcome Section */}
-        <section className="py-12 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+        <section className="py-12 bg-[hsl(var(--light-green-bg))]">
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               <div>
