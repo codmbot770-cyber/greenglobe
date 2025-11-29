@@ -44,6 +44,16 @@ import treePlantingImg from "@assets/stock_images/tree_planting_refore_abf1cea0.
 import wildlifeImg from "@assets/stock_images/birdwatching_wildlif_7096d9cc.jpg";
 import educationImg from "@assets/stock_images/environmental_educat_65329b06.jpg";
 import awarenessImg from "@assets/stock_images/nature_hiking_trail__73e64e09.jpg";
+import coastalCleanupImg from "@assets/stock_images/coastal_ocean_cleanu_66ff535c.jpg";
+import forestImg from "@assets/stock_images/forest_reforestation_1c933e07.jpg";
+import birdSanctuaryImg from "@assets/stock_images/wildlife_bird_sanctu_8535c03c.jpg";
+import workshopImg from "@assets/stock_images/eco_workshop_classro_8e5b0127.jpg";
+import riverCleanupImg from "@assets/stock_images/river_cleanup_water__b93f32a5.jpg";
+import communityGardenImg from "@assets/stock_images/urban_community_gard_0efa8824.jpg";
+import mountainHikingImg from "@assets/stock_images/mountain_hiking_natu_be5ae251.jpg";
+import recyclingImg from "@assets/stock_images/recycling_sustainabi_b0971641.jpg";
+import solarEnergyImg from "@assets/stock_images/solar_energy_renewab_84102c5e.jpg";
+import wetlandImg from "@assets/stock_images/wetland_conservation_62b5a71a.jpg";
 
 const categories = [
   { value: "all", label: "All Categories" },
@@ -68,6 +78,21 @@ const categoryImages: Record<string, string> = {
   "Wildlife": wildlifeImg,
   "Education": educationImg,
   "Awareness": awarenessImg,
+};
+
+const eventImages: Record<number, string> = {
+  1: coastalCleanupImg,
+  2: forestImg,
+  3: birdSanctuaryImg,
+  4: workshopImg,
+  5: mountainHikingImg,
+  6: riverCleanupImg,
+  7: communityGardenImg,
+  8: solarEnergyImg,
+  9: wetlandImg,
+  10: recyclingImg,
+  11: beachCleanupImg,
+  12: treePlantingImg,
 };
 
 export default function Events() {
@@ -139,7 +164,7 @@ export default function Events() {
 
   const EventCard = ({ event, isPast = false }: { event: Event; isPast?: boolean }) => {
     const CategoryIcon = categoryIcons[event.category] || Leaf;
-    const categoryImage = categoryImages[event.category] || awarenessImg;
+    const eventImage = eventImages[event.id] || categoryImages[event.category] || awarenessImg;
     const registered = isRegistered(event.id);
     const isRegistering = registerMutation.isPending;
     
@@ -152,7 +177,7 @@ export default function Events() {
           <div className="relative overflow-hidden">
             <div className="aspect-[16/9] relative">
               <img 
-                src={categoryImage} 
+                src={eventImage} 
                 alt={event.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
