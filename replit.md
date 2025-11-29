@@ -30,8 +30,9 @@ Preferred communication style: Simple, everyday language.
 - Landing page (unauthenticated users) with hero section, statistics, and feature highlights
 - Home dashboard (authenticated users) showing personalized activity and recommendations
 - About page with mission statement, team profiles, and organizational values
-- Competitions page displaying available quizzes with difficulty levels and scoring
-- Events page with filterable/searchable eco-events categorized by type
+- Competitions page displaying 8 active quizzes (Wildlife Protection, Water Conservation, Sustainable Living, Renewable Energy, Azerbaijan Biodiversity, Caspian Sea Conservation, Climate Change & Azerbaijan, Forest Conservation) with 55+ questions
+- Events page with 12 events featuring unique stock photos per event (coastal cleanup, forest reforestation, wildlife sanctuary, eco workshop, river cleanup, urban garden, and more)
+- Community page for user-generated content: discussions, reviews, and event wishes with like/comment functionality
 - Problems page (planned feature, currently placeholder) for environmental issue reporting
 - Dashboard page showing user's competition scores, event registrations, and achievements
 
@@ -108,6 +109,19 @@ Preferred communication style: Simple, everyday language.
 7. **event_registrations** - Event participation
    - id (auto-increment), userId (foreign key), eventId (foreign key)
    - registeredAt timestamp
+
+8. **community_posts** - User-generated blog content
+   - id (auto-increment), userId (foreign key), content (text)
+   - postType (discussion/review/event_wish), status (draft/published/archived)
+   - likesCount, commentsCount, createdAt, updatedAt timestamps
+
+9. **post_likes** - Like tracking for community posts
+   - id (auto-increment), postId (foreign key), userId (foreign key)
+   - createdAt timestamp
+
+10. **post_comments** - Comments on community posts
+    - id (auto-increment), postId (foreign key), userId (foreign key)
+    - content (text), createdAt timestamp
 
 **Validation:**
 - Zod schemas generated from Drizzle tables using drizzle-zod
