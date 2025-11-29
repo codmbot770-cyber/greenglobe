@@ -127,10 +127,13 @@ Preferred communication style: Simple, everyday language.
    - totalQuestions, timeLimit, maxScore, isActive (boolean)
    - createdAt, updatedAt timestamps
 
-5. **competition_questions** - Quiz questions
+5. **competition_questions** - Multilingual quiz questions
    - id (auto-increment), competitionId (foreign key)
-   - questionText, options (array), correctAnswer, points
-   - createdAt timestamp
+   - questionAz (Azerbaijani text, required), optionsAz (array, required)
+   - questionEn (English text, optional), optionsEn (array, optional)
+   - questionRu (Russian text, optional), optionsRu (array, optional)
+   - correctAnswer, points, createdAt timestamp
+   - Helper functions in Quiz.tsx select language-appropriate content with fallback to Azerbaijani
 
 6. **user_scores** - Competition results
    - id (auto-increment), userId (foreign key), competitionId (foreign key)

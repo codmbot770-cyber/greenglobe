@@ -35,19 +35,27 @@ export default function Quiz() {
   const { toast } = useToast();
   const { t, language } = useTranslation();
   
-  // Helper functions for multilingual questions
+  // Helper functions for multilingual questions - always fallback to Azerbaijani (required)
   const getQuestionText = (question: CompetitionQuestion): string => {
-    if (language === "az") return question.questionAz;
+    if (!question || !question.questionAz) {
+      console.error("Question data missing or invalid");
+      return "";
+    }
+    // Try to get the localized version, always fallback to Azerbaijani
     if (language === "ru" && question.questionRu) return question.questionRu;
     if (language === "en" && question.questionEn) return question.questionEn;
-    return question.questionAz; // Fallback to Azerbaijani
+    return question.questionAz; // Default/fallback to Azerbaijani (required field)
   };
   
   const getQuestionOptions = (question: CompetitionQuestion): string[] => {
-    if (language === "az") return question.optionsAz as string[];
+    if (!question || !question.optionsAz) {
+      console.error("Question options missing or invalid");
+      return [];
+    }
+    // Try to get the localized version, always fallback to Azerbaijani
     if (language === "ru" && question.optionsRu) return question.optionsRu as string[];
     if (language === "en" && question.optionsEn) return question.optionsEn as string[];
-    return question.optionsAz as string[]; // Fallback to Azerbaijani
+    return question.optionsAz as string[]; // Default/fallback to Azerbaijani (required field)
   };
   
   const [quizState, setQuizState] = useState<QuizState>("intro");
