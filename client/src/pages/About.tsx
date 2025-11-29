@@ -2,62 +2,66 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Target, 
-  Heart, 
-  Users, 
+import {
+  Target,
+  Heart,
+  Users,
   Lightbulb,
   Globe,
   Award,
   TreePine,
-  Leaf
+  Leaf,
 } from "lucide-react";
 
 const values = [
   {
     icon: Heart,
     title: "Passion for Nature",
-    description: "We are deeply committed to preserving Azerbaijan's natural beauty for future generations.",
+    description:
+      "We are deeply committed to preserving Azerbaijan's natural beauty for future generations.",
   },
   {
     icon: Users,
     title: "Community First",
-    description: "Building a strong network of environmental advocates across all regions of Azerbaijan.",
+    description:
+      "Building a strong network of environmental advocates across all regions of Azerbaijan.",
   },
   {
     icon: Lightbulb,
     title: "Education & Awareness",
-    description: "Empowering citizens with knowledge about environmental protection through engaging activities.",
+    description:
+      "Empowering citizens with knowledge about environmental protection through engaging activities.",
   },
   {
     icon: Globe,
     title: "Sustainable Future",
-    description: "Working towards a balanced ecosystem where nature and development coexist harmoniously.",
+    description:
+      "Working towards a balanced ecosystem where nature and development coexist harmoniously.",
   },
 ];
 
 const team = [
   {
-    name: "Leyla Mammadova",
-    role: "Executive Director",
+    name: "Muhammad Abdulla",
+    role: "Developer",
     image: null,
-    bio: "Leading environmental initiatives across Azerbaijan for over 15 years.",
+    bio: "Leading environmental initiatives across Azerbaijan.",
   },
   {
-    name: "Rashid Aliyev",
-    role: "Head of Conservation",
+    name: "Fuad Aliyev",
+    role: "Developer",
     image: null,
     bio: "Expert in biodiversity preservation with focus on Caucasus ecosystems.",
   },
   {
-    name: "Aysel Huseynova",
-    role: "Community Manager",
+    name: "Khadica Mammadli",
+    role: "Improvement Department",
     image: null,
     bio: "Connecting volunteers with meaningful environmental projects nationwide.",
   },
   {
-    name: "Tural Ismayilov",
-    role: "Education Coordinator",
+    name: "Serhad Farhadli",
+    role: "Researching Assistant",
     image: null,
     bio: "Developing engaging environmental education programs for all ages.",
   },
@@ -74,7 +78,7 @@ export default function About() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="py-16 sm:py-24 bg-gradient-to-br from-primary/10 via-background to-secondary/5">
@@ -84,13 +88,19 @@ export default function About() {
                 <Leaf className="h-4 w-4" />
                 <span>About Our Mission</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6" data-testid="text-about-title">
-                Protecting Azerbaijan's <span className="text-primary">Natural Heritage</span>
+              <h1
+                className="text-4xl sm:text-5xl font-bold mb-6"
+                data-testid="text-about-title"
+              >
+                Protecting Azerbaijan's{" "}
+                <span className="text-primary">Natural Heritage</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                EcoAzerbaijan is a dedicated environmental organization working to preserve the rich 
-                biodiversity and natural beauty of Azerbaijan. Through education, community engagement, 
-                and direct conservation efforts, we're building a sustainable future for our nation.
+                EcoAzerbaijan is a dedicated environmental organization working
+                to preserve the rich biodiversity and natural beauty of
+                Azerbaijan. Through education, community engagement, and direct
+                conservation efforts, we're building a sustainable future for
+                our nation.
               </p>
             </div>
           </div>
@@ -108,17 +118,20 @@ export default function About() {
                   <h2 className="text-3xl font-bold">Our Mission</h2>
                 </div>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  We believe that environmental protection starts with awareness and community action. 
-                  Our mission is to engage citizens of all ages in understanding and protecting Azerbaijan's 
-                  unique ecosystems, from the Caspian coastline to the peaks of the Greater Caucasus.
+                  We believe that environmental protection starts with awareness
+                  and community action. Our mission is to engage citizens of all
+                  ages in understanding and protecting Azerbaijan's unique
+                  ecosystems, from the Caspian coastline to the peaks of the
+                  Greater Caucasus.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Through our competitions, events, and educational programs, we aim to create a generation 
-                  of environmentally conscious citizens who will champion sustainable practices in their 
+                  Through our competitions, events, and educational programs, we
+                  aim to create a generation of environmentally conscious
+                  citizens who will champion sustainable practices in their
                   daily lives and communities.
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 {achievements.map((achievement, index) => (
                   <Card key={index} className="text-center">
@@ -126,7 +139,9 @@ export default function About() {
                       <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">
                         {achievement.value}
                       </div>
-                      <div className="text-sm text-muted-foreground">{achievement.label}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {achievement.label}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
@@ -139,12 +154,14 @@ export default function About() {
         <section className="py-16 bg-card">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Core Values</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                Our Core Values
+              </h2>
               <p className="text-muted-foreground text-lg">
                 The principles that guide everything we do
               </p>
             </div>
-            
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value, index) => (
                 <Card key={index} className="hover-elevate text-center">
@@ -167,27 +184,40 @@ export default function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Meet Our Team</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                Meet Our Team
+              </h2>
               <p className="text-muted-foreground text-lg">
                 Dedicated professionals working for a greener Azerbaijan
               </p>
             </div>
-            
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member, index) => (
                 <Card key={index} className="hover-elevate">
                   <CardContent className="p-6 text-center space-y-4">
                     <Avatar className="h-24 w-24 mx-auto">
-                      <AvatarImage src={member.image || undefined} alt={member.name} className="object-cover" />
+                      <AvatarImage
+                        src={member.image || undefined}
+                        alt={member.name}
+                        className="object-cover"
+                      />
                       <AvatarFallback className="bg-primary/10 text-primary text-xl">
-                        {member.name.split(' ').map(n => n[0]).join('')}
+                        {member.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <h3 className="font-semibold text-lg">{member.name}</h3>
-                      <p className="text-sm text-primary font-medium">{member.role}</p>
+                      <p className="text-sm text-primary font-medium">
+                        {member.role}
+                      </p>
                     </div>
-                    <p className="text-sm text-muted-foreground">{member.bio}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {member.bio}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -202,12 +232,16 @@ export default function About() {
               <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mb-6 mx-auto">
                 <Award className="h-8 w-8 text-primary" />
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">Our Impact</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                Our Impact
+              </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Since our founding, we've worked tirelessly to protect Azerbaijan's natural treasures. 
-                From organizing nationwide tree-planting campaigns to running educational programs in schools, 
-                our initiatives have touched thousands of lives and made a real difference in environmental 
-                conservation across the country.
+                Since our founding, we've worked tirelessly to protect
+                Azerbaijan's natural treasures. From organizing nationwide
+                tree-planting campaigns to running educational programs in
+                schools, our initiatives have touched thousands of lives and
+                made a real difference in environmental conservation across the
+                country.
               </p>
               <div className="grid sm:grid-cols-3 gap-6 mt-8">
                 <Card>
