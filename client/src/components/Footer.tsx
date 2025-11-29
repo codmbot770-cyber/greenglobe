@@ -14,7 +14,7 @@ export function Footer() {
               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-green-500 to-green-600 shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-green-500/30">
                 <Leaf className="h-5 w-5 text-white transition-transform group-hover:rotate-12" />
               </div>
-              <span className="font-bold text-lg bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">EcoFriends</span>
+              <span className="font-bold text-lg bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">EcoFriendsAz</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Dedicated to protecting and preserving Azerbaijan's rich natural heritage for future generations.
@@ -75,7 +75,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-green-200/50 dark:border-green-900/30 pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} EcoFriends. {t("allRightsReserved")}
+            &copy; {new Date().getFullYear()} EcoFriendsAz. {t("allRightsReserved")}
           </p>
         </div>
       </div>
