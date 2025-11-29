@@ -6,6 +6,9 @@ import {
   userScores,
   eventRegistrations,
   problems,
+  communityPosts,
+  postLikes,
+  postComments,
   type User,
   type UpsertUser,
   type Event,
@@ -20,6 +23,12 @@ import {
   type InsertEventRegistration,
   type Problem,
   type InsertProblem,
+  type CommunityPost,
+  type InsertCommunityPost,
+  type PostLike,
+  type InsertPostLike,
+  type PostComment,
+  type InsertPostComment,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
@@ -60,6 +69,24 @@ export interface IStorage {
   // Leaderboard
   getAllScores(): Promise<UserScore[]>;
   getLeaderboard(): Promise<{ userId: string; totalScore: number; quizCount: number }[]>;
+
+  // Community posts
+  getCommunityPosts(): Promise<CommunityPost[]>;
+  getCommunityPost(id: number): Promise<CommunityPost | undefined>;
+  getUserCommunityPosts(userId: string): Promise<CommunityPost[]>;
+  createCommunityPost(post: InsertCommunityPost): Promise<CommunityPost>;
+  deleteCommunityPost(id: number): Promise<void>;
+
+  // Post likes
+  getPostLikes(postId: number): Promise<PostLike[]>;
+  getUserPostLike(postId: number, userId: string): Promise<PostLike | undefined>;
+  createPostLike(like: InsertPostLike): Promise<PostLike>;
+  deletePostLike(postId: number, userId: string): Promise<void>;
+
+  // Post comments
+  getPostComments(postId: number): Promise<PostComment[]>;
+  createPostComment(comment: InsertPostComment): Promise<PostComment>;
+  deletePostComment(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -180,6 +207,81 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(sql`sum(${userScores.score})`))
       .limit(10);
     return result;
+  }
+
+  // Community posts
+  async getCommunityPosts(): Promise<CommunityPost[]> {
+    return db.select().from(communityPosts).where(eq(communityPosts.isPublished, true)).orderBy(desc(communityPosts.createdAt));
+  }
+
+  async getCommunityPost(id: number): Promise<CommunityPost | undefined> {
+    const [post] = await db.select().from(communityPosts).where(eq(communityPosts.id, id));
+    return post;
+  }
+
+  async getUserCommunityPosts(userId: string): Promise<CommunityPost[]> {
+    return db.select().from(communityPosts).where(eq(communityPosts.userId, userId)).orderBy(desc(communityPosts.createdAt));
+  }
+
+  async createCommunityPost(post: InsertCommunityPost): Promise<CommunityPost> {
+    const [newPost] = await db.insert(communityPosts).values(post).returning();
+    return newPost;
+  }
+
+  async deleteCommunityPost(id: number): Promise<void> {
+    await db.delete(communityPosts).where(eq(communityPosts.id, id));
+  }
+
+  // Post likes
+  async getPostLikes(postId: number): Promise<PostLike[]> {
+    return db.select().from(postLikes).where(eq(postLikes.postId, postId));
+  }
+
+  async getUserPostLike(postId: number, userId: string): Promise<PostLike | undefined> {
+    const [like] = await db.select().from(postLikes).where(
+      sql`${postLikes.postId} = ${postId} AND ${postLikes.userId} = ${userId}`
+    );
+    return like;
+  }
+
+  async createPostLike(like: InsertPostLike): Promise<PostLike> {
+    const [newLike] = await db.insert(postLikes).values(like).returning();
+    await db.update(communityPosts).set({
+      likesCount: sql`${communityPosts.likesCount} + 1`
+    }).where(eq(communityPosts.id, like.postId));
+    return newLike;
+  }
+
+  async deletePostLike(postId: number, userId: string): Promise<void> {
+    await db.delete(postLikes).where(
+      sql`${postLikes.postId} = ${postId} AND ${postLikes.userId} = ${userId}`
+    );
+    await db.update(communityPosts).set({
+      likesCount: sql`${communityPosts.likesCount} - 1`
+    }).where(eq(communityPosts.id, postId));
+  }
+
+  // Post comments
+  async getPostComments(postId: number): Promise<PostComment[]> {
+    return db.select().from(postComments).where(eq(postComments.postId, postId)).orderBy(desc(postComments.createdAt));
+  }
+
+  async createPostComment(comment: InsertPostComment): Promise<PostComment> {
+    const [newComment] = await db.insert(postComments).values(comment).returning();
+    await db.update(communityPosts).set({
+      commentsCount: sql`${communityPosts.commentsCount} + 1`
+    }).where(eq(communityPosts.id, comment.postId));
+    return newComment;
+  }
+
+  async deletePostComment(id: number): Promise<void> {
+    const [comment] = await db.select().from(postComments).where(eq(postComments.id, id));
+    if (comment) {
+      await db.delete(postComments).where(eq(postComments.id, id));
+      await db.update(communityPosts).set({
+        commentsCount: sql`${communityPosts.commentsCount} - 1`
+      }).where(eq(communityPosts.id, comment.postId));
+    }
   }
 }
 

@@ -151,3 +151,64 @@ export const insertProblemSchema = createInsertSchema(problems).omit({
 });
 export type InsertProblem = z.infer<typeof insertProblemSchema>;
 export type Problem = typeof problems.$inferSelect;
+
+// Community blog posts
+export const communityPosts = pgTable("community_posts", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: varchar("user_id").notNull(),
+  title: varchar("title", { length: 255 }),
+  content: text("content").notNull(),
+  postType: varchar("post_type", { length: 50 }).notNull().default("general"),
+  imageUrls: jsonb("image_urls").$type<string[]>().default([]),
+  videoUrl: varchar("video_url"),
+  eventWishTitle: varchar("event_wish_title"),
+  eventWishDescription: text("event_wish_description"),
+  likesCount: integer("likes_count").default(0),
+  commentsCount: integer("comments_count").default(0),
+  isPublished: boolean("is_published").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertCommunityPostSchema = createInsertSchema(communityPosts).omit({
+  id: true,
+  likesCount: true,
+  commentsCount: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertCommunityPost = z.infer<typeof insertCommunityPostSchema>;
+export type CommunityPost = typeof communityPosts.$inferSelect;
+
+// Community post likes
+export const postLikes = pgTable("post_likes", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  postId: integer("post_id").notNull(),
+  userId: varchar("user_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertPostLikeSchema = createInsertSchema(postLikes).omit({
+  id: true,
+  createdAt: true,
+});
+export type InsertPostLike = z.infer<typeof insertPostLikeSchema>;
+export type PostLike = typeof postLikes.$inferSelect;
+
+// Community post comments
+export const postComments = pgTable("post_comments", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  postId: integer("post_id").notNull(),
+  userId: varchar("user_id").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertPostCommentSchema = createInsertSchema(postComments).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertPostComment = z.infer<typeof insertPostCommentSchema>;
+export type PostComment = typeof postComments.$inferSelect;
