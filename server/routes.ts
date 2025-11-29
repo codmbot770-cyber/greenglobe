@@ -1,16 +1,175 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { setupAuth, isAuthenticated } from "./replitAuth";
+import { insertEventSchema, insertCompetitionSchema, insertUserScoreSchema, insertEventRegistrationSchema } from "@shared/schema";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
+  // Auth middleware
+  await setupAuth(app);
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+  // Auth routes
+  app.get("/api/auth/user", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Events routes
+  app.get("/api/events", async (_req, res) => {
+    try {
+      const events = await storage.getEvents();
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      res.status(500).json({ message: "Failed to fetch events" });
+    }
+  });
+
+  app.get("/api/events/:id", async (req, res) => {
+    try {
+      const event = await storage.getEvent(parseInt(req.params.id));
+      if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+      res.json(event);
+    } catch (error) {
+      console.error("Error fetching event:", error);
+      res.status(500).json({ message: "Failed to fetch event" });
+    }
+  });
+
+  app.post("/api/events", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const validatedData = insertEventSchema.parse(req.body);
+      const event = await storage.createEvent(validatedData);
+      res.status(201).json(event);
+    } catch (error) {
+      console.error("Error creating event:", error);
+      res.status(400).json({ message: "Failed to create event" });
+    }
+  });
+
+  // Competitions routes
+  app.get("/api/competitions", async (_req, res) => {
+    try {
+      const competitions = await storage.getCompetitions();
+      res.json(competitions);
+    } catch (error) {
+      console.error("Error fetching competitions:", error);
+      res.status(500).json({ message: "Failed to fetch competitions" });
+    }
+  });
+
+  app.get("/api/competitions/:id", async (req, res) => {
+    try {
+      const competition = await storage.getCompetition(parseInt(req.params.id));
+      if (!competition) {
+        return res.status(404).json({ message: "Competition not found" });
+      }
+      res.json(competition);
+    } catch (error) {
+      console.error("Error fetching competition:", error);
+      res.status(500).json({ message: "Failed to fetch competition" });
+    }
+  });
+
+  app.get("/api/competitions/:id/questions", isAuthenticated, async (req, res) => {
+    try {
+      const questions = await storage.getQuestionsByCompetition(parseInt(req.params.id));
+      res.json(questions);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+      res.status(500).json({ message: "Failed to fetch questions" });
+    }
+  });
+
+  app.post("/api/competitions", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const validatedData = insertCompetitionSchema.parse(req.body);
+      const competition = await storage.createCompetition(validatedData);
+      res.status(201).json(competition);
+    } catch (error) {
+      console.error("Error creating competition:", error);
+      res.status(400).json({ message: "Failed to create competition" });
+    }
+  });
+
+  // User scores routes
+  app.get("/api/user/scores", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const scores = await storage.getUserScores(userId);
+      res.json(scores);
+    } catch (error) {
+      console.error("Error fetching user scores:", error);
+      res.status(500).json({ message: "Failed to fetch scores" });
+    }
+  });
+
+  app.post("/api/user/scores", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const validatedData = insertUserScoreSchema.parse({
+        ...req.body,
+        userId,
+      });
+      const score = await storage.createUserScore(validatedData);
+      res.status(201).json(score);
+    } catch (error) {
+      console.error("Error creating user score:", error);
+      res.status(400).json({ message: "Failed to save score" });
+    }
+  });
+
+  // Event registrations routes
+  app.get("/api/user/registrations", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const registrations = await storage.getUserRegistrations(userId);
+      res.json(registrations);
+    } catch (error) {
+      console.error("Error fetching registrations:", error);
+      res.status(500).json({ message: "Failed to fetch registrations" });
+    }
+  });
+
+  app.post("/api/user/registrations", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const validatedData = insertEventRegistrationSchema.parse({
+        ...req.body,
+        userId,
+      });
+      const registration = await storage.createEventRegistration(validatedData);
+      res.status(201).json(registration);
+    } catch (error) {
+      console.error("Error creating registration:", error);
+      res.status(400).json({ message: "Failed to register for event" });
+    }
+  });
 
   return httpServer;
 }
