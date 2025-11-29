@@ -13,6 +13,7 @@ import Events from "@/pages/Events";
 import Problems from "@/pages/Problems";
 import Dashboard from "@/pages/Dashboard";
 import Community from "@/pages/Community";
+import Blogs from "@/pages/Blogs";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +30,7 @@ function Router() {
           <Route path="/events" component={Events} />
           <Route path="/problems" component={Problems} />
           <Route path="/community" component={Community} />
+          <Route path="/blogs" component={Blogs} />
         </>
       ) : (
         <>
@@ -39,6 +41,7 @@ function Router() {
           <Route path="/events" component={Events} />
           <Route path="/problems" component={Problems} />
           <Route path="/community" component={Community} />
+          <Route path="/blogs" component={Blogs} />
           <Route path="/dashboard" component={Dashboard} />
         </>
       )}

@@ -232,7 +232,41 @@ export async function registerRoutes(
     }
   });
 
-  // Community posts routes
+  // Blog posts routes (feedback and ideas - separate from community)
+  app.get("/api/blogs", async (_req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ message: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.post("/api/blogs", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { title, content, postType } = req.body;
+      
+      if (!['feedback', 'idea'].includes(postType)) {
+        return res.status(400).json({ message: "Blog post type must be 'feedback' or 'idea'" });
+      }
+      
+      const validatedData = insertCommunityPostSchema.parse({
+        title,
+        content,
+        postType,
+        userId,
+      });
+      const post = await storage.createCommunityPost(validatedData);
+      res.status(201).json(post);
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      res.status(400).json({ message: "Failed to create blog post" });
+    }
+  });
+
+  // Community posts routes (general, review, wish - separate from blogs)
   app.get("/api/community/posts", async (_req, res) => {
     try {
       const posts = await storage.getCommunityPosts();
@@ -270,6 +304,13 @@ export async function registerRoutes(
   app.post("/api/community/posts", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      const { postType } = req.body;
+      
+      // Community posts only accept general, review, wish types (not feedback/idea which are for blogs)
+      if (postType && ['feedback', 'idea'].includes(postType)) {
+        return res.status(400).json({ message: "Use /api/blogs endpoint for feedback and idea posts" });
+      }
+      
       const validatedData = insertCommunityPostSchema.parse({
         ...req.body,
         userId,

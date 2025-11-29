@@ -31,7 +31,7 @@ import {
   type InsertPostComment,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, inArray, and, or, notInArray } from "drizzle-orm";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -70,7 +70,10 @@ export interface IStorage {
   getAllScores(): Promise<UserScore[]>;
   getLeaderboard(): Promise<{ userId: string; totalScore: number; quizCount: number }[]>;
 
-  // Community posts
+  // Blog posts (feedback and ideas)
+  getBlogPosts(): Promise<CommunityPost[]>;
+
+  // Community posts (general, review, wish)
   getCommunityPosts(): Promise<CommunityPost[]>;
   getCommunityPost(id: number): Promise<CommunityPost | undefined>;
   getUserCommunityPosts(userId: string): Promise<CommunityPost[]>;
@@ -211,8 +214,24 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Community posts
+  // Blog posts (feedback and ideas only)
+  async getBlogPosts(): Promise<CommunityPost[]> {
+    return db.select().from(communityPosts)
+      .where(and(
+        eq(communityPosts.isPublished, true),
+        inArray(communityPosts.postType, ['feedback', 'idea'])
+      ))
+      .orderBy(desc(communityPosts.createdAt));
+  }
+
+  // Community posts (general, review, wish - excluding blogs)
   async getCommunityPosts(): Promise<CommunityPost[]> {
-    return db.select().from(communityPosts).where(eq(communityPosts.isPublished, true)).orderBy(desc(communityPosts.createdAt));
+    return db.select().from(communityPosts)
+      .where(and(
+        eq(communityPosts.isPublished, true),
+        notInArray(communityPosts.postType, ['feedback', 'idea'])
+      ))
+      .orderBy(desc(communityPosts.createdAt));
   }
 
   async getCommunityPost(id: number): Promise<CommunityPost | undefined> {
