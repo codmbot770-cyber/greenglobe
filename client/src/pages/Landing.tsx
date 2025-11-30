@@ -30,8 +30,8 @@ export default function Landing() {
 
   const stats = [
     { icon: Calendar, value: "", labelKey: "willBeHosted" as const, color: "text-blue-500", bgColor: "bg-blue-500/10" },
-    { icon: Users, value: "2,500+", labelKey: "activeMembers" as const, color: "text-amber-500", bgColor: "bg-amber-500/10" },
-    { icon: TreePine, value: "2,500+", labelKey: "treesPlanted" as const, color: "text-green-500", bgColor: "bg-green-500/10" },
+    { icon: Users, value: "4", labelKey: "activeMembers" as const, color: "text-amber-500", bgColor: "bg-amber-500/10" },
+    { icon: TreePine, value: "", labelKey: "treesWillBePlanted" as const, color: "text-green-500", bgColor: "bg-green-500/10" },
     { icon: Trophy, value: "8", labelKey: "quizChallenges" as const, color: "text-purple-500", bgColor: "bg-purple-500/10" },
   ];
 
