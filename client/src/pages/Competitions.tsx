@@ -209,7 +209,7 @@ export default function Competitions() {
                               <div className="flex items-center gap-2 p-3 rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
                                 <Gift className="h-4 w-4 text-primary shrink-0" />
                                 <span className="text-sm font-medium text-primary">
-                                  {competition.prizeDescription}
+                                  {t("winEcoMerchandise")}
                                 </span>
                               </div>
                             )}
