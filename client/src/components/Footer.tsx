@@ -24,16 +24,16 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-green-700 dark:text-green-400">{t("quickLinks")}</h3>
             <nav className="flex flex-col gap-2">
-              <Link href="/" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("home")}
               </Link>
-              <Link href="/about" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("aboutUs")}
               </Link>
-              <Link href="/competitions" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/competitions" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("competitions")}
               </Link>
-              <Link href="/events" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/events" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("ecoEvents")}
               </Link>
             </nav>
@@ -42,13 +42,13 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-green-700 dark:text-green-400">{t("getInvolved")}</h3>
             <nav className="flex flex-col gap-2">
-              <Link href="/competitions" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/competitions" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("takeQuiz")}
               </Link>
-              <Link href="/events" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/events" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("joinEvent")}
               </Link>
-              <Link href="/problems" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
+              <Link href="/problems" className="text-sm text-muted-foreground hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 hover:translate-x-1 hover:font-medium">
                 {t("reportProblems")}
               </Link>
             </nav>
@@ -57,17 +57,17 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-green-700 dark:text-green-400">{t("contactUs")}</h3>
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground group">
-                <MapPin className="h-4 w-4 shrink-0 text-green-500 transition-transform group-hover:scale-110" />
-                <span>Baku, Azerbaijan</span>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground group cursor-pointer transition-all duration-300 hover:text-foreground">
+                <MapPin className="h-4 w-4 shrink-0 text-green-500 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                <span className="transition-transform duration-300 group-hover:translate-x-1">Baku, Azerbaijan</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground group">
-                <Mail className="h-4 w-4 shrink-0 text-green-500 transition-transform group-hover:scale-110" />
-                <span>info@ecofriends.az</span>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground group cursor-pointer transition-all duration-300 hover:text-foreground">
+                <Mail className="h-4 w-4 shrink-0 text-green-500 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                <span className="transition-transform duration-300 group-hover:translate-x-1">info@ecofriends.az</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground group">
-                <Phone className="h-4 w-4 shrink-0 text-green-500 transition-transform group-hover:scale-110" />
-                <span>+994 12 123 4567</span>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground group cursor-pointer transition-all duration-300 hover:text-foreground">
+                <Phone className="h-4 w-4 shrink-0 text-green-500 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                <span className="transition-transform duration-300 group-hover:translate-x-1">+994 12 123 4567</span>
               </div>
             </div>
           </div>

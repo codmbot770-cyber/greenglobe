@@ -488,7 +488,7 @@ export default function Community() {
               </div>
 
               <div className="space-y-6">
-                <Card className="bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-primary/20 overflow-hidden">
+                <Card className="bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent border-primary/20 overflow-hidden transition-all duration-500 hover:shadow-lg">
                   <div className="h-2 section-header-primary" />
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -497,42 +497,42 @@ export default function Community() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-cool">
-                      <span className="font-medium">{t("totalPosts")}</span>
-                      <Badge className="badge-gradient-primary">{posts?.length || 0}</Badge>
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-cool group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                      <span className="font-medium transition-colors duration-300 group-hover:text-primary">{t("totalPosts")}</span>
+                      <Badge className="badge-gradient-primary transition-transform duration-300 group-hover:scale-110">{posts?.length || 0}</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-sunset">
-                      <span className="font-medium">{t("eventReviews")}</span>
-                      <Badge className="badge-gradient-warning">
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-sunset group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                      <span className="font-medium transition-colors duration-300 group-hover:text-amber-600 dark:group-hover:text-amber-400">{t("eventReviews")}</span>
+                      <Badge className="badge-gradient-warning transition-transform duration-300 group-hover:scale-110">
                         {posts?.filter(p => p.postType === "review").length || 0}
                       </Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-nature">
-                      <span className="font-medium">{t("eventWishes")}</span>
-                      <Badge className="badge-gradient-primary">
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-nature group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                      <span className="font-medium transition-colors duration-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">{t("eventWishes")}</span>
+                      <Badge className="badge-gradient-primary transition-transform duration-300 group-hover:scale-110">
                         {posts?.filter(p => p.postType === "wish").length || 0}
                       </Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-ocean">
-                      <span className="font-medium">{t("discussions")}</span>
-                      <Badge className="badge-gradient-secondary">
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-ocean group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
+                      <span className="font-medium transition-colors duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">{t("discussions")}</span>
+                      <Badge className="badge-gradient-secondary transition-transform duration-300 group-hover:scale-110">
                         {posts?.filter(p => p.postType === "general").length || 0}
                       </Badge>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="overflow-hidden">
-                  <div className="relative h-32">
-                    <img src={plantingImg} alt={t("communityTitle")} className="w-full h-full object-cover" />
+                <Card className="overflow-hidden transition-all duration-500 hover:shadow-lg group">
+                  <div className="relative h-32 overflow-hidden">
+                    <img src={plantingImg} alt={t("communityTitle")} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                   </div>
                   <CardContent className="space-y-3 text-sm -mt-6 relative">
                     <div className="flex items-center gap-2 mb-4">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <Award className="h-5 w-5 text-primary" />
+                      <div className="p-2 rounded-lg bg-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+                        <Award className="h-5 w-5 text-primary transition-transform duration-500 group-hover:rotate-12" />
                       </div>
-                      <h3 className="font-bold text-lg">{t("topContributors")}</h3>
+                      <h3 className="font-bold text-lg transition-colors duration-300 group-hover:text-primary">{t("topContributors")}</h3>
                     </div>
                     <div className="space-y-2">
                       {[
@@ -540,19 +540,19 @@ export default function Community() {
                         { nameKey: "greenWarrior" as const, color: "from-blue-500 to-cyan-600" },
                         { nameKey: "natureLover" as const, color: "from-amber-500 to-orange-600" }
                       ].map((contributor, idx) => (
-                        <div key={idx} className="flex items-center gap-3 p-2 rounded-lg hover-elevate">
-                          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${contributor.color} flex items-center justify-center text-white text-xs font-bold`}>
+                        <div key={idx} className="flex items-center gap-3 p-2 rounded-lg hover-elevate cursor-pointer group/item transition-all duration-300 hover:translate-x-1">
+                          <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${contributor.color} flex items-center justify-center text-white text-xs font-bold transition-all duration-300 group-hover/item:scale-110 group-hover/item:shadow-md`}>
                             #{idx + 1}
                           </div>
-                          <span className="font-medium flex-1">{t(contributor.nameKey)}</span>
-                          <Leaf className="h-4 w-4 text-primary" />
+                          <span className="font-medium flex-1 transition-colors duration-300 group-hover/item:text-primary">{t(contributor.nameKey)}</span>
+                          <Leaf className="h-4 w-4 text-primary transition-all duration-300 group-hover/item:scale-125 group-hover/item:rotate-12" />
                         </div>
                       ))}
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="border-primary/20">
+                <Card className="border-primary/20 transition-all duration-500 hover:shadow-lg hover:border-primary/40">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg">
                       <Leaf className="h-5 w-5 text-primary" />
@@ -566,11 +566,11 @@ export default function Community() {
                       t("guideline3"),
                       t("guideline4")
                     ].map((guideline, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-2 rounded-lg bg-muted/50">
-                        <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div key={idx} className="flex items-start gap-3 p-2 rounded-lg bg-muted/50 group cursor-pointer transition-all duration-300 hover:bg-muted hover:translate-x-1">
+                        <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
                           <span className="text-primary text-xs font-bold">{idx + 1}</span>
                         </div>
-                        <p>{guideline}</p>
+                        <p className="transition-colors duration-300 group-hover:text-foreground">{guideline}</p>
                       </div>
                     ))}
                   </CardContent>

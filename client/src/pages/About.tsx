@@ -126,12 +126,12 @@ export default function About() {
 
               <div className="grid grid-cols-2 gap-4 animate-slide-in-right" style={{ opacity: 0 }}>
                 {achievements.map((achievement, index) => (
-                  <Card key={index} className="text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
+                  <Card key={index} className="text-center group hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-transparent hover:border-primary/30 cursor-pointer">
                     <CardContent className="p-6">
-                      <div className="text-4xl sm:text-5xl font-bold gradient-text mb-2">
+                      <div className="text-4xl sm:text-5xl font-bold gradient-text mb-2 transition-transform duration-300 group-hover:scale-110">
                         {achievement.value}
                       </div>
-                      <div className="text-sm text-muted-foreground font-medium">
+                      <div className="text-sm text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
                         {t(achievement.labelKey)}
                       </div>
                     </CardContent>
@@ -155,13 +155,13 @@ export default function About() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value, index) => (
-                <Card key={index} className="card-hover-lift text-center group">
+                <Card key={index} className="card-hover-lift text-center group cursor-pointer transition-all duration-500 hover:shadow-2xl hover:border-primary/30 border-glow-green">
                   <CardContent className="p-6 space-y-4">
-                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-all duration-300 group-hover:scale-110 group-hover:from-primary/30 group-hover:to-secondary/30">
-                      <value.icon className="h-7 w-7 text-primary transition-transform group-hover:rotate-12" />
+                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-all duration-500 group-hover:scale-125 group-hover:rotate-6 group-hover:from-primary/40 group-hover:to-secondary/40 group-hover:shadow-lg">
+                      <value.icon className="h-7 w-7 text-primary transition-all duration-300 group-hover:scale-110" />
                     </div>
-                    <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{t(value.titleKey)}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <h3 className="text-lg font-bold group-hover:text-primary transition-all duration-300 group-hover:scale-105">{t(value.titleKey)}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed transition-colors duration-300 group-hover:text-foreground/80">
                       {t(value.descKey)}
                     </p>
                   </CardContent>
@@ -184,9 +184,9 @@ export default function About() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member, index) => (
-                <Card key={index} className="card-hover-lift group">
+                <Card key={index} className="card-hover-lift group cursor-pointer transition-all duration-500 hover:shadow-2xl hover:border-primary/30">
                   <CardContent className="p-6 text-center space-y-4">
-                    <Avatar className="h-24 w-24 mx-auto ring-4 ring-primary/10 group-hover:ring-primary/30 transition-all duration-300 group-hover:scale-105">
+                    <Avatar className="h-24 w-24 mx-auto ring-4 ring-primary/10 group-hover:ring-primary/50 transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl">
                       <AvatarImage
                         src={member.image || undefined}
                         alt={member.name}
@@ -200,12 +200,12 @@ export default function About() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{member.name}</h3>
-                      <p className="text-sm text-primary font-medium">
+                      <h3 className="font-bold text-lg group-hover:text-primary transition-all duration-300 group-hover:scale-105">{member.name}</h3>
+                      <p className="text-sm text-primary font-medium transition-all duration-300 group-hover:text-secondary">
                         {member.role}
                       </p>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
                       {t(member.bioKey)}
                     </p>
                   </CardContent>
@@ -228,29 +228,29 @@ export default function About() {
                 {t("impactDescription")}
               </p>
               <div className="grid sm:grid-cols-3 gap-6 mt-8">
-                <Card>
+                <Card className="group transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-pointer border-glow-green">
                   <CardContent className="p-6 text-center">
-                    <TreePine className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <h3 className="font-semibold mb-2">{t("conservation")}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <TreePine className="h-8 w-8 text-primary mx-auto mb-3 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12" />
+                    <h3 className="font-semibold mb-2 transition-colors duration-300 group-hover:text-primary">{t("conservation")}</h3>
+                    <p className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
                       {t("conservationDesc")}
                     </p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="group transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-pointer border-glow-green">
                   <CardContent className="p-6 text-center">
-                    <Users className="h-8 w-8 text-secondary mx-auto mb-3" />
-                    <h3 className="font-semibold mb-2">{t("communityTitle")}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <Users className="h-8 w-8 text-secondary mx-auto mb-3 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12" />
+                    <h3 className="font-semibold mb-2 transition-colors duration-300 group-hover:text-secondary">{t("communityTitle")}</h3>
+                    <p className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
                       {t("youthChapters")}
                     </p>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="group transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 cursor-pointer border-glow-green">
                   <CardContent className="p-6 text-center">
-                    <Lightbulb className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <h3 className="font-semibold mb-2">{t("education")}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <Lightbulb className="h-8 w-8 text-primary mx-auto mb-3 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12" />
+                    <h3 className="font-semibold mb-2 transition-colors duration-300 group-hover:text-primary">{t("education")}</h3>
+                    <p className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground/80">
                       {t("educationReach")}
                     </p>
                   </CardContent>

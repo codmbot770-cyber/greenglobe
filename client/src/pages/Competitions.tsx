@@ -266,23 +266,23 @@ export default function Competitions() {
                     leaderboard.map((entry, index) => (
                       <div 
                         key={entry.userId}
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-300 cursor-pointer group hover:scale-[1.02] hover:shadow-sm"
                       >
                         <div className={`
-                          h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold
+                          h-8 w-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 group-hover:scale-110
                           ${index === 0 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : ''}
                           ${index === 1 ? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' : ''}
                           ${index === 2 ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
                           ${index > 2 ? 'bg-muted text-muted-foreground' : ''}
                         `}>
                           {index < 3 ? (
-                            <Medal className="h-4 w-4" />
+                            <Medal className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
                           ) : (
                             index + 1
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate">
+                          <p className="font-medium truncate transition-colors duration-300 group-hover:text-primary">
                             {user?.id === entry.userId ? t("you") : `${t("participant")} ${index + 1}`}
                           </p>
                           <p className="text-xs text-muted-foreground">
@@ -290,7 +290,7 @@ export default function Competitions() {
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-primary">{entry.totalScore.toLocaleString()}</p>
+                          <p className="font-semibold text-primary transition-transform duration-300 group-hover:scale-110">{entry.totalScore.toLocaleString()}</p>
                           <p className="text-xs text-muted-foreground">{t("points")}</p>
                         </div>
                       </div>
@@ -305,17 +305,17 @@ export default function Competitions() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
+              <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 transition-all duration-500 hover:shadow-lg hover:border-primary/40">
                 <CardHeader>
                   <CardTitle className="text-lg">{t("howItWorks")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {howItWorksSteps.map((item) => (
-                    <div key={item.step} className="flex items-start gap-3">
-                      <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold shrink-0">
+                    <div key={item.step} className="flex items-start gap-3 group cursor-pointer transition-all duration-300 hover:translate-x-1">
+                      <div className="h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
                         {item.step}
                       </div>
-                      <p className="text-sm text-muted-foreground">{t(item.textKey)}</p>
+                      <p className="text-sm text-muted-foreground transition-colors duration-300 group-hover:text-foreground">{t(item.textKey)}</p>
                     </div>
                   ))}
                 </CardContent>
@@ -329,26 +329,26 @@ export default function Competitions() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-md hover:border-yellow-400 group">
                     <div className="flex items-center gap-2">
-                      <Star className="h-4 w-4 text-yellow-600" />
-                      <span className="font-medium">{t("gold")}</span>
+                      <Star className="h-4 w-4 text-yellow-600 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                      <span className="font-medium transition-colors duration-300 group-hover:text-yellow-700 dark:group-hover:text-yellow-400">{t("gold")}</span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-md hover:border-gray-400 group">
                     <div className="flex items-center gap-2">
-                      <Star className="h-4 w-4 text-gray-500" />
-                      <span className="font-medium">{t("silver")}</span>
+                      <Star className="h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                      <span className="font-medium transition-colors duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300">{t("silver")}</span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-md hover:border-orange-400 group">
                     <div className="flex items-center gap-2">
-                      <Star className="h-4 w-4 text-orange-600" />
-                      <span className="font-medium">{t("bronze")}</span>
+                      <Star className="h-4 w-4 text-orange-600 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
+                      <span className="font-medium transition-colors duration-300 group-hover:text-orange-700 dark:group-hover:text-orange-400">{t("bronze")}</span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
                 </CardContent>
               </Card>

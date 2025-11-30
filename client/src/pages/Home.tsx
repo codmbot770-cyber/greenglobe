@@ -104,29 +104,29 @@ export default function Home() {
                 {activeCompetitions.length > 0 ? (
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {activeCompetitions.map((competition) => (
-                      <Card key={competition.id} className="hover-elevate">
+                      <Card key={competition.id} className="group transition-all duration-500 hover:shadow-xl hover:-translate-y-2 hover:border-primary/30 cursor-pointer border-glow-green">
                         <CardContent className="p-5 space-y-3">
                           <div className="flex items-start justify-between gap-2">
-                            <h3 className="font-semibold line-clamp-2">{competition.title}</h3>
-                            <Badge variant="secondary" className="shrink-0">
+                            <h3 className="font-semibold line-clamp-2 transition-colors duration-300 group-hover:text-primary">{competition.title}</h3>
+                            <Badge variant="secondary" className="shrink-0 transition-all duration-300 group-hover:scale-105">
                               {competition.difficulty}
                             </Badge>
                           </div>
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <p className="text-sm text-muted-foreground line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
                             {competition.description}
                           </p>
                           <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Target className="h-3 w-3" />
+                            <span className="flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                              <Target className="h-3 w-3 transition-transform duration-300 group-hover:scale-125" />
                               {competition.questionCount} {t("questions")}
                             </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
+                            <span className="flex items-center gap-1 transition-all duration-300 group-hover:text-secondary">
+                              <Clock className="h-3 w-3 transition-transform duration-300 group-hover:scale-125" />
                               {competition.estimatedMinutes} {t("minutes")}
                             </span>
                           </div>
                           <Link href={`/competitions/${competition.id}`}>
-                            <Button size="sm" className="w-full mt-2">
+                            <Button size="sm" className="w-full mt-2 btn-green-glow">
                               {t("startQuiz")}
                             </Button>
                           </Link>
@@ -163,10 +163,10 @@ export default function Home() {
                 {upcomingEvents.length > 0 ? (
                   <div className="space-y-4">
                     {upcomingEvents.map((event) => (
-                      <Card key={event.id} className="hover-elevate">
+                      <Card key={event.id} className="group transition-all duration-500 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/30 cursor-pointer">
                         <CardContent className="p-5">
                           <div className="flex items-start gap-4">
-                            <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-secondary/10 flex flex-col items-center justify-center">
+                            <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-secondary/10 flex flex-col items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:bg-secondary/20 group-hover:rotate-3">
                               <span className="text-xs font-medium text-secondary uppercase">
                                 {new Date(event.eventDate).toLocaleDateString('en-US', { month: 'short' })}
                               </span>
@@ -176,14 +176,14 @@ export default function Home() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-2">
-                                <h3 className="font-semibold">{event.title}</h3>
-                                <Badge variant="outline">{event.category}</Badge>
+                                <h3 className="font-semibold transition-colors duration-300 group-hover:text-secondary">{event.title}</h3>
+                                <Badge variant="outline" className="transition-all duration-300 group-hover:scale-105 group-hover:border-secondary/50">{event.category}</Badge>
                               </div>
-                              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                              <p className="text-sm text-muted-foreground mt-1 line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
                                 {event.description}
                               </p>
-                              <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
-                                <MapPin className="h-3 w-3" />
+                              <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground transition-colors duration-300 group-hover:text-secondary">
+                                <MapPin className="h-3 w-3 transition-transform duration-300 group-hover:scale-125" />
                                 {event.location}
                               </div>
                             </div>
@@ -255,25 +255,25 @@ export default function Home() {
               </Card>
 
               {/* Quick Actions */}
-              <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
+              <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 transition-all duration-500 hover:shadow-lg hover:border-primary/40">
                 <CardHeader>
                   <CardTitle className="text-lg">{t("quickActions")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Link href="/competitions" className="block">
-                    <Button variant="outline" className="w-full justify-start gap-2">
-                      <Trophy className="h-4 w-4" />
+                  <Link href="/competitions" className="block group">
+                    <Button variant="outline" className="w-full justify-start gap-2 transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/5">
+                      <Trophy className="h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
                       {t("takeAQuiz")}
                     </Button>
                   </Link>
-                  <Link href="/events" className="block">
-                    <Button variant="outline" className="w-full justify-start gap-2">
-                      <Calendar className="h-4 w-4" />
+                  <Link href="/events" className="block group">
+                    <Button variant="outline" className="w-full justify-start gap-2 transition-all duration-300 group-hover:border-secondary/50 group-hover:bg-secondary/5">
+                      <Calendar className="h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12" />
                       {t("registerForEventAction")}
                     </Button>
                   </Link>
-                  <Link href="/about" className="block">
-                    <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Link href="/about" className="block group">
+                    <Button variant="ghost" className="w-full justify-start gap-2 transition-all duration-300 group-hover:bg-muted/80">
                       {t("learnAboutUs")}
                     </Button>
                   </Link>

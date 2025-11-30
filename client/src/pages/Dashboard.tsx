@@ -145,9 +145,9 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-4 gap-8">
             <div className="lg:col-span-1 space-y-6">
-              <Card>
+              <Card className="transition-all duration-500 hover:shadow-xl group">
                 <CardContent className="p-6 text-center">
-                  <Avatar className="h-24 w-24 mx-auto mb-4">
+                  <Avatar className="h-24 w-24 mx-auto mb-4 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg ring-4 ring-transparent group-hover:ring-primary/20">
                     <AvatarImage 
                       src={user?.profileImageUrl || undefined} 
                       alt={user?.firstName || "User"} 
@@ -157,59 +157,59 @@ export default function Dashboard() {
                       {getInitials(user?.firstName, user?.lastName)}
                     </AvatarFallback>
                   </Avatar>
-                  <h2 className="text-xl font-semibold" data-testid="text-dashboard-name">
+                  <h2 className="text-xl font-semibold transition-colors duration-300 group-hover:text-primary" data-testid="text-dashboard-name">
                     {user?.firstName} {user?.lastName}
                   </h2>
                   <p className="text-sm text-muted-foreground" data-testid="text-dashboard-email">
                     {user?.email}
                   </p>
-                  <Badge className="mt-3" variant="secondary">
+                  <Badge className="mt-3 transition-all duration-300 group-hover:scale-105" variant="secondary">
                     {t("ecoWarrior")}
                   </Badge>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="transition-all duration-500 hover:shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-sm font-medium text-muted-foreground">
                     {t("quickStats")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-1 p-1 rounded hover:bg-muted/30">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <Trophy className="h-4 w-4" />
+                      <Trophy className="h-4 w-4 transition-all duration-300 group-hover:scale-125 group-hover:text-yellow-500" />
                       {t("totalPoints")}
                     </span>
-                    <span className="font-semibold text-primary">{totalScore}</span>
+                    <span className="font-semibold text-primary transition-transform duration-300 group-hover:scale-110">{totalScore}</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-1 p-1 rounded hover:bg-muted/30">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <Target className="h-4 w-4" />
+                      <Target className="h-4 w-4 transition-all duration-300 group-hover:scale-125 group-hover:text-primary" />
                       {t("quizzesTaken")}
                     </span>
-                    <span className="font-semibold">{completedQuizzes}</span>
+                    <span className="font-semibold transition-transform duration-300 group-hover:scale-110">{completedQuizzes}</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-1 p-1 rounded hover:bg-muted/30">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4" />
+                      <TrendingUp className="h-4 w-4 transition-all duration-300 group-hover:scale-125 group-hover:text-green-500" />
                       {t("avgScore")}
                     </span>
-                    <span className="font-semibold">{averageScore}%</span>
+                    <span className="font-semibold transition-transform duration-300 group-hover:scale-110">{averageScore}%</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-1 p-1 rounded hover:bg-muted/30">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
+                      <Calendar className="h-4 w-4 transition-all duration-300 group-hover:scale-125 group-hover:text-secondary" />
                       {t("eventsJoined")}
                     </span>
-                    <span className="font-semibold">{registrations?.length || 0}</span>
+                    <span className="font-semibold transition-transform duration-300 group-hover:scale-110">{registrations?.length || 0}</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-1 p-1 rounded hover:bg-muted/30">
                     <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <Shield className="h-4 w-4" />
+                      <Shield className="h-4 w-4 transition-all duration-300 group-hover:scale-125 group-hover:text-blue-500" />
                       {t("problemsReported")}
                     </span>
-                    <span className="font-semibold">{problemsReported}</span>
+                    <span className="font-semibold transition-transform duration-300 group-hover:scale-110">{problemsReported}</span>
                   </div>
                 </CardContent>
               </Card>
@@ -228,17 +228,17 @@ export default function Dashboard() {
                     {achievements.map((achievement, i) => (
                       <div 
                         key={i}
-                        className={`p-4 rounded-lg text-center border transition-all ${
+                        className={`p-4 rounded-lg text-center border transition-all duration-500 cursor-pointer group ${
                           achievement.unlocked 
-                            ? 'bg-primary/5 border-primary/20' 
-                            : 'bg-muted/30 border-transparent opacity-50'
+                            ? 'bg-primary/5 border-primary/20 hover:border-primary/50 hover:shadow-lg hover:-translate-y-2 hover:bg-primary/10' 
+                            : 'bg-muted/30 border-transparent opacity-50 hover:opacity-70'
                         }`}
                         title={t(achievement.descKey)}
                       >
-                        <achievement.icon className={`h-8 w-8 mx-auto mb-2 ${
+                        <achievement.icon className={`h-8 w-8 mx-auto mb-2 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 ${
                           achievement.unlocked ? 'text-primary' : 'text-muted-foreground'
                         }`} />
-                        <p className="text-sm font-medium">{t(achievement.nameKey)}</p>
+                        <p className="text-sm font-medium transition-colors duration-300 group-hover:text-primary">{t(achievement.nameKey)}</p>
                         <p className="text-xs text-muted-foreground mt-1">{t(achievement.descKey)}</p>
                       </div>
                     ))}
@@ -272,27 +272,27 @@ export default function Dashboard() {
                         return (
                           <div 
                             key={score.id}
-                            className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                            className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-all duration-300 cursor-pointer group hover:shadow-md hover:-translate-x-1"
                           >
-                            <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                            <div className={`h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 ${
                               percentage >= 90 ? 'bg-yellow-100 dark:bg-yellow-900/30' :
                               percentage >= 70 ? 'bg-gray-100 dark:bg-gray-800' :
                               percentage >= 50 ? 'bg-orange-100 dark:bg-orange-900/30' :
                               'bg-muted'
                             }`}>
-                              <Medal className={`h-5 w-5 ${getScoreColor(percentage)}`} />
+                              <Medal className={`h-5 w-5 transition-transform duration-300 group-hover:rotate-12 ${getScoreColor(percentage)}`} />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium truncate">
+                              <p className="font-medium truncate transition-colors duration-300 group-hover:text-primary">
                                 {competition?.title || `Competition #${score.competitionId}`}
                               </p>
                               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <Clock className="h-3 w-3" />
+                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" />
                                 {formatDate(score.completedAt)}
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className={`text-lg font-bold ${getScoreColor(percentage)}`}>
+                              <p className={`text-lg font-bold transition-transform duration-300 group-hover:scale-110 ${getScoreColor(percentage)}`}>
                                 {percentage}%
                               </p>
                               <p className="text-sm text-muted-foreground">
@@ -334,13 +334,13 @@ export default function Dashboard() {
                         return (
                           <div 
                             key={reg.id}
-                            className="flex items-center gap-4 p-4 rounded-lg bg-muted/30"
+                            className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 transition-all duration-300 cursor-pointer group hover:bg-muted/50 hover:shadow-md hover:-translate-x-1"
                           >
-                            <div className="h-10 w-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                              <Calendar className="h-5 w-5 text-secondary" />
+                            <div className="h-10 w-10 rounded-full bg-secondary/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-secondary/20">
+                              <Calendar className="h-5 w-5 text-secondary transition-transform duration-300 group-hover:rotate-12" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium truncate">
+                              <p className="font-medium truncate transition-colors duration-300 group-hover:text-secondary">
                                 {event?.title || `Event #${reg.eventId}`}
                               </p>
                               <p className="text-sm text-muted-foreground truncate">
@@ -348,7 +348,7 @@ export default function Dashboard() {
                               </p>
                             </div>
                             {event && (
-                              <Badge variant={event.isPast ? "secondary" : "outline"}>
+                              <Badge variant={event.isPast ? "secondary" : "outline"} className="transition-all duration-300 group-hover:scale-105">
                                 {event.isPast ? t("completed") : formatDate(event.eventDate)}
                               </Badge>
                             )}

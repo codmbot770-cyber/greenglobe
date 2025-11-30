@@ -148,14 +148,14 @@ export default function Landing() {
           <div className="container mx-auto px-4 relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
-                <div key={index} className={`text-center group animate-fade-in-up stagger-${index + 1}`} style={{ opacity: 0 }}>
-                  <div className={`inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${stat.bgColor} border border-current/10`}>
-                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                <div key={index} className={`text-center group animate-fade-in-up stagger-${index + 1} cursor-pointer`} style={{ opacity: 0 }}>
+                  <div className={`inline-flex items-center justify-center h-16 w-16 rounded-2xl mb-4 transition-all duration-500 group-hover:scale-125 group-hover:rotate-6 group-hover:shadow-lg ${stat.bgColor} border border-current/10`}>
+                    <stat.icon className={`h-8 w-8 ${stat.color} transition-transform duration-300 group-hover:scale-110`} />
                   </div>
-                  <div className={`text-3xl sm:text-4xl font-bold ${stat.color}`} data-testid={`stat-value-${index}`}>
+                  <div className={`text-3xl sm:text-4xl font-bold ${stat.color} transition-transform duration-300 group-hover:scale-110`} data-testid={`stat-value-${index}`}>
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1 font-medium">{t(stat.labelKey)}</div>
+                  <div className="text-sm text-muted-foreground mt-1 font-medium transition-colors duration-300 group-hover:text-foreground">{t(stat.labelKey)}</div>
                 </div>
               ))}
             </div>
@@ -219,13 +219,13 @@ export default function Landing() {
             
             <div className="grid md:grid-cols-3 gap-6">
               {ecosystems.map((ecosystem, index) => (
-                <Card key={index} className="border-primary/20 group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <Card key={index} className="border-primary/20 group transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-primary/40 cursor-pointer border-glow-green">
                   <CardContent className="p-6 text-center space-y-4">
-                    <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-transform duration-300 group-hover:scale-110">
-                      <ecosystem.icon className="h-10 w-10 text-primary" />
+                    <div className="inline-flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mx-auto transition-all duration-500 group-hover:scale-125 group-hover:rotate-6 group-hover:shadow-lg group-hover:from-primary/30 group-hover:to-secondary/30">
+                      <ecosystem.icon className="h-10 w-10 text-primary transition-all duration-300 group-hover:scale-110" />
                     </div>
-                    <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">{t(ecosystem.titleKey)}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{t(ecosystem.descKey)}</p>
+                    <h3 className="text-xl font-semibold group-hover:text-primary transition-all duration-300 group-hover:scale-105">{t(ecosystem.titleKey)}</h3>
+                    <p className="text-muted-foreground leading-relaxed transition-colors duration-300 group-hover:text-foreground/80">{t(ecosystem.descKey)}</p>
                   </CardContent>
                 </Card>
               ))}
