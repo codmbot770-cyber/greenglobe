@@ -127,7 +127,48 @@ export default function About() {
                 </p>
               </div>
 
-              
+              <div className="grid grid-cols-2 gap-4 animate-slide-in-right" style={{ opacity: 0 }}>
+                <Card className="group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/50 dark:to-green-950/50 border-emerald-200/50 dark:border-emerald-800/50">
+                  <CardContent className="p-5 text-center">
+                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-green-500/20 mx-auto mb-3 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+                      <TreePine className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <h3 className="font-bold text-emerald-700 dark:text-emerald-300 mb-1">{t("protectForests")}</h3>
+                    <p className="text-xs text-muted-foreground">{t("protectForestsDesc")}</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50 border-blue-200/50 dark:border-blue-800/50">
+                  <CardContent className="p-5 text-center">
+                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 mx-auto mb-3 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+                      <Globe className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <h3 className="font-bold text-blue-700 dark:text-blue-300 mb-1">{t("cleanOceans")}</h3>
+                    <p className="text-xs text-muted-foreground">{t("cleanOceansDesc")}</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50 border-amber-200/50 dark:border-amber-800/50">
+                  <CardContent className="p-5 text-center">
+                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-amber-500/20 to-yellow-500/20 mx-auto mb-3 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+                      <Lightbulb className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <h3 className="font-bold text-amber-700 dark:text-amber-300 mb-1">{t("spreadAwareness")}</h3>
+                    <p className="text-xs text-muted-foreground">{t("spreadAwarenessDesc")}</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="group cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-950/50 dark:to-purple-950/50 border-violet-200/50 dark:border-violet-800/50">
+                  <CardContent className="p-5 text-center">
+                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-500/20 mx-auto mb-3 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6">
+                      <Users className="h-6 w-6 text-violet-600 dark:text-violet-400" />
+                    </div>
+                    <h3 className="font-bold text-violet-700 dark:text-violet-300 mb-1">{t("uniteCommunitiesMission")}</h3>
+                    <p className="text-xs text-muted-foreground">{t("uniteCommunitiesDesc")}</p>
+                  </CardContent>
+                </Card>
+              </div>
+
             </div>
           </div>
         </section>
