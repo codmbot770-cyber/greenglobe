@@ -311,16 +311,19 @@ export default function Problems() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-blue-500/10 via-background to-destructive/5 relative overflow-hidden">
-          <div className="absolute inset-0 pattern-dots opacity-20" />
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-cyan-100/80 via-sky-50/50 to-blue-100/60 dark:from-cyan-950/40 dark:via-sky-950/30 dark:to-blue-950/40 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-sky-500/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+          <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-sky-400/15 to-teal-500/15 rounded-full blur-2xl" />
+          <div className="absolute inset-0 pattern-dots opacity-10" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 mb-6 animate-fade-in" style={{ opacity: 0 }}>
-                <Droplets className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 px-5 py-2.5 text-sm font-medium text-cyan-700 dark:text-cyan-300 mb-6 animate-fade-in border border-cyan-300/30 dark:border-cyan-700/30 shadow-lg shadow-cyan-500/10" style={{ opacity: 0 }}>
+                <Droplets className="h-4 w-4 animate-pulse" />
                 <span>{t("problemsTagline")}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-problems-title">
-                {t("problemsTitle")} <span className="gradient-text">{t("caspianSeaTitle")}</span>
+                {t("problemsTitle")} <span className="bg-gradient-to-r from-cyan-600 via-sky-500 to-blue-500 bg-clip-text text-transparent">{t("caspianSeaTitle")}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8 animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 {t("problemsDescription")}
@@ -485,13 +488,13 @@ export default function Problems() {
           </div>
         </section>
 
-        <section className="py-12">
+        <section className="py-12 bg-gradient-to-b from-cyan-50/30 to-background dark:from-cyan-950/20 dark:to-background">
           <div className="container mx-auto px-4">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3">
-                <TabsTrigger value="caspian" data-testid="tab-caspian">{t("caspianSeaIssues")}</TabsTrigger>
-                <TabsTrigger value="solutions" data-testid="tab-solutions">{t("solutions")}</TabsTrigger>
-                <TabsTrigger value="reports" data-testid="tab-reports">{t("communityReports")}</TabsTrigger>
+              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-gradient-to-r from-cyan-100/80 via-sky-100/60 to-blue-100/80 dark:from-cyan-900/40 dark:via-sky-900/30 dark:to-blue-900/40 p-1">
+                <TabsTrigger value="caspian" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-sky-500 data-[state=active]:text-white" data-testid="tab-caspian">{t("caspianSeaIssues")}</TabsTrigger>
+                <TabsTrigger value="solutions" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white" data-testid="tab-solutions">{t("solutions")}</TabsTrigger>
+                <TabsTrigger value="reports" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:to-purple-500 data-[state=active]:text-white" data-testid="tab-reports">{t("communityReports")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="caspian" className="space-y-8">
@@ -574,38 +577,42 @@ export default function Problems() {
                   </div>
 
                   <div className="space-y-6">
-                    <Card className="bg-gradient-to-br from-blue-500/5 to-primary/5 border-blue-200 dark:border-blue-800">
+                    <Card className="bg-gradient-to-br from-cyan-100/60 via-sky-50/40 to-blue-100/50 dark:from-cyan-950/40 dark:via-sky-950/30 dark:to-blue-950/40 border-cyan-200/50 dark:border-cyan-800/50 shadow-lg shadow-cyan-500/10">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-lg">
-                          <Droplets className="h-5 w-5 text-blue-500" />
-                          {t("caspianSeaFacts")}
+                          <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                            <Droplets className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
+                          </div>
+                          <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">{t("caspianSeaFacts")}</span>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4 text-sm">
-                        <div className="p-3 rounded-lg bg-background">
-                          <p className="font-semibold">371,000 km²</p>
+                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-cyan-200/30 dark:border-cyan-800/30">
+                          <p className="font-semibold text-cyan-700 dark:text-cyan-300">371,000 km²</p>
                           <p className="text-muted-foreground text-xs">{t("surfaceArea")}</p>
                         </div>
-                        <div className="p-3 rounded-lg bg-background">
-                          <p className="font-semibold">1,025 meters</p>
+                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-sky-200/30 dark:border-sky-800/30">
+                          <p className="font-semibold text-sky-700 dark:text-sky-300">1,025 meters</p>
                           <p className="text-muted-foreground text-xs">{t("maximumDepth")}</p>
                         </div>
-                        <div className="p-3 rounded-lg bg-background">
-                          <p className="font-semibold">{t("fiveNations")}</p>
+                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-blue-200/30 dark:border-blue-800/30">
+                          <p className="font-semibold text-blue-700 dark:text-blue-300">{t("fiveNations")}</p>
                           <p className="text-muted-foreground text-xs">{t("fiveNationsDesc")}</p>
                         </div>
-                        <div className="p-3 rounded-lg bg-background">
-                          <p className="font-semibold">850+</p>
+                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-indigo-200/30 dark:border-indigo-800/30">
+                          <p className="font-semibold text-indigo-700 dark:text-indigo-300">850+</p>
                           <p className="text-muted-foreground text-xs">{t("uniqueSpecies")}</p>
                         </div>
                       </CardContent>
                     </Card>
 
-                    <Card className="border-amber-200 dark:border-amber-800">
+                    <Card className="bg-gradient-to-br from-amber-100/60 via-orange-50/40 to-yellow-100/50 dark:from-amber-950/40 dark:via-orange-950/30 dark:to-yellow-950/40 border-amber-200/50 dark:border-amber-800/50 shadow-lg shadow-amber-500/10">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-lg">
-                          <Scale className="h-5 w-5 text-amber-500" />
-                          {t("economicReality")}
+                          <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20">
+                            <Scale className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                          </div>
+                          <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">{t("economicReality")}</span>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3 text-sm text-muted-foreground">
@@ -619,7 +626,9 @@ export default function Problems() {
 
               <TabsContent value="solutions" className="space-y-8">
                 <div className="text-center max-w-2xl mx-auto mb-8">
-                  <h2 className="text-2xl font-bold mb-4">{t("balancingEconomyEnvironment")}</h2>
+                  <h2 className="text-2xl font-bold mb-4">
+                    <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-green-500 bg-clip-text text-transparent">{t("balancingEconomyEnvironment")}</span>
+                  </h2>
                   <p className="text-muted-foreground">
                     {t("balancingDescription")}
                   </p>
@@ -628,12 +637,19 @@ export default function Problems() {
                 <div className="grid md:grid-cols-2 gap-6">
                   {sustainableSolutions.map((solution, idx) => {
                     const IconComponent = solution.icon;
+                    const colors = [
+                      { bg: "from-emerald-500/20 to-green-500/20", text: "text-emerald-600 dark:text-emerald-400", card: "from-emerald-50/60 to-green-50/40 dark:from-emerald-950/40 dark:to-green-950/30" },
+                      { bg: "from-teal-500/20 to-cyan-500/20", text: "text-teal-600 dark:text-teal-400", card: "from-teal-50/60 to-cyan-50/40 dark:from-teal-950/40 dark:to-cyan-950/30" },
+                      { bg: "from-sky-500/20 to-blue-500/20", text: "text-sky-600 dark:text-sky-400", card: "from-sky-50/60 to-blue-50/40 dark:from-sky-950/40 dark:to-blue-950/30" },
+                      { bg: "from-violet-500/20 to-purple-500/20", text: "text-violet-600 dark:text-violet-400", card: "from-violet-50/60 to-purple-50/40 dark:from-violet-950/40 dark:to-purple-950/30" },
+                    ];
+                    const color = colors[idx % colors.length];
                     return (
-                      <Card key={idx} className="hover-elevate" data-testid={`card-solution-${idx}`}>
+                      <Card key={idx} className={`bg-gradient-to-br ${color.card} transition-all duration-500 hover:shadow-xl hover:-translate-y-1`} data-testid={`card-solution-${idx}`}>
                         <CardHeader>
                           <div className="flex items-center gap-3">
-                            <div className="p-3 rounded-lg bg-primary/10">
-                              <IconComponent className="h-6 w-6 text-primary" />
+                            <div className={`p-3 rounded-lg bg-gradient-to-br ${color.bg}`}>
+                              <IconComponent className={`h-6 w-6 ${color.text}`} />
                             </div>
                             <CardTitle className="text-lg">{solution.title}</CardTitle>
                           </div>

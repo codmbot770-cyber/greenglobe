@@ -333,11 +333,13 @@ export default function Community() {
           </div>
         </section>
 
-        <section className="py-12 bg-gradient-to-b from-muted/50 to-background">
-          <div className="container mx-auto px-4">
+        <section className="py-12 bg-gradient-to-br from-fuchsia-50/60 via-pink-50/40 to-rose-50/50 dark:from-fuchsia-950/30 dark:via-pink-950/20 dark:to-rose-950/30 relative overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-fuchsia-400/20 to-pink-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-gradient-to-br from-rose-400/20 to-orange-500/20 rounded-full blur-3xl" />
+          <div className="container mx-auto px-4 relative">
             <div className="text-center mb-10">
               <h2 className="text-2xl md:text-3xl font-bold mb-3 animate-fade-in" style={{ opacity: 0 }}>
-                {t("exploreCommunityFeatures").split(" ")[0]} <span className="gradient-text">{t("exploreCommunityFeatures").split(" ").slice(1).join(" ")}</span>
+                {t("exploreCommunityFeatures").split(" ")[0]} <span className="bg-gradient-to-r from-fuchsia-600 via-pink-500 to-rose-500 bg-clip-text text-transparent">{t("exploreCommunityFeatures").split(" ").slice(1).join(" ")}</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto animate-fade-in-up stagger-1" style={{ opacity: 0 }}>
                 {t("chooseEngagement")}

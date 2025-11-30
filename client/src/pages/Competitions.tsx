@@ -99,16 +99,19 @@ export default function Competitions() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/5 relative overflow-hidden">
-          <div className="absolute inset-0 pattern-dots opacity-20" />
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-indigo-100/80 via-violet-50/50 to-purple-100/60 dark:from-indigo-950/40 dark:via-violet-950/30 dark:to-purple-950/40 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-violet-500/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-fuchsia-500/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+          <div className="absolute top-1/2 left-1/3 w-56 h-56 bg-gradient-to-br from-violet-400/15 to-indigo-500/15 rounded-full blur-2xl" />
+          <div className="absolute inset-0 pattern-dots opacity-10" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6 animate-fade-in" style={{ opacity: 0 }}>
-                <Trophy className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-violet-500/20 px-5 py-2.5 text-sm font-medium text-indigo-700 dark:text-indigo-300 mb-6 animate-fade-in border border-indigo-300/30 dark:border-indigo-700/30 shadow-lg shadow-indigo-500/10" style={{ opacity: 0 }}>
+                <Trophy className="h-4 w-4 animate-pulse" />
                 <span>{t("environmentalKnowledgeChallenge")}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-competitions-title">
-                {t("testYourEcoKnowledge")} <span className="gradient-text">{t("ecoKnowledge")}</span>
+                {t("testYourEcoKnowledge")} <span className="bg-gradient-to-r from-indigo-600 via-violet-500 to-purple-500 bg-clip-text text-transparent">{t("ecoKnowledge")}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 {t("competitionsHeroDesc")}

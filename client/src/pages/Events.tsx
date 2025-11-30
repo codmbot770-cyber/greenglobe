@@ -291,16 +291,19 @@ export default function Events() {
       <Navbar />
       
       <main className="flex-1">
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-secondary/10 via-background to-primary/5 relative overflow-hidden">
-          <div className="absolute inset-0 pattern-dots opacity-20" />
+        <section className="py-12 sm:py-16 bg-gradient-to-br from-rose-100/70 via-orange-50/50 to-amber-100/60 dark:from-rose-950/40 dark:via-orange-950/30 dark:to-amber-950/40 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-gradient-to-br from-rose-400/20 to-orange-500/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-amber-400/20 to-yellow-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+          <div className="absolute top-1/2 right-1/4 w-48 h-48 bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-full blur-2xl" />
+          <div className="absolute inset-0 pattern-dots opacity-10" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-sm font-medium text-secondary mb-6 animate-fade-in" style={{ opacity: 0 }}>
-                <CalendarIcon className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500/20 to-orange-500/20 px-5 py-2.5 text-sm font-medium text-rose-700 dark:text-rose-300 mb-6 animate-fade-in border border-rose-300/30 dark:border-rose-700/30 shadow-lg shadow-rose-500/10" style={{ opacity: 0 }}>
+                <CalendarIcon className="h-4 w-4 animate-pulse" />
                 <span>{t("joinEnvironmentalActivities")}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 animate-fade-in-up stagger-1" style={{ opacity: 0 }} data-testid="text-events-title">
-                <span className="text-secondary">{t("eventsPageTitle")}</span> {t("ecoEventsInAzerbaijan")}
+                <span className="bg-gradient-to-r from-rose-600 via-orange-500 to-amber-500 bg-clip-text text-transparent">{t("eventsPageTitle")}</span> {t("ecoEventsInAzerbaijan")}
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up stagger-2" style={{ opacity: 0 }}>
                 {t("eventsHeroDesc")}
@@ -309,22 +312,22 @@ export default function Events() {
           </div>
         </section>
 
-        <section className="border-b bg-[hsl(var(--light-green-bg))] sticky top-16 z-40">
+        <section className="border-b bg-gradient-to-r from-rose-50/80 via-orange-50/60 to-amber-50/80 dark:from-rose-950/30 dark:via-orange-950/20 dark:to-amber-950/30 sticky top-16 z-40 backdrop-blur-sm">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-rose-500" />
                 <Input
                   placeholder={t("searchEventsPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 border-rose-200/50 dark:border-rose-800/50 focus:border-rose-400"
                   data-testid="input-search-events"
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-[200px]" data-testid="select-category">
-                  <Filter className="h-4 w-4 mr-2" />
+                <SelectTrigger className="w-full sm:w-[200px] border-orange-200/50 dark:border-orange-800/50" data-testid="select-category">
+                  <Filter className="h-4 w-4 mr-2 text-orange-500" />
                   <SelectValue placeholder={t("category")} />
                 </SelectTrigger>
                 <SelectContent>
