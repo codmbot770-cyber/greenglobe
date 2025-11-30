@@ -580,28 +580,116 @@ export default function Problems() {
                     <Card className="bg-gradient-to-br from-cyan-100/60 via-sky-50/40 to-blue-100/50 dark:from-cyan-950/40 dark:via-sky-950/30 dark:to-blue-950/40 border-cyan-200/50 dark:border-cyan-800/50 shadow-lg shadow-cyan-500/10">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-lg">
-                          <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                          <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 animate-pulse">
                             <Droplets className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
                           </div>
                           <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">{t("caspianSeaFacts")}</span>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4 text-sm">
-                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-cyan-200/30 dark:border-cyan-800/30">
-                          <p className="font-semibold text-cyan-700 dark:text-cyan-300">371,000 km²</p>
-                          <p className="text-muted-foreground text-xs">{t("surfaceArea")}</p>
+                        <div 
+                          className="group p-4 rounded-xl bg-white/60 dark:bg-gray-900/60 border border-cyan-200/30 dark:border-cyan-800/30 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/20 hover:border-cyan-400 dark:hover:border-cyan-500 relative overflow-hidden"
+                          data-testid="fact-surface-area"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                          <div className="relative flex items-center gap-3">
+                            <div className="p-2 rounded-full bg-cyan-100 dark:bg-cyan-900/50 group-hover:scale-110 transition-transform duration-300">
+                              <Waves className="h-5 w-5 text-cyan-600 dark:text-cyan-400 group-hover:animate-bounce" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-xl text-cyan-700 dark:text-cyan-300 group-hover:text-cyan-600 transition-colors">371,000 km²</p>
+                              <p className="text-muted-foreground text-xs group-hover:text-cyan-600/70 transition-colors">{t("surfaceArea")}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-cyan-600/80 dark:text-cyan-400/80 pt-2 border-t border-cyan-200/50 dark:border-cyan-700/50">
+                              {t("surfaceAreaDetail")}
+                            </p>
+                          </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-sky-200/30 dark:border-sky-800/30">
-                          <p className="font-semibold text-sky-700 dark:text-sky-300">1,025 meters</p>
-                          <p className="text-muted-foreground text-xs">{t("maximumDepth")}</p>
+
+                        <div 
+                          className="group p-4 rounded-xl bg-white/60 dark:bg-gray-900/60 border border-sky-200/30 dark:border-sky-800/30 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-sky-500/20 hover:border-sky-400 dark:hover:border-sky-500 relative overflow-hidden"
+                          data-testid="fact-depth"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-sky-400/0 via-sky-400/10 to-sky-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                          <div className="relative flex items-center gap-3">
+                            <div className="p-2 rounded-full bg-sky-100 dark:bg-sky-900/50 group-hover:scale-110 transition-transform duration-300">
+                              <TrendingUp className="h-5 w-5 text-sky-600 dark:text-sky-400 group-hover:rotate-180 transition-transform duration-500" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-xl text-sky-700 dark:text-sky-300 group-hover:text-sky-600 transition-colors">1,025 m</p>
+                              <p className="text-muted-foreground text-xs group-hover:text-sky-600/70 transition-colors">{t("maximumDepth")}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-sky-600/80 dark:text-sky-400/80 pt-2 border-t border-sky-200/50 dark:border-sky-700/50">
+                              {t("depthDetail")}
+                            </p>
+                          </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-blue-200/30 dark:border-blue-800/30">
-                          <p className="font-semibold text-blue-700 dark:text-blue-300">{t("fiveNations")}</p>
-                          <p className="text-muted-foreground text-xs">{t("fiveNationsDesc")}</p>
+
+                        <div 
+                          className="group p-4 rounded-xl bg-white/60 dark:bg-gray-900/60 border border-blue-200/30 dark:border-blue-800/30 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20 hover:border-blue-400 dark:hover:border-blue-500 relative overflow-hidden"
+                          data-testid="fact-nations"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-blue-400/10 to-blue-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                          <div className="relative flex items-center gap-3">
+                            <div className="p-2 rounded-full bg-blue-100 dark:bg-blue-900/50 group-hover:scale-110 transition-transform duration-300">
+                              <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-xl text-blue-700 dark:text-blue-300 group-hover:text-blue-600 transition-colors">{t("fiveNations")}</p>
+                              <p className="text-muted-foreground text-xs group-hover:text-blue-600/70 transition-colors">{t("fiveNationsDesc")}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-blue-600/80 dark:text-blue-400/80 pt-2 border-t border-blue-200/50 dark:border-blue-700/50">
+                              {t("nationsDetail")}
+                            </p>
+                          </div>
                         </div>
-                        <div className="p-3 rounded-lg bg-white/60 dark:bg-gray-900/60 border border-indigo-200/30 dark:border-indigo-800/30">
-                          <p className="font-semibold text-indigo-700 dark:text-indigo-300">850+</p>
-                          <p className="text-muted-foreground text-xs">{t("uniqueSpecies")}</p>
+
+                        <div 
+                          className="group p-4 rounded-xl bg-white/60 dark:bg-gray-900/60 border border-indigo-200/30 dark:border-indigo-800/30 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/20 hover:border-indigo-400 dark:hover:border-indigo-500 relative overflow-hidden"
+                          data-testid="fact-species"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-indigo-400/0 via-indigo-400/10 to-indigo-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                          <div className="relative flex items-center gap-3">
+                            <div className="p-2 rounded-full bg-indigo-100 dark:bg-indigo-900/50 group-hover:scale-110 transition-transform duration-300">
+                              <Fish className="h-5 w-5 text-indigo-600 dark:text-indigo-400 group-hover:animate-pulse" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-xl text-indigo-700 dark:text-indigo-300 group-hover:text-indigo-600 transition-colors">850+</p>
+                              <p className="text-muted-foreground text-xs group-hover:text-indigo-600/70 transition-colors">{t("uniqueSpecies")}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-indigo-600/80 dark:text-indigo-400/80 pt-2 border-t border-indigo-200/50 dark:border-indigo-700/50">
+                              {t("speciesDetail")}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div 
+                          className="group p-4 rounded-xl bg-white/60 dark:bg-gray-900/60 border border-teal-200/30 dark:border-teal-800/30 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-teal-500/20 hover:border-teal-400 dark:hover:border-teal-500 relative overflow-hidden"
+                          data-testid="fact-caviar"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-teal-400/0 via-teal-400/10 to-teal-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                          <div className="relative flex items-center gap-3">
+                            <div className="p-2 rounded-full bg-teal-100 dark:bg-teal-900/50 group-hover:scale-110 transition-transform duration-300">
+                              <Droplets className="h-5 w-5 text-teal-600 dark:text-teal-400 group-hover:animate-bounce" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-xl text-teal-700 dark:text-teal-300 group-hover:text-teal-600 transition-colors">90%</p>
+                              <p className="text-muted-foreground text-xs group-hover:text-teal-600/70 transition-colors">{t("worldCaviar")}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-teal-600/80 dark:text-teal-400/80 pt-2 border-t border-teal-200/50 dark:border-teal-700/50">
+                              {t("caviarDetail")}
+                            </p>
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
