@@ -438,7 +438,7 @@ export default function Quiz() {
                   <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                     <Medal className="h-6 w-6 mx-auto mb-2 text-green-600" />
                     <p className="text-green-800 dark:text-green-200 font-medium">
-                      Congratulations! {competition.prizeDescription}
+                      {t("congratulations")} {t("youEarnedPrize")} {competition.prizeDescription}
                     </p>
                   </div>
                 )}
