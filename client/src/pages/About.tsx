@@ -127,20 +127,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 animate-slide-in-right" style={{ opacity: 0 }}>
-                {achievements.map((achievement, index) => (
-                  <Card key={index} className="text-center group hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border-2 border-transparent hover:border-primary/30 cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="text-4xl sm:text-5xl font-bold gradient-text mb-2 transition-transform duration-300 group-hover:scale-110">
-                        {achievement.value}
-                      </div>
-                      <div className="text-sm text-muted-foreground font-medium transition-colors duration-300 group-hover:text-foreground">
-                        {t(achievement.labelKey)}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              
             </div>
           </div>
         </section>
