@@ -500,49 +500,59 @@ export default function Problems() {
               <TabsContent value="caspian" className="space-y-8">
                 <div className="grid lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2 space-y-6">
-                    <div className="prose dark:prose-invert max-w-none">
-                      <h2 className="text-2xl font-bold flex items-center gap-2 mb-4">
-                        <Droplets className="h-6 w-6 text-blue-500" />
-                        {t("challengeOilEnvironment")}
-                      </h2>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {t("oilEnvironmentDescription")}
-                      </p>
+                    <div className="group p-6 rounded-2xl bg-gradient-to-br from-blue-50/80 via-cyan-50/60 to-sky-50/80 dark:from-blue-950/40 dark:via-cyan-950/30 dark:to-sky-950/40 border border-blue-200/50 dark:border-blue-800/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/20 hover:scale-[1.02] hover:border-blue-400/50 dark:hover:border-blue-600/50 relative overflow-hidden cursor-pointer">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-blue-400/5 to-blue-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                      <div className="relative">
+                        <h2 className="text-2xl font-bold flex items-center gap-3 mb-4">
+                          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                            <Droplets className="h-6 w-6 text-blue-500 group-hover:animate-pulse" />
+                          </div>
+                          <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-sky-600 bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-cyan-500 transition-all duration-300">{t("challengeOilEnvironment")}</span>
+                        </h2>
+                        <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
+                          {t("oilEnvironmentDescription")}
+                        </p>
+                      </div>
                     </div>
 
                     <div className="space-y-4">
                       {caspianSeaProblems.map((problem) => {
                         const IconComponent = problem.icon;
                         return (
-                          <Card key={problem.id} className="border-l-4 border-l-destructive" data-testid={`card-problem-${problem.id}`}>
-                            <CardHeader className="pb-2">
+                          <Card 
+                            key={problem.id} 
+                            className="group border-l-4 border-l-destructive transition-all duration-500 hover:shadow-xl hover:shadow-destructive/10 hover:scale-[1.01] hover:border-l-destructive/80 relative overflow-hidden cursor-pointer" 
+                            data-testid={`card-problem-${problem.id}`}
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-r from-destructive/0 via-destructive/5 to-destructive/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                            <CardHeader className="pb-2 relative">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-center gap-3">
-                                  <div className="p-2 rounded-lg bg-destructive/10">
-                                    <IconComponent className="h-5 w-5 text-destructive" />
+                                  <div className="p-2 rounded-lg bg-destructive/10 group-hover:scale-110 group-hover:bg-destructive/20 transition-all duration-300">
+                                    <IconComponent className="h-5 w-5 text-destructive group-hover:animate-pulse" />
                                   </div>
-                                  <CardTitle className="text-lg">{problem.title}</CardTitle>
+                                  <CardTitle className="text-lg group-hover:text-destructive/90 transition-colors duration-300">{problem.title}</CardTitle>
                                 </div>
-                                <Badge className={getSeverityColor(problem.severity)}>
+                                <Badge className={`${getSeverityColor(problem.severity)} group-hover:scale-105 transition-transform duration-300`}>
                                   {problem.severity}
                                 </Badge>
                               </div>
                             </CardHeader>
-                            <CardContent className="space-y-4">
-                              <p className="text-sm text-muted-foreground">{problem.description}</p>
+                            <CardContent className="space-y-4 relative">
+                              <p className="text-sm text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300">{problem.description}</p>
                               
                               <Accordion type="single" collapsible className="w-full">
                                 <AccordionItem value="impacts" className="border-none">
-                                  <AccordionTrigger className="text-sm font-medium hover:no-underline py-2">
+                                  <AccordionTrigger className="text-sm font-medium hover:no-underline py-2 group/trigger">
                                     <span className="flex items-center gap-2">
-                                      <AlertTriangle className="h-4 w-4 text-amber-500" />
+                                      <AlertTriangle className="h-4 w-4 text-amber-500 group-hover/trigger:animate-bounce" />
                                       {t("environmentalImpacts")}
                                     </span>
                                   </AccordionTrigger>
                                   <AccordionContent>
                                     <ul className="space-y-2 text-sm text-muted-foreground">
                                       {problem.impacts.map((impact, idx) => (
-                                        <li key={idx} className="flex items-start gap-2">
+                                        <li key={idx} className="flex items-start gap-2 hover:translate-x-1 hover:text-foreground/80 transition-all duration-200 cursor-default">
                                           <span className="text-destructive mt-1">•</span>
                                           {impact}
                                         </li>
@@ -551,16 +561,16 @@ export default function Problems() {
                                   </AccordionContent>
                                 </AccordionItem>
                                 <AccordionItem value="solutions" className="border-none">
-                                  <AccordionTrigger className="text-sm font-medium hover:no-underline py-2">
+                                  <AccordionTrigger className="text-sm font-medium hover:no-underline py-2 group/trigger">
                                     <span className="flex items-center gap-2">
-                                      <Lightbulb className="h-4 w-4 text-primary" />
+                                      <Lightbulb className="h-4 w-4 text-primary group-hover/trigger:animate-pulse" />
                                       {t("proposedSolutions")}
                                     </span>
                                   </AccordionTrigger>
                                   <AccordionContent>
                                     <ul className="space-y-2 text-sm text-muted-foreground">
                                       {problem.solutions.map((solution, idx) => (
-                                        <li key={idx} className="flex items-start gap-2">
+                                        <li key={idx} className="flex items-start gap-2 hover:translate-x-1 hover:text-foreground/80 transition-all duration-200 cursor-default">
                                           <span className="text-primary mt-1">•</span>
                                           {solution}
                                         </li>
