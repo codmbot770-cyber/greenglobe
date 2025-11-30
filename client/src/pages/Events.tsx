@@ -139,6 +139,26 @@ export default function Events() {
     },
   });
 
+  const unregisterMutation = useMutation({
+    mutationFn: async (eventId: number) => {
+      await apiRequest("DELETE", `/api/user/registrations/${eventId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/user/registrations"] });
+      toast({
+        title: t("unregistrationSuccessful"),
+        description: t("unregisteredFromEvent"),
+      });
+    },
+    onError: () => {
+      toast({
+        title: t("unregistrationFailed"),
+        description: t("unregistrationError"),
+        variant: "destructive",
+      });
+    },
+  });
+
   const isRegistered = (eventId: number) => {
     return registrations?.some(r => r.eventId === eventId) || false;
   };
@@ -175,6 +195,7 @@ export default function Events() {
     const eventImage = eventImages[event.id] || categoryImages[event.category] || awarenessImg;
     const registered = isRegistered(event.id);
     const isRegistering = registerMutation.isPending;
+    const isUnregistering = unregisterMutation.isPending;
     
     return (
       <Card 
@@ -246,9 +267,24 @@ export default function Events() {
               <div className="pt-3">
                 {isAuthenticated ? (
                   registered ? (
-                    <Button variant="secondary" className="w-full gap-2" disabled>
-                      <CheckCircle className="h-4 w-4" />
-                      {t("alreadyRegistered")}
+                    <Button 
+                      variant="outline" 
+                      className="w-full gap-2 border-green-500 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30 group/btn"
+                      onClick={() => unregisterMutation.mutate(event.id)}
+                      disabled={isUnregistering}
+                      data-testid={`button-unregister-event-${event.id}`}
+                    >
+                      {isUnregistering ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          {t("cancelling")}
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle className="h-4 w-4" />
+                          {t("registered")} - {t("clickToCancel")}
+                        </>
+                      )}
                     </Button>
                   ) : (
                     <Button 

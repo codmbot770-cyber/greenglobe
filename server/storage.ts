@@ -58,7 +58,9 @@ export interface IStorage {
 
   // Event registrations
   getUserRegistrations(userId: string): Promise<EventRegistration[]>;
+  getEventRegistration(userId: string, eventId: number): Promise<EventRegistration | undefined>;
   createEventRegistration(registration: InsertEventRegistration): Promise<EventRegistration>;
+  deleteEventRegistration(userId: string, eventId: number): Promise<void>;
 
   // Problems
   getProblems(): Promise<Problem[]>;
@@ -170,9 +172,26 @@ export class DatabaseStorage implements IStorage {
     return db.select().from(eventRegistrations).where(eq(eventRegistrations.userId, userId)).orderBy(desc(eventRegistrations.registeredAt));
   }
 
+  async getEventRegistration(userId: string, eventId: number): Promise<EventRegistration | undefined> {
+    const [registration] = await db.select().from(eventRegistrations)
+      .where(and(
+        eq(eventRegistrations.userId, userId),
+        eq(eventRegistrations.eventId, eventId)
+      ));
+    return registration;
+  }
+
   async createEventRegistration(registration: InsertEventRegistration): Promise<EventRegistration> {
     const [newRegistration] = await db.insert(eventRegistrations).values(registration).returning();
     return newRegistration;
+  }
+
+  async deleteEventRegistration(userId: string, eventId: number): Promise<void> {
+    await db.delete(eventRegistrations)
+      .where(and(
+        eq(eventRegistrations.userId, userId),
+        eq(eventRegistrations.eventId, eventId)
+      ));
   }
 
   // Problems

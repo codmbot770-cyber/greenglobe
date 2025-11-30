@@ -159,8 +159,27 @@ export async function registerRoutes(
   app.post("/api/user/registrations", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      const { eventId } = req.body;
+
+      // Check if event exists
+      const event = await storage.getEvent(eventId);
+      if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+
+      // Check if event is past
+      if (event.isPast) {
+        return res.status(400).json({ message: "Cannot register for past events" });
+      }
+
+      // Check if already registered
+      const existingRegistration = await storage.getEventRegistration(userId, eventId);
+      if (existingRegistration) {
+        return res.status(400).json({ message: "Already registered for this event" });
+      }
+
       const validatedData = insertEventRegistrationSchema.parse({
-        ...req.body,
+        eventId,
         userId,
       });
       const registration = await storage.createEventRegistration(validatedData);
@@ -168,6 +187,31 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error creating registration:", error);
       res.status(400).json({ message: "Failed to register for event" });
+    }
+  });
+
+  app.delete("/api/user/registrations/:eventId", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const eventId = parseInt(req.params.eventId);
+
+      // Check if registration exists
+      const existingRegistration = await storage.getEventRegistration(userId, eventId);
+      if (!existingRegistration) {
+        return res.status(404).json({ message: "Registration not found" });
+      }
+
+      // Check if event is past (can't unregister from past events)
+      const event = await storage.getEvent(eventId);
+      if (event?.isPast) {
+        return res.status(400).json({ message: "Cannot unregister from past events" });
+      }
+
+      await storage.deleteEventRegistration(userId, eventId);
+      res.json({ message: "Successfully unregistered from event" });
+    } catch (error) {
+      console.error("Error deleting registration:", error);
+      res.status(400).json({ message: "Failed to unregister from event" });
     }
   });
 
