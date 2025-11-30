@@ -93,6 +93,15 @@ const eventImages: Record<number, string> = {
   12: treePlantingImg,
 };
 
+const eventDescriptionKeys: Record<string, string> = {
+  "Caspian Beach Cleanup": "eventDescCaspianBeachCleanup",
+  "Mountain Reforestation Day": "eventDescMountainReforestation",
+  "Birdwatching at Shirvan Reserve": "eventDescBirdwatchingShirvan",
+  "Environmental Workshop for Schools": "eventDescEnvironmentalWorkshop",
+  "Gobustan Nature Walk": "eventDescGobustanNatureWalk",
+  "Kura River Cleanup Campaign": "eventDescKuraRiverCleanup",
+};
+
 export default function Events() {
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
@@ -249,7 +258,7 @@ export default function Events() {
             </h3>
             
             <p className="text-sm text-muted-foreground line-clamp-2">
-              {event.description}
+              {eventDescriptionKeys[event.title] ? t(eventDescriptionKeys[event.title] as any) : event.description}
             </p>
             
             <div className="space-y-2 pt-2">

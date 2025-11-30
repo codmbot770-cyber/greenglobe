@@ -187,6 +187,14 @@ export const translations = {
     pastEvent: "Past Event",
     registered: "Registered",
     
+    // Event Descriptions
+    eventDescCaspianBeachCleanup: "Join us for a community cleanup along the beautiful Caspian Sea coastline. Help preserve marine life and keep our beaches pristine for future generations.",
+    eventDescMountainReforestation: "Plant native trees in the Caucasus foothills. Learn about local flora and contribute to restoring Azerbaijan's forest cover.",
+    eventDescBirdwatchingShirvan: "Observe migratory birds and learn about wildlife conservation at Shirvan National Park, home to gazelles and flamingos.",
+    eventDescEnvironmentalWorkshop: "Interactive workshop teaching students about recycling, conservation, and sustainable living practices.",
+    eventDescGobustanNatureWalk: "Explore the unique mud volcanoes and semi-desert ecosystem of the Gobustan reserve while learning about geological conservation.",
+    eventDescKuraRiverCleanup: "Help clean the banks of the Kura River and raise awareness about freshwater ecosystem protection.",
+    
     // Community
     communityHub: "Community Hub",
     communityTagline: "Connect & Share",
@@ -710,6 +718,14 @@ export const translations = {
     pastEvent: "Keçmiş Tədbir",
     registered: "Qeydiyyatdan Keçib",
     
+    // Event Descriptions
+    eventDescCaspianBeachCleanup: "Xəzər dənizi sahilinin gözəl sahilboyu təmizliyinə qoşulun. Dəniz həyatını qorumağa və sahillərimizi gələcək nəsillər üçün tərtəmiz saxlamağa kömək edin.",
+    eventDescMountainReforestation: "Qafqaz dağ ətəklərində yerli ağaclar əkin. Yerli flora haqqında öyrənin və Azərbaycanın meşə örtüyünün bərpasına töhfə verin.",
+    eventDescBirdwatchingShirvan: "Şirvan Milli Parkında köçəri quşları müşahidə edin və vəhşi təbiətin qorunması haqqında öyrənin - ceyranların və flaminqoların vətəni.",
+    eventDescEnvironmentalWorkshop: "Şagirdlərə təkrar emal, qorunma və davamlı yaşayış təcrübələrini öyrədən interaktiv seminar.",
+    eventDescGobustanNatureWalk: "Qobustan qoruğunun unikal palçıq vulkanlarını və yarımsəhra ekosistemini kəşf edin və geoloji qorunma haqqında öyrənin.",
+    eventDescKuraRiverCleanup: "Kür çayının sahillərini təmizləməyə kömək edin və şirin su ekosisteminin qorunması haqqında maarifləndirmə aparın.",
+    
     // Community
     communityHub: "İcma Mərkəzi",
     communityTagline: "Əlaqə Qurun və Paylaşın",
@@ -1232,6 +1248,14 @@ export const translations = {
     alreadyRegistered: "Уже зарегистрированы",
     pastEvent: "Прошедшее мероприятие",
     registered: "Зарегистрирован",
+    
+    // Event Descriptions
+    eventDescCaspianBeachCleanup: "Присоединяйтесь к общественной уборке вдоль прекрасного побережья Каспийского моря. Помогите сохранить морскую жизнь и сохранить наши пляжи чистыми для будущих поколений.",
+    eventDescMountainReforestation: "Посадите местные деревья в предгорьях Кавказа. Узнайте о местной флоре и внесите вклад в восстановление лесного покрова Азербайджана.",
+    eventDescBirdwatchingShirvan: "Наблюдайте за перелётными птицами и узнайте о сохранении дикой природы в Ширванском национальном парке — доме газелей и фламинго.",
+    eventDescEnvironmentalWorkshop: "Интерактивный семинар, обучающий студентов переработке отходов, охране природы и устойчивому образу жизни.",
+    eventDescGobustanNatureWalk: "Исследуйте уникальные грязевые вулканы и полупустынную экосистему Гобустанского заповедника, изучая геологическую охрану.",
+    eventDescKuraRiverCleanup: "Помогите очистить берега реки Куры и повысить осведомлённость о защите пресноводных экосистем.",
     
     // Community
     communityHub: "Центр сообщества",
