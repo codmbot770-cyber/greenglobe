@@ -17,7 +17,7 @@ export function Footer() {
               <span className="font-bold text-lg bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">GreenGlobe</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Dedicated to protecting and preserving Azerbaijan's rich natural heritage for future generations.
+              {t("footerTagline")}
             </p>
           </div>
 

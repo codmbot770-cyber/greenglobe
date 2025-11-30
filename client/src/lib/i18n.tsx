@@ -463,6 +463,7 @@ export const translations = {
     joinEvent: "Join an Event",
     contactUs: "Contact Us",
     allRightsReserved: "All rights reserved. Protecting our environment together.",
+    footerTagline: "Dedicated to protecting and preserving Azerbaijan's rich natural heritage for future generations.",
     
     // Common
     loading: "Loading...",
@@ -984,6 +985,7 @@ export const translations = {
     joinEvent: "Tədbirə Qoşulun",
     contactUs: "Bizimlə Əlaqə",
     allRightsReserved: "Bütün hüquqlar qorunur. Birlikdə ətraf mühitimizi qoruyuruq.",
+    footerTagline: "Azərbaycanın zəngin təbii irsini gələcək nəsillər üçün qorumağa və saxlamağa həsr olunmuşdur.",
     
     // Common
     loading: "Yüklənir...",
@@ -1505,6 +1507,7 @@ export const translations = {
     joinEvent: "Участвовать в мероприятии",
     contactUs: "Связаться с нами",
     allRightsReserved: "Все права защищены. Вместе защищаем окружающую среду.",
+    footerTagline: "Посвящено защите и сохранению богатого природного наследия Азербайджана для будущих поколений.",
     
     // Common
     loading: "Загрузка...",
