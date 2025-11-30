@@ -348,35 +348,36 @@ export default function Community() {
               {sectionFeatures.map((feature, idx) => (
                 <Card 
                   key={feature.type}
-                  className={`group cursor-pointer card-hover-lift overflow-hidden border-2 border-transparent hover:border-primary/30 animate-fade-in-up`}
+                  className={`group cursor-pointer overflow-hidden border-2 border-transparent hover:border-primary/40 animate-fade-in-up transition-all duration-500 hover:shadow-2xl hover:-translate-y-3`}
                   style={{ opacity: 0, animationDelay: `${0.1 * (idx + 1)}s` }}
                   onClick={() => handleFeatureClick(feature.type)}
                   data-testid={`card-feature-${feature.type}`}
                 >
-                  <div className="relative h-40 overflow-hidden">
+                  <div className="relative h-44 overflow-hidden">
                     <img 
                       src={feature.image} 
                       alt={feature.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-125 group-hover:rotate-2"
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60`} />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-60 transition-opacity duration-500 group-hover:opacity-80`} />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center text-white">
-                        <div className="h-14 w-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 mx-auto icon-container">
-                          {feature.type === "review" && <Star className="h-7 w-7" />}
-                          {feature.type === "general" && <MessageCircle className="h-7 w-7" />}
-                          {feature.type === "wish" && <Sparkles className="h-7 w-7" />}
+                      <div className="text-center text-white transform transition-all duration-500 group-hover:scale-110">
+                        <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 mx-auto transition-all duration-500 group-hover:bg-white/30 group-hover:shadow-xl group-hover:scale-110">
+                          {feature.type === "review" && <Star className="h-8 w-8 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110" />}
+                          {feature.type === "general" && <MessageCircle className="h-8 w-8 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110" />}
+                          {feature.type === "wish" && <Sparkles className="h-8 w-8 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110" />}
                         </div>
-                        <Badge className="badge-gradient-primary">{feature.stats}</Badge>
+                        <Badge className="badge-gradient-primary transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">{feature.stats}</Badge>
                       </div>
                     </div>
+                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-card to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
-                  <CardContent className="p-4">
-                    <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{feature.description}</p>
-                    <div className="flex items-center text-primary font-medium text-sm">
-                      <span>{t("getStarted")}</span>
-                      <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-2" />
+                  <CardContent className="p-5">
+                    <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-all duration-300 group-hover:scale-105 origin-left">{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 transition-colors duration-300 group-hover:text-foreground/80">{feature.description}</p>
+                    <div className="flex items-center text-primary font-semibold text-sm transition-all duration-300 group-hover:gap-2">
+                      <span className="transition-all duration-300 group-hover:text-primary">{t("getStarted")}</span>
+                      <ArrowRight className="h-5 w-5 ml-1 transition-all duration-500 group-hover:translate-x-3 group-hover:scale-125" />
                     </div>
                   </CardContent>
                 </Card>

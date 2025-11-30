@@ -1,8 +1,8 @@
-# EcoFriendsAz - Environmental Protection Platform
+# GreenWorld - Environmental Protection Platform
 
 ## Overview
 
-EcoFriendsAz is an environmental protection platform focused on preserving Azerbaijan's natural heritage through community engagement. The platform enables users to participate in environmental competitions (quizzes), join eco-events (cleanups, tree planting, wildlife conservation), and report environmental problems. The application aims to educate citizens about ecological issues while facilitating real-world environmental action across Azerbaijan's diverse ecosystems including the Caspian Sea, Caucasus Mountains, and protected national parks.
+GreenWorld is an environmental protection platform focused on preserving Azerbaijan's natural heritage through community engagement. The platform enables users to participate in environmental competitions (quizzes), join eco-events (cleanups, tree planting, wildlife conservation), and report environmental problems. The application aims to educate citizens about ecological issues while facilitating real-world environmental action across Azerbaijan's diverse ecosystems including the Caspian Sea, Caucasus Mountains, and protected national parks.
 
 ## Internationalization (i18n)
 

@@ -51,7 +51,7 @@ export function Navbar() {
             <Leaf className="h-5 w-5 text-white transition-transform group-hover:rotate-12" />
           </div>
           <span className="hidden font-bold text-lg sm:inline-block bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent" data-testid="text-logo">
-            EcoFriendsAz
+            GreenWorld
           </span>
         </Link>
 
